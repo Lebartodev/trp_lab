@@ -71,31 +71,78 @@ public class MovieItem implements java.io.Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        MovieItem mi = (MovieItem) o;
-        return mi.getId() == id &&
-                mi.getName().equals(name) &&
-                mi.getYear() == year &&
-                mi.getGenreId() == genreId &&
-                mi.getBudget() == budget;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MovieItem movieItem = (MovieItem) o;
+
+        if (id != movieItem.id) return false;
+        if (year != movieItem.year) return false;
+        if (genreId != movieItem.genreId) return false;
+        if (budget != movieItem.budget) return false;
+        return name != null ? name.equals(movieItem.name) : movieItem.name == null;
     }
 
     @Override
     public int hashCode() {
-        return id * 322;
-        //TODO change hashcode
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + year;
+        result = 31 * result + genreId;
+        result = 31 * result + budget;
+        return result;
     }
 
     @Override
     public String toString() {
-        return "Id: " + id + "/n"
-                + "Name: " + name + "/n"
-                + "Year: " + year + "/n"
-                + "Description: " + description + "/n"
-                + "GenreId: " + genreId + "/n"
-                + "Budget: " + budget;
+        return "MovieItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", year=" + year +
+                ", description='" + description + '\'' +
+                ", genreId=" + genreId +
+                ", budget=" + budget +
+                '}';
+    }
+
+    public class Builder{
+        private Builder(){
+
+        }
+
+        public Builder id(int id){
+            MovieItem.this.id = id;
+            return this;
+        }
+
+        public Builder name(String name){
+            MovieItem.this.name = name;
+            return this;
+        }
+
+        public Builder year(int year){
+            MovieItem.this.year = year;
+            return this;
+        }
+
+        public Builder description(String description){
+            MovieItem.this.description = description;
+            return this;
+        }
+
+        public Builder genreId(int genreId){
+            MovieItem.this.genreId = genreId;
+            return this;
+        }
+
+        public Builder budget(int budget){
+            MovieItem.this.budget = budget;
+            return this;
+        }
+
+        public MovieItem build(){
+            return MovieItem.this;
+        }
     }
 
 }
