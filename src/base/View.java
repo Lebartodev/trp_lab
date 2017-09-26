@@ -2,6 +2,8 @@ package base;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import model.data.ActionEmpty;
+import model.data.ActionShowCategories;
 
 import javax.swing.*;
 
@@ -32,10 +34,18 @@ public abstract class View<M extends Model, C extends Controller> {
         if (model != null) {
             subscriptionModel = model.getPublisher().subscribe(new Consumer<ActionData>() {
                 public void accept(ActionData actionData) throws Exception {
+                    if (actionData instanceof ActionShowCategories) {
+                        onShowCategories((ActionShowCategories) actionData);
+                    }
 
                 }
             });
         }
+    }
+
+
+    public void onShowCategories(ActionShowCategories data) {
+
     }
 
     abstract public JComponent render();
