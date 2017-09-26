@@ -56,7 +56,6 @@ public abstract class View<M extends Model, C extends Controller> {
         }
 
         this.controller = controller;
-        this.controller.setView(this);
 
         if (this.model != null) {
             try {

@@ -105,6 +105,10 @@ public class MovieItem implements java.io.Serializable {
                 '}';
     }
 
+    public static Builder newBuilder() {
+        return new MovieItem().new Builder();
+    }
+
     public class Builder{
         private Builder(){
 

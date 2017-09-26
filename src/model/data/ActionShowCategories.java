@@ -1,11 +1,12 @@
 package model.data;
 
+import base.ActionData;
 import model.CategoryItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionShowCategories {
+public class ActionShowCategories implements ActionData{
 
 
     List<CategoryItem> categories = new ArrayList<CategoryItem>();

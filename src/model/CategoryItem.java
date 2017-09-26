@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class CategoryItem {
+public class CategoryItem implements java.io.Serializable{
     private int id;
     private String name;
     private List<MovieItem> movies;
@@ -62,6 +62,10 @@ public class CategoryItem {
                 ", name='" + name + '\'' +
                 ", movies=" + movies +
                 '}';
+    }
+
+    public static Builder newBuilder() {
+        return new CategoryItem().new Builder();
     }
 
     public class Builder{
