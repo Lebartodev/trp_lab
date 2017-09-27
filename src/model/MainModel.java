@@ -98,12 +98,12 @@ public class MainModel extends Model {
 
     public void onCreateMovie(String name, int year, String description
             , int genreId, int budget){
-
-        categories.get(genreId-1).getMovies().add(MovieItem.newBuilder()
+        MovieItem movie = MovieItem.newBuilder()
                 .id(lastFilmId).name(name).year(year).description(description)
-                .genreId(genreId).budget(budget).build());
+                .genreId(genreId).budget(budget).build();
+        categories.get(genreId-1).getMovies().add(movie);
         serializeModel();
-        emit(new ActionOnCreateMovie(categories,genreId-1,categories.get(genreId-1).getMovies(),lastFilmId));
+        emit(new ActionOnCreateMovie(categories,categories.get(genreId-1),categories.get(genreId-1).getMovies(),movie));
 
         lastFilmId++;
 

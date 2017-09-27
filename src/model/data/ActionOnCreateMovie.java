@@ -14,12 +14,12 @@ import java.util.Map;
 public class ActionOnCreateMovie implements ActionData{
 
     List<CategoryItem> categories = new ArrayList<>();
-    int currentCategory;
+    CategoryItem currentCategory;
     List<MovieItem> movies = new ArrayList<>();
-    int currentMovie;
+    MovieItem currentMovie;
 
-    public ActionOnCreateMovie(List<CategoryItem> categories, int currentCategory
-            , List<MovieItem> movies, int currentMovie) {
+    public ActionOnCreateMovie(List<CategoryItem> categories, CategoryItem currentCategory
+            , List<MovieItem> movies, MovieItem currentMovie) {
         this.categories = categories;
         this.currentCategory = currentCategory;
         this.movies = movies;
@@ -30,7 +30,7 @@ public class ActionOnCreateMovie implements ActionData{
         return categories;
     }
 
-    public int getCurrentCategory() {
+    public CategoryItem getCurrentCategory() {
         return currentCategory;
     }
 
@@ -38,7 +38,7 @@ public class ActionOnCreateMovie implements ActionData{
         return movies;
     }
 
-    public int getCurrentMovie() {
+    public MovieItem getCurrentMovie() {
         return currentMovie;
     }
 }
