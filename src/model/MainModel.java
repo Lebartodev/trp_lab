@@ -3,6 +3,7 @@ package model;
 import base.ActionData;
 import base.Model;
 import model.data.ActionShowCategories;
+import model.data.ActionShowMovie;
 import model.data.ActionShowMoviesInCategory;
 
 import java.util.ArrayList;
@@ -27,12 +28,16 @@ public class MainModel extends Model {
     public void getMoviesInCategory(int id){
         List<MovieItem> movies = new ArrayList<>(4);
         for (int i = 1;i < 5; i++){
-            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
-                    .year(1990 + i).description("Test description for Test film " + i)
-            .genreId(id).budget(500 + i).build());
+            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i).build());
         }
-        
+
         emit(new ActionShowMoviesInCategory(CategoryItem.newBuilder().id(id).name("Test category " + id)
                 .movies(movies).build()));
+    }
+
+    public void getMovie(int id){
+        emit(new ActionShowMovie(MovieItem.newBuilder().id(id).name("Test film " + id)
+                .year(1990 + id).description("Test description for Test film " + id)
+                .genreId(id).budget(500 + id).build()));
     }
 }
