@@ -38,6 +38,16 @@ public class MenuView extends View<MainModel, MainController> {
             frame.setVisible(true);
             frame.setLocation(100, 100);
         });
+        createMovie.addActionListener(e -> {
+            JFrame frame = new JFrame("Create movie");
+            frame.setSize(300, 100);
+            frame.setMinimumSize(new Dimension(300, 100));
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.getContentPane().add(new CreateMovieView(model(), controller(),frame).render());
+            frame.pack();
+            frame.setVisible(true);
+            frame.setLocation(100, 100);
+        });
 
         return menuBar;
     }

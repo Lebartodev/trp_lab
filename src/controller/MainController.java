@@ -15,8 +15,8 @@ public class MainController extends Controller<MainModel> {
     public void requestMovie(int id) {
         this.model().getMovie(id);
     }
-    public void createCategory(){
-        this.model().createCategory();
+    public void createCategory(String categoryName ){
+        this.model().createCategory(categoryName);
     }
 
 }

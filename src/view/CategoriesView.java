@@ -100,7 +100,6 @@ public class CategoriesView extends View<MainModel, MainController> {
     private void initSingleMoviePage() {
         moviePanel = new JPanel(new BorderLayout());
         moviePanel.setVisible(false);
-        moviePanel.setVisible(false);
         JPanel movieContentPanel = new JPanel(new BorderLayout());
 
         movieContentPanel.setBackground(Color.WHITE);

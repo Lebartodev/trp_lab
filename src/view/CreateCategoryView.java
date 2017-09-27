@@ -13,10 +13,10 @@ import java.awt.event.ActionListener;
 public class CreateCategoryView extends View<MainModel, MainController> {
     private JFrame frame;
 
-    public CreateCategoryView(MainModel model, MainController controller,JFrame frame) {
+    public CreateCategoryView(MainModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
-        this.frame=frame;
+        this.frame = frame;
     }
 
 
@@ -32,9 +32,16 @@ public class CreateCategoryView extends View<MainModel, MainController> {
         viewPanel.add(createButton, BorderLayout.SOUTH);
         viewPanel.setSize(300, 100);
         createButton.addActionListener(e -> {
-            controller().createCategory();
-            if (frame != null) {
-                frame.dispose();
+            if (textField.getText().length() < 4) {
+                JOptionPane.showMessageDialog(frame,
+                        "Name must be more than 4 symbols",
+                        "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                controller().createCategory(textField.getText());
+                if (frame != null) {
+                    frame.dispose();
+                }
             }
             // textField.getText()
         });
