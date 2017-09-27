@@ -35,6 +35,10 @@ public class CategoryItem implements java.io.Serializable{
         this.movies = movies;
     }
 
+    public void addMovie(MovieItem movie){
+        this.movies.add(movie);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,10 +61,10 @@ public class CategoryItem implements java.io.Serializable{
 
     @Override
     public String toString() {
-        return "CategoryItem{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", movies=" + movies +
+        return "CategoryItem{" + System.lineSeparator() +
+                "id=" + id + System.lineSeparator() +
+                ", name='" + name + '\'' + System.lineSeparator() +
+                ", movies=" + movies + System.lineSeparator() +
                 '}';
     }
 

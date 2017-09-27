@@ -87,13 +87,13 @@ public class MovieItem implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "MovieItem{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", year=" + year +
-                ", description='" + description + '\'' +
-                ", genreId=" + genreId +
-                ", budget=" + budget +
+        return "MovieItem{" + System.lineSeparator() +
+                "id=" + id + System.lineSeparator() +
+                ", name='" + name + '\'' + System.lineSeparator() +
+                ", year=" + year + System.lineSeparator() +
+                ", description='" + description + '\'' + System.lineSeparator() +
+                ", genreId=" + genreId + System.lineSeparator() +
+                ", budget=" + budget + System.lineSeparator() +
                 '}';
     }
 
@@ -112,7 +112,11 @@ public class MovieItem implements java.io.Serializable {
         }
 
         public Builder name(String name){
-            MovieItem.this.name = name;
+            if(name == null){
+                MovieItem.this.name = "New Film";
+            } else {
+                MovieItem.this.name = name;
+            }
             return this;
         }
 
@@ -122,7 +126,11 @@ public class MovieItem implements java.io.Serializable {
         }
 
         public Builder description(String description){
-            MovieItem.this.description = description;
+            if(description == null){
+                MovieItem.this.description = "Add description to this movie!";
+            } else {
+                MovieItem.this.description = description;
+            }
             return this;
         }
 
