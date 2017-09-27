@@ -4,6 +4,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import model.data.ActionEmpty;
 import model.data.ActionShowCategories;
+import model.data.ActionShowMovie;
 import model.data.ActionShowMoviesInCategory;
 
 import javax.swing.*;
@@ -46,6 +47,9 @@ public abstract class View<M extends Model, C extends Controller> {
                     if (actionData instanceof ActionShowMoviesInCategory) {
                         onShowSingleCategory((ActionShowMoviesInCategory) actionData);
                     }
+                    if (actionData instanceof ActionShowMovie) {
+                        onShowMovie((ActionShowMovie) actionData);
+                    }
 
                 }
             });
@@ -56,6 +60,11 @@ public abstract class View<M extends Model, C extends Controller> {
     public void onShowCategories(ActionShowCategories data) {
 
     }
+
+    public void onShowMovie(ActionShowMovie data) {
+
+    }
+
     public void onShowSingleCategory(ActionShowMoviesInCategory data) {
 
     }

@@ -6,6 +6,7 @@ import model.CategoryItem;
 import model.MainModel;
 import model.MovieItem;
 import model.data.ActionShowCategories;
+import model.data.ActionShowMovie;
 import model.data.ActionShowMoviesInCategory;
 
 import javax.swing.*;
@@ -19,15 +20,20 @@ public class CategoriesView extends View<MainModel, MainController> {
     private JList<MovieItem> moviesList;
     private JPanel viewPanel;
     private JLabel moviesTitle = new JLabel("Select a category");
+    private JLabel singleMovieTitle = new JLabel("Select movie");
+    private JTextArea movieDescription = new JTextArea("asd");
+    private JPanel moviesPanel;
+    private JPanel moviePanel;
 
-    public CategoriesView() {
-        this.setModel(new MainModel());
-        this.controller(new MainController());
+    public CategoriesView(MainModel model,MainController controller) {
+        this.setModel(model);
+        this.controller(controller);
     }
 
     public JComponent render() {
 
-        viewPanel = new JPanel(new BorderLayout());
+        viewPanel = new JPanel();
+        viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.X_AXIS));
         viewPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         initCategoriesList();
         initMoviesList();
@@ -47,6 +53,14 @@ public class CategoriesView extends View<MainModel, MainController> {
     public void onShowSingleCategory(ActionShowMoviesInCategory data) {
         moviesList.setListData(data.getMoviesInCategory().getMovies().toArray(new MovieItem[data.getMoviesInCategory().getMovies().size()]));
         moviesTitle.setText(data.getMoviesInCategory().getName());
+        moviesPanel.setVisible(true);
+    }
+
+    @Override
+    public void onShowMovie(ActionShowMovie data) {
+        singleMovieTitle.setText(data.getMovie().getName());
+        movieDescription.setText(data.getMovie().getDescription()+"\nBudget: "+data.getMovie().getBudget()+"\nYear:"+data.getMovie().getYear());
+        moviePanel.setVisible(true);
     }
 
     private void initCategoriesList() {
@@ -59,29 +73,43 @@ public class CategoriesView extends View<MainModel, MainController> {
         categoriesScroll.setBorder(new EmptyBorder(0, 10, 0, 10));
         categoriesPanel.add(categoriesScroll, BorderLayout.CENTER);
         categoriesPanel.add(categoriesLabel, BorderLayout.NORTH);
-        viewPanel.add(categoriesPanel, BorderLayout.WEST);
-
+        categoriesPanel.setMaximumSize(new Dimension(120, Integer.MAX_VALUE));
+        viewPanel.add(categoriesPanel);
         categoriesList.addListSelectionListener(e -> controller().requestCategory(categoriesList.getSelectedValue().getId()));
     }
 
     private void initMoviesList() {
-        JPanel moviesPanel = new JPanel(new BorderLayout());
+
+        moviesPanel = new JPanel(new BorderLayout());
+        moviesPanel.setVisible(false);
         moviesTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
+
+
         moviesList = new JList<MovieItem>();
         moviesList.setCellRenderer(new MovieRenderer());
         JScrollPane moviesScroll = new JScrollPane(moviesList);
         moviesPanel.add(moviesScroll, BorderLayout.CENTER);
         moviesPanel.add(moviesTitle, BorderLayout.NORTH);
-
-        viewPanel.add(moviesPanel, BorderLayout.CENTER);
+        moviesPanel.setMaximumSize(new Dimension(120, Integer.MAX_VALUE));
+        moviesPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+        moviesScroll.setBorder(new EmptyBorder(0, 10, 0, 10));
+        viewPanel.add(moviesPanel);
+        moviesList.addListSelectionListener(e -> controller().requestMovie(moviesList.getSelectedValue().getId()));
     }
 
     private void initSingleMoviePage() {
-        JPanel moviePanel = new JPanel(new BorderLayout());
+        moviePanel = new JPanel(new BorderLayout());
+        moviePanel.setVisible(false);
+        moviePanel.setVisible(false);
+        JPanel movieContentPanel = new JPanel(new BorderLayout());
 
-        moviePanel.add(new JLabel("Placeholder"), BorderLayout.CENTER);
-
-        viewPanel.add(moviePanel, BorderLayout.EAST);
+        movieContentPanel.setBackground(Color.WHITE);
+        singleMovieTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
+        movieDescription.setEditable(false);
+        movieContentPanel.add(movieDescription, BorderLayout.NORTH);
+        moviePanel.add(singleMovieTitle, BorderLayout.NORTH);
+        moviePanel.add(movieContentPanel, BorderLayout.CENTER);
+        viewPanel.add(moviePanel);
 
     }
 

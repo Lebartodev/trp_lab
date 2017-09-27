@@ -7,13 +7,18 @@ import model.MainModel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CreateCategoryView extends View<MainModel, MainController> {
+    private JFrame frame;
 
-    public CreateCategoryView(MainModel model, MainController controller) {
+    public CreateCategoryView(MainModel model, MainController controller,JFrame frame) {
         this.setModel(model);
         this.controller(controller);
+        this.frame=frame;
     }
+
 
     @Override
     public JComponent render() {
@@ -25,7 +30,14 @@ public class CreateCategoryView extends View<MainModel, MainController> {
         viewPanel.add(label, BorderLayout.NORTH);
         viewPanel.add(textField, BorderLayout.CENTER);
         viewPanel.add(createButton, BorderLayout.SOUTH);
-        viewPanel.setSize(300,100);
+        viewPanel.setSize(300, 100);
+        createButton.addActionListener(e -> {
+            controller().createCategory();
+            if (frame != null) {
+                frame.dispose();
+            }
+            // textField.getText()
+        });
         return viewPanel;
     }
 }

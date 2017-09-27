@@ -11,6 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class MenuView extends View<MainModel, MainController> {
+    public MenuView(MainModel model, MainController controller) {
+        this.setModel(model);
+        this.controller(controller);
+    }
 
     public JMenuBar render() {
         JMenuBar menuBar = new JMenuBar();
@@ -26,13 +30,13 @@ public class MenuView extends View<MainModel, MainController> {
 
         createCategory.addActionListener(e -> {
             JFrame frame = new JFrame("Create category");
-            frame.setSize(300,100);
+            frame.setSize(300, 100);
             frame.setMinimumSize(new Dimension(300, 100));
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(new CreateCategoryView(model(), controller()).render());
+            frame.getContentPane().add(new CreateCategoryView(model(), controller(),frame).render());
             frame.pack();
             frame.setVisible(true);
-            frame.setLocation(100,100);
+            frame.setLocation(100, 100);
         });
 
         return menuBar;
