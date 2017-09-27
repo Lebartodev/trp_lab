@@ -1,20 +1,12 @@
 package model;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 
 public class MovieItem implements java.io.Serializable {
-    @NotNull
     private int id;
-    @Nullable
     private String name;
-    @Nullable
     private int year;
-    @Nullable
     private String description;
-    @NotNull
     private int genreId;
-    @Nullable
     private int budget;
 
     public MovieItem() {

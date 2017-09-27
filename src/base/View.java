@@ -19,6 +19,7 @@ public abstract class View<M extends Model, C extends Controller> {
             throw new IllegalStateException("A Model has already been set on the View.");
         }
         this.model = model;
+        subscribeOnModel();
 
         if (this.controller != null) {
             try {
@@ -28,6 +29,10 @@ public abstract class View<M extends Model, C extends Controller> {
 
             }
         }
+    }
+
+    protected final M model() {
+        return this.model;
     }
 
     private void subscribeOnModel() {
@@ -49,6 +54,10 @@ public abstract class View<M extends Model, C extends Controller> {
     }
 
     abstract public JComponent render();
+
+    protected final C controller() {
+        return this.controller;
+    }
 
     protected final void controller(final C controller) {
         if (this.controller != null) {

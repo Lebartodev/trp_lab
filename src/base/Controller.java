@@ -7,4 +7,7 @@ public abstract class Controller<M extends Model> {
     protected final void setModel(M model) {
         this.model = model;
     }
+    protected M model(){
+        return model;
+    }
 }
