@@ -6,9 +6,12 @@ import model.CategoryItem;
 import model.MainModel;
 import model.MovieItem;
 import model.data.ActionShowCategories;
+import model.data.ActionShowMoviesInCategory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
 public class CategoriesView extends View<MainModel, MainController> {
@@ -37,6 +40,13 @@ public class CategoriesView extends View<MainModel, MainController> {
     @Override
     public void onShowCategories(ActionShowCategories data) {
         categoriesList.setListData(data.getCategories().toArray(new CategoryItem[data.getCategories().size()]));
+
+    }
+
+    @Override
+    public void onShowSingleCategory(ActionShowMoviesInCategory data) {
+        moviesList.setListData(data.getMoviesInCategory().getMovies().toArray(new MovieItem[data.getMoviesInCategory().getMovies().size()]));
+        moviesTitle.setText(data.getMoviesInCategory().getName());
     }
 
     private void initCategoriesList() {
@@ -50,12 +60,15 @@ public class CategoriesView extends View<MainModel, MainController> {
         categoriesPanel.add(categoriesScroll, BorderLayout.CENTER);
         categoriesPanel.add(categoriesLabel, BorderLayout.NORTH);
         viewPanel.add(categoriesPanel, BorderLayout.WEST);
+
+        categoriesList.addListSelectionListener(e -> controller().requestCategory(categoriesList.getSelectedValue().getId()));
     }
 
     private void initMoviesList() {
         JPanel moviesPanel = new JPanel(new BorderLayout());
         moviesTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
         moviesList = new JList<MovieItem>();
+        moviesList.setCellRenderer(new MovieRenderer());
         JScrollPane moviesScroll = new JScrollPane(moviesList);
         moviesPanel.add(moviesScroll, BorderLayout.CENTER);
         moviesPanel.add(moviesTitle, BorderLayout.NORTH);
