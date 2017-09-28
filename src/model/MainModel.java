@@ -1,6 +1,5 @@
 package model;
 
-import base.ActionData;
 import base.Model;
 import model.data.ActionOnCreateMovie;
 import model.data.ActionShowCategories;
@@ -12,9 +11,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainModel extends Model {
 

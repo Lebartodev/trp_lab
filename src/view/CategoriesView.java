@@ -25,7 +25,8 @@ public class CategoriesView extends View<MainModel, MainController> {
     private JPanel moviesPanel;
     private JPanel moviePanel;
 
-    public CategoriesView(MainModel model,MainController controller) {
+
+    public CategoriesView(MainModel model, MainController controller) {
         this.setModel(model);
         this.controller(controller);
     }
@@ -59,23 +60,33 @@ public class CategoriesView extends View<MainModel, MainController> {
     @Override
     public void onShowMovie(ActionShowMovie data) {
         singleMovieTitle.setText(data.getMovie().getName());
-        movieDescription.setText(data.getMovie().getDescription()+"\nBudget: "+data.getMovie().getBudget()+"\nYear:"+data.getMovie().getYear());
+        movieDescription.setText(data.getMovie().getDescription() + "\nBudget: " + data.getMovie().getBudget() + "\nYear:" + data.getMovie().getYear());
         moviePanel.setVisible(true);
     }
 
     private void initCategoriesList() {
         JPanel categoriesPanel = new JPanel(new BorderLayout());
         JLabel categoriesLabel = new JLabel("Categories");
+        JLabel deleteLabel = new JLabel("( Delete");
+        JLabel editLabel = new JLabel("|Edit )");
+        JPanel editLayout = new JPanel();
+        editLayout.setLayout(new BoxLayout(editLayout, BoxLayout.X_AXIS));
+        editLayout.add(deleteLabel);
+        editLayout.add(editLabel);
+        categoriesPanel.add(editLayout, BorderLayout.SOUTH);
         categoriesLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
         categoriesList = new JList<CategoryItem>();
         categoriesList.setCellRenderer(new CategoryRenderer());
+        categoriesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane categoriesScroll = new JScrollPane(categoriesList);
         categoriesScroll.setBorder(new EmptyBorder(0, 10, 0, 10));
         categoriesPanel.add(categoriesScroll, BorderLayout.CENTER);
         categoriesPanel.add(categoriesLabel, BorderLayout.NORTH);
         categoriesPanel.setMaximumSize(new Dimension(120, Integer.MAX_VALUE));
         viewPanel.add(categoriesPanel);
-        categoriesList.addListSelectionListener(e -> controller().requestCategory(categoriesList.getSelectedValue().getId()));
+        categoriesList.addListSelectionListener(e -> {
+            controller().requestCategory(categoriesList.getSelectedValue().getId());
+        });
     }
 
     private void initMoviesList() {
@@ -83,7 +94,13 @@ public class CategoriesView extends View<MainModel, MainController> {
         moviesPanel = new JPanel(new BorderLayout());
         moviesPanel.setVisible(false);
         moviesTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
-
+        JLabel deleteLabel = new JLabel("( Delete");
+        JLabel editLabel = new JLabel("|Edit )");
+        JPanel editLayout = new JPanel();
+        editLayout.setLayout(new BoxLayout(editLayout, BoxLayout.X_AXIS));
+        editLayout.add(deleteLabel);
+        editLayout.add(editLabel);
+        moviesPanel.add(editLayout, BorderLayout.SOUTH);
 
         moviesList = new JList<MovieItem>();
         moviesList.setCellRenderer(new MovieRenderer());
@@ -94,7 +111,12 @@ public class CategoriesView extends View<MainModel, MainController> {
         moviesPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
         moviesScroll.setBorder(new EmptyBorder(0, 10, 0, 10));
         viewPanel.add(moviesPanel);
-        moviesList.addListSelectionListener(e -> controller().requestMovie(moviesList.getSelectedValue().getId()));
+        moviesList.addListSelectionListener(e -> {
+            if (moviesList.getSelectedValue() != null) {
+                controller().requestMovie(moviesList.getSelectedValue().getId());
+            }
+        });
+
     }
 
     private void initSingleMoviePage() {

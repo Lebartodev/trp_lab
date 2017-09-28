@@ -77,7 +77,6 @@ public class CreateMovieView extends View<MainModel, MainController> {
 
 
         viewPanel.add(createButton, BorderLayout.SOUTH);
-        //viewPanel.setSize(300, 100);
         createButton.addActionListener(e -> {
             if (textField.getText().length() < 4) {
                 JOptionPane.showMessageDialog(frame,
@@ -85,8 +84,15 @@ public class CreateMovieView extends View<MainModel, MainController> {
                         "Error",
                         JOptionPane.WARNING_MESSAGE);
             } else if (frame != null) {
+                controller().createMovie(textField.getText(),
+                        Integer.parseInt(textYear.getText()),
+                        textDesc.getText(),
+                        ((CategoryItem) c.getSelectedItem()).getId(),
+                        Integer.parseInt(textBudget.getText())
+                );
                 frame.dispose();
             }
+
             // textField.getText()
         });
         controller().requestCategories();
