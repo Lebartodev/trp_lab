@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ActionShowCategories implements ActionData{
 
-    List<CategoryItem> categories = new ArrayList<CategoryItem>();
+    List<CategoryItem> categories = new ArrayList<>();
 
     public ActionShowCategories(List<CategoryItem> categories) {
         this.categories = categories;

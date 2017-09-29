@@ -5,7 +5,6 @@ import java.util.List;
 public class CategoryItem implements java.io.Serializable{
     private int id;
     private String name;
-    private List<MovieItem> movies;
 
     public CategoryItem() {
 
@@ -27,18 +26,6 @@ public class CategoryItem implements java.io.Serializable{
         this.name = name;
     }
 
-    public List<MovieItem> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(List<MovieItem> movies) {
-        this.movies = movies;
-    }
-
-    public void addMovie(MovieItem movie){
-        this.movies.add(movie);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,15 +34,13 @@ public class CategoryItem implements java.io.Serializable{
         CategoryItem that = (CategoryItem) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return movies != null ? movies.equals(that.movies) : that.movies == null;
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (movies != null ? movies.hashCode() : 0);
+        result = 31 * result + name.hashCode();
         return result;
     }
 
@@ -64,7 +49,6 @@ public class CategoryItem implements java.io.Serializable{
         return "CategoryItem{" + System.lineSeparator() +
                 "id=" + id + System.lineSeparator() +
                 ", name='" + name + '\'' + System.lineSeparator() +
-                ", movies=" + movies + System.lineSeparator() +
                 '}';
     }
 
@@ -87,10 +71,6 @@ public class CategoryItem implements java.io.Serializable{
             return this;
         }
 
-        public Builder movies(List<MovieItem> movies){
-            CategoryItem.this.movies = movies;
-            return this;
-        }
 
         public CategoryItem build(){
             return CategoryItem.this;

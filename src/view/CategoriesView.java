@@ -52,8 +52,9 @@ public class CategoriesView extends View<MainModel, MainController> {
 
     @Override
     public void onShowSingleCategory(ActionShowMoviesInCategory data) {
-        moviesList.setListData(data.getMoviesInCategory().getMovies().toArray(new MovieItem[data.getMoviesInCategory().getMovies().size()]));
-        moviesTitle.setText(data.getMoviesInCategory().getName());
+        moviesList.setListData(data.getMoviesInCategory()
+                .toArray(new MovieItem[data.getMoviesInCategory().size()]));
+        moviesTitle.setText(data.getCategoryName());
         moviesPanel.setVisible(true);
     }
 

@@ -12,14 +12,19 @@ import java.util.List;
  */
 public class ActionShowMoviesInCategory implements ActionData{
 
-    CategoryItem category = new CategoryItem();
+    List<MovieItem> movies = new ArrayList<>();
+    String categoryName;
 
-    public ActionShowMoviesInCategory(CategoryItem category){
-        this.category = category;
+    public ActionShowMoviesInCategory(String categoryName, List<MovieItem> movies){
+        this.categoryName = categoryName;
+        this.movies = movies;
     }
 
-    public CategoryItem getMoviesInCategory(){
-        return category;
+    public List<MovieItem> getMoviesInCategory(){
+        return movies;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
 }
