@@ -4,10 +4,7 @@ import base.Model;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import model.data.ActionOnCreateMovie;
-import model.data.ActionShowCategories;
-import model.data.ActionShowMovie;
-import model.data.ActionShowMoviesInCategory;
+import model.data.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,28 +22,36 @@ public class MainModel extends Model {
 
     public MainModel() {
         File file = new File("model.dat");
-        if(file.exists()) {
+        if (file.exists()) {
             deserializeModel();
-        }
+        } else {
             for (int i = 1; i < 5; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                         .year(1990 + i).description("Test description for Test film " + i)
-                        .genreId(1).budget(500 + i).build());
+                        .genreId(0).budget(500 + i).build());
             }
 
             for (int i = 5; i < 9; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                         .year(1990 + i).description("Test description for Test film " + i)
-                        .genreId(2).budget(500 + i).build());
+                        .genreId(1).budget(500 + i).build());
             }
 
             for (int i = 9; i < 13; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                         .year(1990 + i).description("Test description for Test film " + i)
-                        .genreId(3).budget(500 + i).build());
+                        .genreId(2).budget(500 + i).build());
             }
 
+            categories.add(CategoryItem.newBuilder().id(0)
+                    .name("Category 0").build());
+            categories.add(CategoryItem.newBuilder().id(1)
+                    .name("Category 1").build());
+            categories.add(CategoryItem.newBuilder().id(2)
+                    .name("Category 2").build());
+
             lastFilmId = 13;
+        }
 
         calculateLastFilmId();
     }
@@ -71,16 +76,17 @@ public class MainModel extends Model {
 
         List<MovieItem> moviesInCategory = new ArrayList<>();
         for (MovieItem movie : movies) {
-            if(movie.getGenreId()==id)
+            if (movie.getGenreId() == id) {
                 moviesInCategory.add(movie);
+            }
         }
 
-        emit(new ActionShowMoviesInCategory(categories.get(id-1).getName(), movies));
+        emit(new ActionShowMoviesInCategory(categories.get(id).getName(), moviesInCategory));
     }
 
     public void getMovie(int id) {
         for (MovieItem movie : movies) {
-            if(movie.getId()==id){
+            if (movie.getId() == id) {
                 emit(new ActionShowMovie(movie));
             }
         }
@@ -89,7 +95,7 @@ public class MainModel extends Model {
 
     public void createCategory(String name) {
 
-        CategoryItem catNew = CategoryItem.newBuilder().id(categories.size() + 1)
+        CategoryItem catNew = CategoryItem.newBuilder().id(categories.size())
                 .name(name).build();
 
         categories.add(catNew);
@@ -107,20 +113,43 @@ public class MainModel extends Model {
         serializeModel();
         List<MovieItem> moviesInCategory = new ArrayList<>();
         for (MovieItem movie : movies) {
-            if(movie.getGenreId()==genreId)
+            if (movie.getGenreId() == genreId)
                 moviesInCategory.add(movie);
         }
-        emit(new ActionOnCreateMovie(categories, categories.get(genreId - 1)
+        emit(new ActionOnCreateMovie(categories, categories.get(genreId)
                 , moviesInCategory, movieNew));
 
         lastFilmId++;
 
     }
 
+    public void onEditCategory(int id){
+        emit(new ActionOnEditCategory(categories.get(id).getName()));
+    }
+
+    public void editCategory(int id, String name){
+        categories.get(id).setName(name);
+    }
+
+    public void deleteCategory(int id){
+        categories.remove(id);
+    }
+
+    public void editMovie(int id, String name, int year,
+                          String description, int genreId, int budget){
+        MovieItem editMovie = movies.get(id);
+        editMovie.setName(name);
+        editMovie.setYear(year);
+        editMovie.setDescription(description);
+        editMovie.setGenreId(genreId);
+        editMovie.setBudget(budget);
+    }
+
     private void serializeModel() {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(this.categories);
+            oos.writeObject(this.movies);
             System.out.println("Запись произведена");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -130,6 +159,7 @@ public class MainModel extends Model {
     private void deserializeModel() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             this.categories = (ArrayList<CategoryItem>) ois.readObject();
+            this.movies = (ArrayList<MovieItem>) ois.readObject();
         } catch (Exception ex) {
 
             ex.printStackTrace();
@@ -138,9 +168,9 @@ public class MainModel extends Model {
 
     private void calculateLastFilmId() {
         lastFilmId = 1;
-            for (MovieItem movieItem : movies) {
-                if (movieItem.getId() > lastFilmId)
-                    lastFilmId = movieItem.getId();
-            }
+        for (MovieItem movieItem : movies) {
+            if (movieItem.getId() > lastFilmId)
+                lastFilmId = movieItem.getId();
+        }
     }
 }

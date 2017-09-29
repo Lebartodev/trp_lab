@@ -86,6 +86,8 @@ public class CategoriesView extends View<MainModel, MainController> {
         categoriesPanel.setMaximumSize(new Dimension(120, Integer.MAX_VALUE));
         viewPanel.add(categoriesPanel);
         categoriesList.addListSelectionListener(e -> {
+            System.out.println("xyu");
+            if(categoriesList.getSelectedValue()!=null)
             controller().requestCategory(categoriesList.getSelectedValue().getId());
         });
     }

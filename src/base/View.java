@@ -36,23 +36,21 @@ public abstract class View<M extends Model, C extends Controller> {
 
     private void subscribeOnModel() {
         if (model != null) {
-            subscriptionModel = model.getPublisher().subscribe(new Consumer<ActionData>() {
-                public void accept(ActionData actionData) throws Exception {
-                    if (actionData instanceof ActionShowCategories) {
-                        onShowCategories((ActionShowCategories) actionData);
-                    }
-                    if (actionData instanceof ActionShowMoviesInCategory) {
-                        onShowSingleCategory((ActionShowMoviesInCategory) actionData);
-                    }
-                    if (actionData instanceof ActionShowMovie) {
-                        onShowMovie((ActionShowMovie) actionData);
-                    }
-                    if (actionData instanceof ActionOnCreateMovie) {
-                        onCreateMovie((ActionOnCreateMovie) actionData);
-                    }
-
+            subscriptionModel = model.getPublisher().subscribe(actionData -> {
+                if (actionData instanceof ActionShowCategories) {
+                    onShowCategories((ActionShowCategories) actionData);
                 }
-            });
+                if (actionData instanceof ActionShowMoviesInCategory) {
+                    onShowSingleCategory((ActionShowMoviesInCategory) actionData);
+                }
+                if (actionData instanceof ActionShowMovie) {
+                    onShowMovie((ActionShowMovie) actionData);
+                }
+                if (actionData instanceof ActionOnCreateMovie) {
+                    onCreateMovie((ActionOnCreateMovie) actionData);
+                }
+
+            },throwable -> throwable.printStackTrace());
         }
     }
 
