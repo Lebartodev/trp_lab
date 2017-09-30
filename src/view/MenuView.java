@@ -6,14 +6,15 @@ import model.MainModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class MenuView extends View<MainModel, MainController> {
-    public MenuView(MainModel model, MainController controller) {
+    private JFrame frame;
+
+    public MenuView(MainModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
+        this.frame = frame;
     }
 
     public JMenuBar render() {
@@ -33,20 +34,36 @@ public class MenuView extends View<MainModel, MainController> {
             frame.setSize(300, 100);
             frame.setMinimumSize(new Dimension(300, 100));
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(new CreateCategoryView(model(), controller(),frame).render());
+            frame.getContentPane().add(new CreateCategoryView(model(), controller(), frame).render());
             frame.pack();
             frame.setVisible(true);
             frame.setLocation(100, 100);
+            this.frame.setEnabled(false);
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    super.windowClosed(e);
+                    MenuView.this.frame.setEnabled(true);
+                }
+            });
         });
         createMovie.addActionListener(e -> {
             JFrame frame = new JFrame("Create movie");
             frame.setSize(300, 100);
             frame.setMinimumSize(new Dimension(300, 100));
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(new CreateMovieView(model(), controller(),frame).render());
+            frame.getContentPane().add(new CreateMovieView(model(), controller(), frame).render());
             frame.pack();
             frame.setVisible(true);
             frame.setLocation(100, 100);
+            this.frame.setEnabled(false);
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    super.windowClosed(e);
+                    MenuView.this.frame.setEnabled(true);
+                }
+            });
         });
 
         return menuBar;

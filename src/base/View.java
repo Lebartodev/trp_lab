@@ -49,15 +49,22 @@ public abstract class View<M extends Model, C extends Controller> {
                 if (actionData instanceof ActionOnCreateMovie) {
                     onCreateMovie((ActionOnCreateMovie) actionData);
                 }
+                if (actionData instanceof ActionOnEditCategory) {
+                    onEditCategory((ActionOnEditCategory) actionData);
+                }
 
-            },throwable -> throwable.printStackTrace());
+            }, throwable -> throwable.printStackTrace());
         }
     }
 
+    public void onEditCategory(ActionOnEditCategory data) {
+
+    }
 
     public void onShowCategories(ActionShowCategories data) {
 
     }
+
     public void onCreateMovie(ActionOnCreateMovie data) {
 
     }

@@ -14,6 +14,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CategoriesView extends View<MainModel, MainController> {
     private JList<CategoryItem> categoriesList;
@@ -24,11 +26,13 @@ public class CategoriesView extends View<MainModel, MainController> {
     private JTextArea movieDescription = new JTextArea("asd");
     private JPanel moviesPanel;
     private JPanel moviePanel;
+    private JFrame frame;
 
 
-    public CategoriesView(MainModel model, MainController controller) {
+    public CategoriesView(MainModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
+        this.frame = frame;
     }
 
     public JComponent render() {
@@ -52,8 +56,7 @@ public class CategoriesView extends View<MainModel, MainController> {
 
     @Override
     public void onShowSingleCategory(ActionShowMoviesInCategory data) {
-        moviesList.setListData(data.getMoviesInCategory()
-                .toArray(new MovieItem[data.getMoviesInCategory().size()]));
+        moviesList.setListData(data.getMoviesInCategory().toArray(new MovieItem[data.getMoviesInCategory().size()]));
         moviesTitle.setText(data.getCategoryName());
         moviesPanel.setVisible(true);
     }
@@ -74,8 +77,8 @@ public class CategoriesView extends View<MainModel, MainController> {
         deleteLabel.setMargin(new Insets(0, 5, 0, 5));
         editLabel.setBorderPainted(false);
         editLabel.setMargin(new Insets(0, 5, 0, 5));
-        editLabel.setBorder(new EmptyBorder(0,5,0,5));
-        deleteLabel.setBorder(new EmptyBorder(0,5,0,5));
+        editLabel.setBorder(new EmptyBorder(0, 5, 0, 5));
+        deleteLabel.setBorder(new EmptyBorder(0, 5, 0, 5));
         JPanel editLayout = new JPanel();
         editLayout.setLayout(new BoxLayout(editLayout, BoxLayout.X_AXIS));
         editLayout.add(deleteLabel);
@@ -93,14 +96,21 @@ public class CategoriesView extends View<MainModel, MainController> {
         viewPanel.add(categoriesPanel);
         categoriesList.addListSelectionListener(e -> {
             System.out.println("xyu");
-            if(categoriesList.getSelectedValue()!=null)
-            controller().requestCategory(categoriesList.getSelectedValue().getId());
+            if (categoriesList.getSelectedValue() != null)
+                controller().requestCategory(categoriesList.getSelectedValue().getId());
         });
         editLabel.addActionListener(e -> {
             if (categoriesList.getSelectedValue() != null) {
-                controller().editSelectedCategory(categoriesList.getSelectedValue().getId());
+                openCategoryEditor();
             }
         });
+        deleteLabel.addActionListener(e -> {
+            if (categoriesList.getSelectedValue() != null) {
+                controller().deleteCategory(categoriesList.getSelectedValue().getId());
+                controller().requestCategories();
+            }
+        });
+
     }
 
     private void initMoviesList() {
@@ -116,8 +126,8 @@ public class CategoriesView extends View<MainModel, MainController> {
         deleteLabel.setMargin(new Insets(0, 5, 0, 5));
         editLabel.setBorderPainted(false);
         editLabel.setMargin(new Insets(0, 5, 0, 5));
-        editLabel.setBorder(new EmptyBorder(0,5,0,5));
-        deleteLabel.setBorder(new EmptyBorder(0,5,0,5));
+        editLabel.setBorder(new EmptyBorder(0, 5, 0, 5));
+        deleteLabel.setBorder(new EmptyBorder(0, 5, 0, 5));
         editLayout.setLayout(new BoxLayout(editLayout, BoxLayout.X_AXIS));
         editLayout.add(deleteLabel);
         editLayout.add(editLabel);
@@ -137,6 +147,18 @@ public class CategoriesView extends View<MainModel, MainController> {
                 controller().requestMovie(moviesList.getSelectedValue().getId());
             }
         });
+        deleteLabel.addActionListener(e -> {
+            if (moviesList.getSelectedValue() != null) {
+
+                controller().deleteMovie(moviesList.getSelectedValue().getId());
+                controller().requestCategory(moviesList.getSelectedValue().getGenreId());
+            }
+        });
+        editLabel.addActionListener(e -> {
+            if (moviesList.getSelectedValue() != null) {
+                openMovieEditor();
+            }
+        });
 
     }
 
@@ -153,6 +175,44 @@ public class CategoriesView extends View<MainModel, MainController> {
         moviePanel.add(movieContentPanel, BorderLayout.CENTER);
         viewPanel.add(moviePanel);
 
+    }
+
+    private void openCategoryEditor() {
+        JFrame frame = new JFrame("Edit category");
+        frame.setSize(300, 100);
+        frame.setMinimumSize(new Dimension(300, 100));
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.getContentPane().add(new CreateCategoryView(model(), controller(), frame, categoriesList.getSelectedValue().getId()).render());
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocation(100, 100);
+        this.frame.setEnabled(false);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                CategoriesView.this.frame.setEnabled(true);
+            }
+        });
+    }
+
+    private void openMovieEditor() {
+        JFrame frame = new JFrame("Edit movie");
+        frame.setSize(300, 100);
+        frame.setMinimumSize(new Dimension(300, 100));
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.getContentPane().add(new CreateMovieView(model(), controller(), frame, moviesList.getSelectedValue().getId()).render());
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocation(100, 100);
+        this.frame.setEnabled(false);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                CategoriesView.this.frame.setEnabled(true);
+            }
+        });
     }
 
 }
