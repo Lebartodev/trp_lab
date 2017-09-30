@@ -11,6 +11,10 @@ public abstract class Model {
         this.publisher.onNext(event);
     }
 
+    protected final void emitException(Exception ex){
+        this.publisher.onError(ex);
+    }
+
     public PublishSubject<ActionData> getPublisher() {
         return publisher;
     }
