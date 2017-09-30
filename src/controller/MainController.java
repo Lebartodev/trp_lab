@@ -25,5 +25,8 @@ public class MainController extends Controller<MainModel> {
     public void createMovie(String name, int year, String description, int genreId, int budget) {
         this.model().onCreateMovie(name, year, description, genreId, budget);
     }
+    public void editSelectedCategory(int id){
+
+    }
 
 }

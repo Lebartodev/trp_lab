@@ -67,8 +67,14 @@ public class CategoriesView extends View<MainModel, MainController> {
     private void initCategoriesList() {
         JPanel categoriesPanel = new JPanel(new BorderLayout());
         JLabel categoriesLabel = new JLabel("Categories");
-        JLabel deleteLabel = new JLabel("( Delete");
-        JLabel editLabel = new JLabel("|Edit )");
+        JButton deleteLabel = new JButton("Delete");
+        JButton editLabel = new JButton("Edit");
+        deleteLabel.setBorderPainted(false);
+        deleteLabel.setMargin(new Insets(0, 5, 0, 5));
+        editLabel.setBorderPainted(false);
+        editLabel.setMargin(new Insets(0, 5, 0, 5));
+        editLabel.setBorder(new EmptyBorder(0,5,0,5));
+        deleteLabel.setBorder(new EmptyBorder(0,5,0,5));
         JPanel editLayout = new JPanel();
         editLayout.setLayout(new BoxLayout(editLayout, BoxLayout.X_AXIS));
         editLayout.add(deleteLabel);
@@ -87,6 +93,11 @@ public class CategoriesView extends View<MainModel, MainController> {
         categoriesList.addListSelectionListener(e -> {
             controller().requestCategory(categoriesList.getSelectedValue().getId());
         });
+        editLabel.addActionListener(e -> {
+            if (categoriesList.getSelectedValue() != null) {
+                controller().editSelectedCategory(categoriesList.getSelectedValue().getId());
+            }
+        });
     }
 
     private void initMoviesList() {
@@ -94,9 +105,16 @@ public class CategoriesView extends View<MainModel, MainController> {
         moviesPanel = new JPanel(new BorderLayout());
         moviesPanel.setVisible(false);
         moviesTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
-        JLabel deleteLabel = new JLabel("( Delete");
-        JLabel editLabel = new JLabel("|Edit )");
+        JButton deleteLabel = new JButton("Delete");
+        JButton editLabel = new JButton("Edit");
         JPanel editLayout = new JPanel();
+
+        deleteLabel.setBorderPainted(false);
+        deleteLabel.setMargin(new Insets(0, 5, 0, 5));
+        editLabel.setBorderPainted(false);
+        editLabel.setMargin(new Insets(0, 5, 0, 5));
+        editLabel.setBorder(new EmptyBorder(0,5,0,5));
+        deleteLabel.setBorder(new EmptyBorder(0,5,0,5));
         editLayout.setLayout(new BoxLayout(editLayout, BoxLayout.X_AXIS));
         editLayout.add(deleteLabel);
         editLayout.add(editLabel);
