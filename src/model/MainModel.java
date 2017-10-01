@@ -50,7 +50,7 @@ public class MainModel extends Model {
             categories.add(CategoryItem.newBuilder().id(2)
                     .name("Category 2").build());
 
-            lastFilmId = 13;
+            lastFilmId = 12;
         }
 
         calculateLastFilmId();
@@ -58,17 +58,6 @@ public class MainModel extends Model {
 
     public void getCategories() {
 
-        /*Single.just(cat)
-                .toObservable()
-                .flatMapIterable(categoryItems -> categoryItems)
-                .map(categoryItem -> {
-                    categoryItem.setMovies(new ArrayList<>());
-                    return categoryItem;
-                }).toList().doOnSuccess(categoryItems -> {
-            List<CategoryItem> catdddd = new ArrayList<>(categories);
-            emit(new ActionShowCategories(categoryItems));
-
-        }).subscribe();*/
         emit(new ActionShowCategories(categories));
     }
 
@@ -81,13 +70,21 @@ public class MainModel extends Model {
             }
         }
 
-        emit(new ActionShowMoviesInCategory(categories.get(id).getName(), moviesInCategory));
+        for (CategoryItem category : categories) {
+            if(category.getId()==id){
+                emit(new ActionShowMoviesInCategory(category
+                        .getName(), moviesInCategory));
+                return;
+            }
+        }
+
     }
 
     public void getMovie(int id) {
         for (MovieItem movie : movies) {
             if (movie.getId() == id) {
                 emit(new ActionShowMovie(movie));
+                return;
             }
         }
 
@@ -95,7 +92,15 @@ public class MainModel extends Model {
 
     public void createCategory(String name) {
 
-        CategoryItem catNew = CategoryItem.newBuilder().id(categories.size())
+        int lastCategory = 0;
+
+        for (CategoryItem category : categories) {
+            if(category.getId()>lastCategory){
+                lastCategory = category.getId();
+            }
+        }
+
+        CategoryItem catNew = CategoryItem.newBuilder().id(lastCategory)
                 .name(name).build();
 
         categories.add(catNew);
@@ -116,21 +121,35 @@ public class MainModel extends Model {
             if (movie.getGenreId() == genreId)
                 moviesInCategory.add(movie);
         }
-        emit(new ActionOnCreateMovie(categories, categories.get(genreId)
-                , moviesInCategory, movieNew));
-
-        lastFilmId++;
-        serializeModel();
+        for (CategoryItem category : categories) {
+            if(category.getId()==genreId){
+                emit(new ActionOnCreateMovie(categories, category
+                        , moviesInCategory, movieNew));
+                lastFilmId++;
+                serializeModel();
+                return;
+            }
+        }
 
     }
 
     public void onEditCategory(int id){
-        emit(new ActionOnEditCategory(categories.get(id).getName()));
+        for (CategoryItem category : categories) {
+            if(category.getId()==id){
+                emit(new ActionOnEditCategory(category.getName()));
+                return;
+            }
+        }
     }
 
     public void editCategory(int id, String name){
-        categories.get(id).setName(name);
-        serializeModel();
+        for (CategoryItem category : categories) {
+            if(category.getId()==id){
+                category.setName(name);
+                serializeModel();
+                return;
+            }
+        }
     }
 
     public void deleteCategory(int id){
@@ -139,13 +158,24 @@ public class MainModel extends Model {
                 movies.remove(movie);
             }
         }
-        categories.remove(id);
-        serializeModel();
+        for (CategoryItem category : categories) {
+            if(category.getId()==id){
+                categories.remove(category);
+                serializeModel();
+                return;
+            }
+        }
     }
 
     public void editMovie(int id, String name, int year,
                           String description, int genreId, int budget){
-        MovieItem editMovie = movies.get(id);
+        MovieItem editMovie = new MovieItem();
+        for (MovieItem movie : movies) {
+            if(movie.getId()==id){
+                editMovie = movie;
+                break;
+            }
+        }
         editMovie.setName(name);
         editMovie.setYear(year);
         editMovie.setDescription(description);
@@ -181,7 +211,7 @@ public class MainModel extends Model {
     }
 
     private void calculateLastFilmId() {
-        lastFilmId = 1;
+        lastFilmId = 0;
         for (MovieItem movieItem : movies) {
             if (movieItem.getId() > lastFilmId)
                 lastFilmId = movieItem.getId();
