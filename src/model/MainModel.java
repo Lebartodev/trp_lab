@@ -25,19 +25,19 @@ public class MainModel extends Model {
         if (file.exists()) {
             deserializeModel();
         } else {
-            for (int i = 1; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                         .year(1990 + i).description("Test description for Test film " + i)
                         .genreId(0).budget(500 + i).build());
             }
 
-            for (int i = 5; i < 9; i++) {
+            for (int i = 4; i < 8; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                         .year(1990 + i).description("Test description for Test film " + i)
                         .genreId(1).budget(500 + i).build());
             }
 
-            for (int i = 9; i < 13; i++) {
+            for (int i = 8; i < 12; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                         .year(1990 + i).description("Test description for Test film " + i)
                         .genreId(2).budget(500 + i).build());
@@ -120,6 +120,7 @@ public class MainModel extends Model {
                 , moviesInCategory, movieNew));
 
         lastFilmId++;
+        serializeModel();
 
     }
 
@@ -129,10 +130,17 @@ public class MainModel extends Model {
 
     public void editCategory(int id, String name){
         categories.get(id).setName(name);
+        serializeModel();
     }
 
     public void deleteCategory(int id){
+        for (MovieItem movie : movies) {
+            if(movie.getGenreId()==id){
+                movies.remove(movie);
+            }
+        }
         categories.remove(id);
+        serializeModel();
     }
 
     public void editMovie(int id, String name, int year,
@@ -143,6 +151,12 @@ public class MainModel extends Model {
         editMovie.setDescription(description);
         editMovie.setGenreId(genreId);
         editMovie.setBudget(budget);
+        serializeModel();
+    }
+
+    public void deleteMovie(int id){
+        movies.remove(movies.get(id));
+        serializeModel();
     }
 
     private void serializeModel() {
