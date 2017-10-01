@@ -39,7 +39,7 @@ public class MainController extends Controller<MainModel> {
     }
 
     public void deleteMovie(int id) {
-//
+        this.model().deleteMovie(id);
     }
 
     public void deleteCategory(int id) {
