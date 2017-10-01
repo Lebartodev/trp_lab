@@ -100,7 +100,7 @@ public class MainModel extends Model {
             }
         }
 
-        CategoryItem catNew = CategoryItem.newBuilder().id(lastCategory)
+        CategoryItem catNew = CategoryItem.newBuilder().id(lastCategory+1)
                 .name(name).build();
 
         categories.add(catNew);
@@ -153,18 +153,21 @@ public class MainModel extends Model {
     }
 
     public void deleteCategory(int id){
+        List<MovieItem> moviesForDelete = new ArrayList<>();
         for (MovieItem movie : movies) {
             if(movie.getGenreId()==id){
-                movies.remove(movie);
+                moviesForDelete.add(movie);
             }
         }
+        movies.removeAll(moviesForDelete);
+        CategoryItem categoryForDelete = new CategoryItem();
         for (CategoryItem category : categories) {
             if(category.getId()==id){
-                categories.remove(category);
-                serializeModel();
-                return;
+                categoryForDelete = category;
             }
         }
+        categories.remove(categoryForDelete);
+        serializeModel();
     }
 
     public void editMovie(int id, String name, int year,
