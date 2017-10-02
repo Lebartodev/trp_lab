@@ -101,50 +101,41 @@ public class MovieItem implements java.io.Serializable {
         return new MovieItem().new Builder();
     }
 
-    public class Builder{
-        private Builder(){
-
+    public class Builder {
+        private Builder() {
         }
 
-        public Builder id(int id){
+        public Builder id(int id) {
             MovieItem.this.id = id;
             return this;
         }
 
-        public Builder name(String name){
-            if(name == null){
-                MovieItem.this.name = "New Film";
-            } else {
-                MovieItem.this.name = name;
-            }
+        public Builder name(String name) {
+            MovieItem.this.name = name;
             return this;
         }
 
-        public Builder year(int year){
+        public Builder year(int year) {
             MovieItem.this.year = year;
             return this;
         }
 
-        public Builder description(String description){
-            if(description == null){
-                MovieItem.this.description = "Add description to this movie!";
-            } else {
-                MovieItem.this.description = description;
-            }
+        public Builder description(String description) {
+            MovieItem.this.description = description;
             return this;
         }
 
-        public Builder genreId(int genreId){
+        public Builder genreId(int genreId) {
             MovieItem.this.genreId = genreId;
             return this;
         }
 
-        public Builder budget(int budget){
+        public Builder budget(int budget) {
             MovieItem.this.budget = budget;
             return this;
         }
 
-        public MovieItem build(){
+        public MovieItem build() {
             return MovieItem.this;
         }
     }

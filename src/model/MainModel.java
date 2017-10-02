@@ -24,6 +24,7 @@ public class MainModel extends Model {
         File file = new File("model.dat");
         if (file.exists()) {
             deserializeModel();
+            calculateLastFilmId();
         } else {
             for (int i = 0; i < 4; i++) {
                 movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
@@ -126,7 +127,6 @@ public class MainModel extends Model {
                 emit(new ActionOnCreateMovie(categories, category
                         , moviesInCategory, movieNew));
                 lastFilmId++;
-                serializeModel();
                 return;
             }
         }
@@ -217,7 +217,7 @@ public class MainModel extends Model {
         lastFilmId = 0;
         for (MovieItem movieItem : movies) {
             if (movieItem.getId() > lastFilmId)
-                lastFilmId = movieItem.getId();
+                lastFilmId = movieItem.getId()+1;
         }
     }
 }

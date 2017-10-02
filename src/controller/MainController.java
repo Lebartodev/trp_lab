@@ -2,6 +2,7 @@ package controller;
 
 import base.Controller;
 import model.MainModel;
+import org.junit.platform.commons.util.StringUtils;
 
 public class MainController extends Controller<MainModel> {
 
@@ -23,10 +24,22 @@ public class MainController extends Controller<MainModel> {
     }
 
     public void createMovie(String name, int year, String description, int genreId, int budget) {
+        if(StringUtils.isBlank(name)){
+            name="New movie";
+        }
+        if(StringUtils.isBlank(description)){
+            description = "Please add description.";
+        }
         this.model().onCreateMovie(name, year, description, genreId, budget);
     }
 
     public void editMovie(int id, String name, int year, String description, int genreId, int budget) {
+        if(StringUtils.isBlank(name)){
+            name="Edited movie";
+        }
+        if(StringUtils.isBlank(description)){
+            description = "Please add description.";
+        }
         this.model().editMovie(id, name, year, description, genreId, budget);
     }
 
