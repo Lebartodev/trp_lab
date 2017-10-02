@@ -34,6 +34,11 @@ public abstract class View<M extends Model, C extends Controller> {
         return this.model;
     }
 
+    public void unsubscribe() {
+        if (subscriptionModel != null)
+            subscriptionModel.dispose();
+    }
+
     private void subscribeOnModel() {
         if (model != null) {
             subscriptionModel = model.getPublisher().subscribe(actionData -> {

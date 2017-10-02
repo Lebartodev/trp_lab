@@ -92,27 +92,29 @@ public class CreateMovieView extends View<MainModel, MainController> {
 
         viewPanel.add(createButton, BorderLayout.SOUTH);
         createButton.addActionListener(e -> {
-            if (textField.getText().length() < 4) {
-                JOptionPane.showMessageDialog(frame,
-                        "Name must be more than 4 symbols",
-                        "Error",
-                        JOptionPane.WARNING_MESSAGE);
-            } else if (frame != null) {
+            if (frame != null) {
                 if (movieId == Integer.MIN_VALUE) {
+                    textYear.getText().length();
                     controller().createMovie(textField.getText(),
-                            Integer.parseInt(textYear.getText()),
+                            textYear.getText().trim().length() == 0 ? 0
+                                    : Integer.parseInt(textYear.getText()),
                             textDesc.getText(),
                             ((CategoryItem) c.getSelectedItem()).getId(),
-                            Integer.parseInt(textBudget.getText())
+                            textBudget.getText().trim().length() == 0 ? 0 : Integer.parseInt(textBudget.getText())
                     );
                 } else {
                     controller().editMovie(movieId, textField.getText(),
-                            Integer.parseInt(textYear.getText()),
+                            textYear.getText().trim().length() == 0 ? 0
+                                    : Integer.parseInt(textYear.getText()),
                             textDesc.getText(),
                             ((CategoryItem) c.getSelectedItem()).getId(),
-                            Integer.parseInt(textBudget.getText())
+                            textBudget.getText().trim().length() == 0 ? 0 : Integer.parseInt(textBudget.getText())
                     );
+                    controller().requestMovie(movieId);
+
                 }
+                controller().requestCategory(((CategoryItem) c.getSelectedItem()).getId());
+                unsubscribe();
                 frame.dispose();
             }
 
@@ -133,17 +135,19 @@ public class CreateMovieView extends View<MainModel, MainController> {
         textBudget.setText(String.valueOf(data.getMovie().getBudget()));
         textYear.setText(String.valueOf(data.getMovie().getYear()));
         textDesc.setText(data.getMovie().getDescription());
+        categoryId=data.getMovie().getGenreId();
         controller().requestCategories();
     }
 
     @Override
     public void onShowCategories(ActionShowCategories data) {
-        for (CategoryItem categoryItem : data.getCategories()) {
-            c.addItem(categoryItem);
-            if (categoryId == categoryItem.getId()) {
-                c.setSelectedItem(categoryItem);
+        if (c.getItemCount() == 0)
+            for (CategoryItem categoryItem : data.getCategories()) {
+                c.addItem(categoryItem);
+                if (categoryId == categoryItem.getId()) {
+                    c.setSelectedItem(categoryItem);
+                }
             }
-        }
 
 
     }

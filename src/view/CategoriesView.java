@@ -134,6 +134,7 @@ public class CategoriesView extends View<MainModel, MainController> {
 
         moviesList = new JList<MovieItem>();
         moviesList.setCellRenderer(new MovieRenderer());
+        moviesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane moviesScroll = new JScrollPane(moviesList);
         moviesPanel.add(moviesScroll, BorderLayout.CENTER);
         moviesPanel.add(moviesTitle, BorderLayout.NORTH);
