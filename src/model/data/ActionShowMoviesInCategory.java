@@ -6,21 +6,23 @@ import model.MovieItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by pavel on 27.09.17.
  */
 public class ActionShowMoviesInCategory implements ActionData{
 
-    List<MovieItem> movies = new ArrayList<>();
+    ConcurrentLinkedQueue<MovieItem> movies = new ConcurrentLinkedQueue<>();
     String categoryName;
 
-    public ActionShowMoviesInCategory(String categoryName, List<MovieItem> movies){
+    public ActionShowMoviesInCategory(String categoryName
+            , ConcurrentLinkedQueue<MovieItem> movies){
         this.categoryName = categoryName;
         this.movies = movies;
     }
 
-    public List<MovieItem> getMoviesInCategory(){
+    public ConcurrentLinkedQueue<MovieItem> getMoviesInCategory(){
         return movies;
     }
 

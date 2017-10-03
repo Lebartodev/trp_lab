@@ -6,6 +6,7 @@ import model.data.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainModel extends Model {
@@ -14,7 +15,7 @@ public class MainModel extends Model {
 
     private List<CategoryItem> categories = new ArrayList<>();
 
-    private List<MovieItem> movies = new ArrayList<>();
+    //private List<MovieItem> movies = new ArrayList<>();
 
     private AtomicInteger filmId = new AtomicInteger();
 
@@ -37,16 +38,10 @@ public class MainModel extends Model {
     public void getMoviesInCategory(int id) {
 
         List<MovieItem> moviesInCategory = new ArrayList<>();
-        for (MovieItem movie : movies) {
-            if (movie.getGenreId() == id) {
-                moviesInCategory.add(movie);
-            }
-        }
-
         for (CategoryItem category : categories) {
             if(category.getId()==id){
                 emit(new ActionShowMoviesInCategory(category
-                        .getName(), moviesInCategory));
+                        .getName(), category.getMovies()));
                 return;
             }
         }
@@ -54,10 +49,12 @@ public class MainModel extends Model {
     }
 
     public void getMovie(int id) {
-        for (MovieItem movie : movies) {
-            if (movie.getId() == id) {
-                emit(new ActionShowMovie(movie));
-                return;
+        for (CategoryItem category : categories) {
+            for (MovieItem movieItem : category.getMovies()) {
+                if(movieItem.getId()==id){
+                    emit(new ActionShowMovie(movieItem));
+                    return;
+                }
             }
         }
 
@@ -66,7 +63,7 @@ public class MainModel extends Model {
     public void createCategory(String name) {
 
         CategoryItem catNew = CategoryItem.newBuilder().id(createCategoryId())
-                .name(name).build();
+                .name(name).movies(new ConcurrentLinkedQueue()).build();
 
         categories.add(catNew);
         serializeModel();
@@ -79,21 +76,15 @@ public class MainModel extends Model {
         MovieItem movieNew = MovieItem.newBuilder()
                 .id(createFilmId()).name(name).year(year).description(description)
                 .genreId(genreId).budget(budget).build();
-        movies.add(movieNew);
-        serializeModel();
-        List<MovieItem> moviesInCategory = new ArrayList<>();
-        for (MovieItem movie : movies) {
-            if (movie.getGenreId() == genreId)
-                moviesInCategory.add(movie);
-        }
         for (CategoryItem category : categories) {
             if(category.getId()==genreId){
+                category.getMovies().add(movieNew);
                 emit(new ActionOnCreateMovie(categories, category
-                        , moviesInCategory, movieNew));
+                        , category.getMovies(), movieNew));
+                serializeModel();
                 return;
             }
         }
-
     }
 
     public void onEditCategory(int id){
@@ -116,13 +107,6 @@ public class MainModel extends Model {
     }
 
     public void deleteCategory(int id){
-        List<MovieItem> moviesForDelete = new ArrayList<>();
-        for (MovieItem movie : movies) {
-            if(movie.getGenreId()==id){
-                moviesForDelete.add(movie);
-            }
-        }
-        movies.removeAll(moviesForDelete);
         CategoryItem categoryForDelete = new CategoryItem();
         for (CategoryItem category : categories) {
             if(category.getId()==id){
@@ -135,52 +119,67 @@ public class MainModel extends Model {
 
     public void editMovie(int id, String name, int year,
                           String description, int genreId, int budget){
-        MovieItem editMovie = new MovieItem();
-        for (MovieItem movie : movies) {
-            if(movie.getId()==id){
-                editMovie = movie;
-                break;
+        for (CategoryItem category : categories) {
+            for (MovieItem movieItem : category.getMovies()) {
+                if(movieItem.getId()==id){
+                    movieItem.setName(name);
+                    movieItem.setYear(year);
+                    movieItem.setDescription(description);
+                    movieItem.setGenreId(genreId);
+                    movieItem.setBudget(budget);
+                }
             }
         }
-        editMovie.setName(name);
-        editMovie.setYear(year);
-        editMovie.setDescription(description);
-        editMovie.setGenreId(genreId);
-        editMovie.setBudget(budget);
+
         serializeModel();
     }
 
     public void deleteMovie(int id){
-        movies.remove(movies.get(id));
+        for (CategoryItem category : categories) {
+            for (MovieItem movieItem : category.getMovies()) {
+                if(movieItem.getId()==id){
+                    category.getMovies().remove(movieItem);
+                    return;
+                }
+            }
+        }
         serializeModel();
     }
 
     private void testData(){
+        ConcurrentLinkedQueue<MovieItem> movies1 = new ConcurrentLinkedQueue<>();
         for (int i = 0; i < 4; i++) {
-            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
+            movies1.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                     .year(1990 + i).description("Test description for Test film " + i)
                     .genreId(0).budget(500 + i).build());
         }
+        categories.add(CategoryItem.newBuilder().id(0)
+                .name("Category 0").movies(movies1).build());
+
+        ConcurrentLinkedQueue<MovieItem> movies2 = new ConcurrentLinkedQueue<>();
 
         for (int i = 4; i < 8; i++) {
-            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
+            movies2.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                     .year(1990 + i).description("Test description for Test film " + i)
                     .genreId(1).budget(500 + i).build());
         }
 
+        categories.add(CategoryItem.newBuilder().id(1)
+                .name("Category 1").movies(movies2).build());
+
+        ConcurrentLinkedQueue<MovieItem> movies3 = new ConcurrentLinkedQueue<>();
+
         for (int i = 8; i < 12; i++) {
-            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
+            movies3.add(MovieItem.newBuilder().id(i).name("Test film " + i)
                     .year(1990 + i).description("Test description for Test film " + i)
                     .genreId(2).budget(500 + i).build());
         }
-        filmId.set(11);
 
-        categories.add(CategoryItem.newBuilder().id(0)
-                .name("Category 0").build());
-        categories.add(CategoryItem.newBuilder().id(1)
-                .name("Category 1").build());
         categories.add(CategoryItem.newBuilder().id(2)
-                .name("Category 2").build());
+                .name("Category 2").movies(movies3).build());
+        
+
+        filmId.set(11);
         categoryId.set(2);
 
     }
@@ -189,7 +188,6 @@ public class MainModel extends Model {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(this.categories);
-            oos.writeObject(this.movies);
             oos.writeObject(this.filmId);
             oos.writeObject(this.categoryId);
             System.out.println("Запись произведена");
@@ -201,7 +199,6 @@ public class MainModel extends Model {
     private void deserializeModel() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             this.categories = (ArrayList<CategoryItem>) ois.readObject();
-            this.movies = (ArrayList<MovieItem>) ois.readObject();
             this.filmId = (AtomicInteger) ois.readObject();
             this.categoryId = (AtomicInteger) ois.readObject();
         } catch (Exception ex) {

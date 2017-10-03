@@ -7,6 +7,7 @@ import model.MovieItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by pavel on 27.09.17.
@@ -15,11 +16,11 @@ public class ActionOnCreateMovie implements ActionData{
 
     List<CategoryItem> categories = new ArrayList<>();
     CategoryItem currentCategory;
-    List<MovieItem> movies = new ArrayList<>();
+    ConcurrentLinkedQueue<MovieItem> movies = new ConcurrentLinkedQueue<>();
     MovieItem currentMovie;
 
     public ActionOnCreateMovie(List<CategoryItem> categories, CategoryItem currentCategory
-            , List<MovieItem> movies, MovieItem currentMovie) {
+            , ConcurrentLinkedQueue<MovieItem> movies, MovieItem currentMovie) {
         this.categories = categories;
         this.currentCategory = currentCategory;
         this.movies = movies;
@@ -34,7 +35,7 @@ public class ActionOnCreateMovie implements ActionData{
         return currentCategory;
     }
 
-    public List<MovieItem> getMovies() {
+    public ConcurrentLinkedQueue<MovieItem> getMovies() {
         return movies;
     }
 

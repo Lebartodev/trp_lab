@@ -1,10 +1,12 @@
 package model;
 
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class CategoryItem implements java.io.Serializable{
     private int id;
     private String name;
+
+    ConcurrentLinkedQueue<MovieItem> movies = new ConcurrentLinkedQueue<>();
 
     public CategoryItem() {
 
@@ -24,6 +26,14 @@ public class CategoryItem implements java.io.Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ConcurrentLinkedQueue<MovieItem> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(ConcurrentLinkedQueue<MovieItem> movies) {
+        this.movies = movies;
     }
 
     @Override
@@ -68,6 +78,11 @@ public class CategoryItem implements java.io.Serializable{
 
         public Builder name(String name){
             CategoryItem.this.name = name;
+            return this;
+        }
+
+        public Builder movies(ConcurrentLinkedQueue movies){
+            CategoryItem.this.movies = movies;
             return this;
         }
 
