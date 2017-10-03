@@ -15,12 +15,12 @@ import java.awt.*;
 
 public class CreateMovieView extends View<MainModel, MainController> {
     private JFrame frame;
-    JComboBox c;
+    private JComboBox c;
     private int movieId = Integer.MIN_VALUE;
-    JTextField textField = new JTextField();
-    JTextField textBudget = new JTextField();
-    JTextArea textDesc = new JTextArea();
-    JTextField textYear = new JTextField();
+    private JTextField textField = new JTextField();
+    private JTextField textBudget = new JTextField();
+    private JTextArea textDesc = new JTextArea();
+    private JTextField textYear = new JTextField();
     private int categoryId;
 
     public CreateMovieView(MainModel model, MainController controller, JFrame frame) {
@@ -135,7 +135,7 @@ public class CreateMovieView extends View<MainModel, MainController> {
         textBudget.setText(String.valueOf(data.getMovie().getBudget()));
         textYear.setText(String.valueOf(data.getMovie().getYear()));
         textDesc.setText(data.getMovie().getDescription());
-        categoryId=data.getMovie().getGenreId();
+        categoryId = data.getMovie().getGenreId();
         controller().requestCategories();
     }
 

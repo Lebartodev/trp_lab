@@ -14,19 +14,14 @@ public abstract class View<M extends Model, C extends Controller> {
 
 
     protected final void setModel(final M model) {
-        if (this.model != null) {
-            throw new IllegalStateException("A Model has already been set on the View.");
+        if (this.model == null) {
+            this.model = model;
         }
-        this.model = model;
+
         subscribeOnModel();
 
         if (this.controller != null) {
-            try {
-                this.controller.setModel(model);
-
-            } catch (IllegalStateException ex) {
-
-            }
+            this.controller.setModel(model);
         }
     }
 
@@ -44,21 +39,17 @@ public abstract class View<M extends Model, C extends Controller> {
             subscriptionModel = model.getPublisher().subscribe(actionData -> {
                 if (actionData instanceof ActionShowCategories) {
                     onShowCategories((ActionShowCategories) actionData);
-                }
-                if (actionData instanceof ActionShowMoviesInCategory) {
+                } else if (actionData instanceof ActionShowMoviesInCategory) {
                     onShowSingleCategory((ActionShowMoviesInCategory) actionData);
-                }
-                if (actionData instanceof ActionShowMovie) {
+                } else if (actionData instanceof ActionShowMovie) {
                     onShowMovie((ActionShowMovie) actionData);
-                }
-                if (actionData instanceof ActionOnCreateMovie) {
+                } else if (actionData instanceof ActionOnCreateMovie) {
                     onCreateMovie((ActionOnCreateMovie) actionData);
-                }
-                if (actionData instanceof ActionOnEditCategory) {
+                } else if (actionData instanceof ActionOnEditCategory) {
                     onEditCategory((ActionOnEditCategory) actionData);
                 }
 
-            }, throwable -> throwable.printStackTrace());
+            }, Throwable::printStackTrace);
         }
     }
 
@@ -89,17 +80,14 @@ public abstract class View<M extends Model, C extends Controller> {
     }
 
     protected final void controller(final C controller) {
-        if (this.controller != null) {
-            throw new IllegalStateException("A Controller has already been set on the View.");
-        }
-
-        this.controller = controller;
+        if (this.controller == null)
+            this.controller = controller;
 
         if (this.model != null) {
             try {
                 this.controller.setModel(this.model);
             } catch (IllegalStateException ex) {
-
+                System.out.println();
             }
         }
     }
