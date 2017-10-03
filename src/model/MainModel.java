@@ -1,60 +1,32 @@
 package model;
 
 import base.Model;
-import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import model.data.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainModel extends Model {
 
-    String filename = "model.dat";
+    private String filename = "model.dat";
 
-    List<CategoryItem> categories = new ArrayList<>();
+    private List<CategoryItem> categories = new ArrayList<>();
 
-    List<MovieItem> movies = new ArrayList<>();
+    private List<MovieItem> movies = new ArrayList<>();
 
-    int lastFilmId;
+    private AtomicInteger filmId = new AtomicInteger();
+
+    private AtomicInteger categoryId = new AtomicInteger();
 
     public MainModel() {
         File file = new File("model.dat");
         if (file.exists()) {
             deserializeModel();
-            calculateLastFilmId();
         } else {
-            for (int i = 0; i < 4; i++) {
-                movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
-                        .year(1990 + i).description("Test description for Test film " + i)
-                        .genreId(0).budget(500 + i).build());
-            }
-
-            for (int i = 4; i < 8; i++) {
-                movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
-                        .year(1990 + i).description("Test description for Test film " + i)
-                        .genreId(1).budget(500 + i).build());
-            }
-
-            for (int i = 8; i < 12; i++) {
-                movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
-                        .year(1990 + i).description("Test description for Test film " + i)
-                        .genreId(2).budget(500 + i).build());
-            }
-
-            categories.add(CategoryItem.newBuilder().id(0)
-                    .name("Category 0").build());
-            categories.add(CategoryItem.newBuilder().id(1)
-                    .name("Category 1").build());
-            categories.add(CategoryItem.newBuilder().id(2)
-                    .name("Category 2").build());
-
-            lastFilmId = 12;
+            testData();
         }
-
-        calculateLastFilmId();
     }
 
     public void getCategories() {
@@ -93,15 +65,7 @@ public class MainModel extends Model {
 
     public void createCategory(String name) {
 
-        int lastCategory = 0;
-
-        for (CategoryItem category : categories) {
-            if(category.getId()>lastCategory){
-                lastCategory = category.getId();
-            }
-        }
-
-        CategoryItem catNew = CategoryItem.newBuilder().id(lastCategory+1)
+        CategoryItem catNew = CategoryItem.newBuilder().id(createCategoryId())
                 .name(name).build();
 
         categories.add(catNew);
@@ -113,7 +77,7 @@ public class MainModel extends Model {
     public void onCreateMovie(String name, int year, String description
             , int genreId, int budget) {
         MovieItem movieNew = MovieItem.newBuilder()
-                .id(lastFilmId).name(name).year(year).description(description)
+                .id(createFilmId()).name(name).year(year).description(description)
                 .genreId(genreId).budget(budget).build();
         movies.add(movieNew);
         serializeModel();
@@ -126,7 +90,6 @@ public class MainModel extends Model {
             if(category.getId()==genreId){
                 emit(new ActionOnCreateMovie(categories, category
                         , moviesInCategory, movieNew));
-                lastFilmId++;
                 return;
             }
         }
@@ -192,11 +155,43 @@ public class MainModel extends Model {
         serializeModel();
     }
 
+    private void testData(){
+        for (int i = 0; i < 4; i++) {
+            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
+                    .year(1990 + i).description("Test description for Test film " + i)
+                    .genreId(0).budget(500 + i).build());
+        }
+
+        for (int i = 4; i < 8; i++) {
+            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
+                    .year(1990 + i).description("Test description for Test film " + i)
+                    .genreId(1).budget(500 + i).build());
+        }
+
+        for (int i = 8; i < 12; i++) {
+            movies.add(MovieItem.newBuilder().id(i).name("Test film " + i)
+                    .year(1990 + i).description("Test description for Test film " + i)
+                    .genreId(2).budget(500 + i).build());
+        }
+        filmId.set(11);
+
+        categories.add(CategoryItem.newBuilder().id(0)
+                .name("Category 0").build());
+        categories.add(CategoryItem.newBuilder().id(1)
+                .name("Category 1").build());
+        categories.add(CategoryItem.newBuilder().id(2)
+                .name("Category 2").build());
+        categoryId.set(2);
+
+    }
+
     private void serializeModel() {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(this.categories);
             oos.writeObject(this.movies);
+            oos.writeObject(this.filmId);
+            oos.writeObject(this.categoryId);
             System.out.println("Запись произведена");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -207,17 +202,19 @@ public class MainModel extends Model {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             this.categories = (ArrayList<CategoryItem>) ois.readObject();
             this.movies = (ArrayList<MovieItem>) ois.readObject();
+            this.filmId = (AtomicInteger) ois.readObject();
+            this.categoryId = (AtomicInteger) ois.readObject();
         } catch (Exception ex) {
 
             ex.printStackTrace();
         }
     }
 
-    private void calculateLastFilmId() {
-        lastFilmId = 0;
-        for (MovieItem movieItem : movies) {
-            if (movieItem.getId() > lastFilmId)
-                lastFilmId = movieItem.getId()+1;
-        }
+    private int createFilmId() {
+        return filmId.incrementAndGet();
+    }
+
+    private int createCategoryId(){
+        return categoryId.incrementAndGet();
     }
 }
