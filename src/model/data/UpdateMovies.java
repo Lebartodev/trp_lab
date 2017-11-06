@@ -11,18 +11,17 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by pavel on 27.09.17.
  */
-public class ActionShowMoviesInCategory implements ActionData{
+public class UpdateMovies implements ActionData {
 
     ConcurrentLinkedQueue<MovieItem> movies = new ConcurrentLinkedQueue<>();
     String categoryName;
 
-    public ActionShowMoviesInCategory(String categoryName
-            , ConcurrentLinkedQueue<MovieItem> movies){
+    public UpdateMovies(String categoryName, ConcurrentLinkedQueue<MovieItem> movies) {
         this.categoryName = categoryName;
         this.movies = movies;
     }
 
-    public ConcurrentLinkedQueue<MovieItem> getMoviesInCategory(){
+    public ConcurrentLinkedQueue<MovieItem> getMoviesInCategory() {
         return movies;
     }
 

@@ -1,7 +1,6 @@
 package base;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import model.data.*;
 
 import javax.swing.*;
@@ -37,10 +36,10 @@ public abstract class View<M extends Model, C extends Controller> {
     private void subscribeOnModel() {
         if (model != null) {
             subscriptionModel = model.getPublisher().subscribe(actionData -> {
-                if (actionData instanceof ActionShowCategories) {
-                    onShowCategories((ActionShowCategories) actionData);
-                } else if (actionData instanceof ActionShowMoviesInCategory) {
-                    onShowSingleCategory((ActionShowMoviesInCategory) actionData);
+                if (actionData instanceof UpdateCategories) {
+                    onShowCategories((UpdateCategories) actionData);
+                } else if (actionData instanceof UpdateMovies) {
+                    onShowSingleCategory((UpdateMovies) actionData);
                 } else if (actionData instanceof ActionShowMovie) {
                     onShowMovie((ActionShowMovie) actionData);
                 } else if (actionData instanceof ActionOnCreateMovie) {
@@ -57,7 +56,7 @@ public abstract class View<M extends Model, C extends Controller> {
 
     }
 
-    public void onShowCategories(ActionShowCategories data) {
+    public void onShowCategories(UpdateCategories data) {
 
     }
 
@@ -69,7 +68,7 @@ public abstract class View<M extends Model, C extends Controller> {
 
     }
 
-    public void onShowSingleCategory(ActionShowMoviesInCategory data) {
+    public void onShowSingleCategory(UpdateMovies data) {
 
     }
 

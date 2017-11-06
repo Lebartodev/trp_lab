@@ -6,11 +6,11 @@ import model.CategoryItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionShowCategories implements ActionData{
+public class UpdateCategories implements ActionData{
 
     List<CategoryItem> categories = new ArrayList<>();
 
-    public ActionShowCategories(List<CategoryItem> categories) {
+    public UpdateCategories(List<CategoryItem> categories) {
         this.categories = categories;
     }
 

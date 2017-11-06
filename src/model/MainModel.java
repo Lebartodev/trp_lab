@@ -32,7 +32,7 @@ public class MainModel extends Model {
 
     public void getCategories() {
 
-        emit(new ActionShowCategories(categories));
+        emit(new UpdateCategories(categories));
     }
 
     public void getMoviesInCategory(int id) {
@@ -40,7 +40,7 @@ public class MainModel extends Model {
         List<MovieItem> moviesInCategory = new ArrayList<>();
         for (CategoryItem category : categories) {
             if(category.getId()==id){
-                emit(new ActionShowMoviesInCategory(category
+                emit(new UpdateMovies(category
                         .getName(), category.getMovies()));
                 return;
             }
@@ -68,7 +68,7 @@ public class MainModel extends Model {
         categories.add(catNew);
         serializeModel();
 
-        emit(new ActionShowCategories(categories));
+        emit(new UpdateCategories(categories));
     }
 
     public void onCreateMovie(String name, int year, String description

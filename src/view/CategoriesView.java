@@ -5,14 +5,12 @@ import controller.MainController;
 import model.CategoryItem;
 import model.MainModel;
 import model.MovieItem;
-import model.data.ActionShowCategories;
+import model.data.UpdateCategories;
 import model.data.ActionShowMovie;
-import model.data.ActionShowMoviesInCategory;
+import model.data.UpdateMovies;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -49,13 +47,13 @@ public class CategoriesView extends View<MainModel, MainController> {
     }
 
     @Override
-    public void onShowCategories(ActionShowCategories data) {
+    public void onShowCategories(UpdateCategories data) {
         categoriesList.setListData(data.getCategories().toArray(new CategoryItem[data.getCategories().size()]));
 
     }
 
     @Override
-    public void onShowSingleCategory(ActionShowMoviesInCategory data) {
+    public void onShowSingleCategory(UpdateMovies data) {
         moviesList.setListData(data.getMoviesInCategory().toArray(new MovieItem[data.getMoviesInCategory().size()]));
         moviesTitle.setText(data.getCategoryName());
         moviesPanel.setVisible(true);

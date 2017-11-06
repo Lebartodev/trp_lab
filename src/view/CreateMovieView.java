@@ -4,8 +4,7 @@ import base.View;
 import controller.MainController;
 import model.CategoryItem;
 import model.MainModel;
-import model.data.ActionOnCreateMovie;
-import model.data.ActionShowCategories;
+import model.data.UpdateCategories;
 import model.data.ActionShowMovie;
 
 import javax.swing.*;
@@ -140,7 +139,7 @@ public class CreateMovieView extends View<MainModel, MainController> {
     }
 
     @Override
-    public void onShowCategories(ActionShowCategories data) {
+    public void onShowCategories(UpdateCategories data) {
         if (c.getItemCount() == 0)
             for (CategoryItem categoryItem : data.getCategories()) {
                 c.addItem(categoryItem);
