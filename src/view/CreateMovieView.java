@@ -4,7 +4,7 @@ import base.View;
 import controller.MainController;
 import model.CategoryItem;
 import model.MainModel;
-import model.data.UpdateCategories;
+import model.data.response.UpdateCategories;
 import model.data.ActionShowMovie;
 
 import javax.swing.*;

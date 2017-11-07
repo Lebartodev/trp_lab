@@ -1,7 +1,10 @@
 package model;
 
 import base.Model;
-import model.data.*;
+import model.data.response.ResponseOnCreateMovie;
+import model.data.response.OnCategoryEdited;
+import model.data.response.UpdateCategories;
+import model.data.response.UpdateMovies;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -79,7 +82,7 @@ public class MainModel extends Model {
         for (CategoryItem category : categories) {
             if(category.getId()==genreId){
                 category.getMovies().add(movieNew);
-                emit(new ActionOnCreateMovie(categories, category
+                emit(new ResponseOnCreateMovie(categories, category
                         , category.getMovies(), movieNew));
                 serializeModel();
                 return;
@@ -90,7 +93,7 @@ public class MainModel extends Model {
     public void onEditCategory(int id){
         for (CategoryItem category : categories) {
             if(category.getId()==id){
-                emit(new ActionOnEditCategory(category.getName()));
+                emit(new OnCategoryEdited(category.getName()));
                 return;
             }
         }

@@ -1,7 +1,10 @@
 package base;
 
 import io.reactivex.disposables.Disposable;
-import model.data.*;
+import model.data.response.ResponseOnCreateMovie;
+import model.data.response.OnCategoryEdited;
+import model.data.response.UpdateCategories;
+import model.data.response.UpdateMovies;
 
 import javax.swing.*;
 
@@ -42,17 +45,17 @@ public abstract class View<M extends Model, C extends Controller> {
                     onShowSingleCategory((UpdateMovies) actionData);
                 } else if (actionData instanceof ActionShowMovie) {
                     onShowMovie((ActionShowMovie) actionData);
-                } else if (actionData instanceof ActionOnCreateMovie) {
-                    onCreateMovie((ActionOnCreateMovie) actionData);
-                } else if (actionData instanceof ActionOnEditCategory) {
-                    onEditCategory((ActionOnEditCategory) actionData);
+                } else if (actionData instanceof ResponseOnCreateMovie) {
+                    onCreateMovie((ResponseOnCreateMovie) actionData);
+                } else if (actionData instanceof OnCategoryEdited) {
+                    onEditCategory((OnCategoryEdited) actionData);
                 }
 
             }, Throwable::printStackTrace);
         }
     }
 
-    public void onEditCategory(ActionOnEditCategory data) {
+    public void onEditCategory(OnCategoryEdited data) {
 
     }
 
@@ -60,7 +63,7 @@ public abstract class View<M extends Model, C extends Controller> {
 
     }
 
-    public void onCreateMovie(ActionOnCreateMovie data) {
+    public void onCreateMovie(ResponseOnCreateMovie data) {
 
     }
 

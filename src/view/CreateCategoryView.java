@@ -3,13 +3,11 @@ package view;
 import base.View;
 import controller.MainController;
 import model.MainModel;
-import model.data.ActionOnEditCategory;
+import model.data.response.OnCategoryEdited;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CreateCategoryView extends View<MainModel, MainController> {
     private JFrame frame;
@@ -66,7 +64,7 @@ public class CreateCategoryView extends View<MainModel, MainController> {
     }
 
     @Override
-    public void onEditCategory(ActionOnEditCategory data) {
+    public void onEditCategory(OnCategoryEdited data) {
         textField.setText(data.getCategoryName());
     }
 }

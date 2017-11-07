@@ -5,9 +5,9 @@ import controller.MainController;
 import model.CategoryItem;
 import model.MainModel;
 import model.MovieItem;
-import model.data.UpdateCategories;
+import model.data.response.UpdateCategories;
 import model.data.ActionShowMovie;
-import model.data.UpdateMovies;
+import model.data.response.UpdateMovies;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

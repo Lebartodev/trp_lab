@@ -1,4 +1,4 @@
-package model.data;
+package model.data.response;
 
 import base.ActionData;
 import model.MovieItem;
@@ -6,11 +6,11 @@ import model.MovieItem;
 /**
  * Created by pavel on 27.09.17.
  */
-public class ActionShowMovie implements ActionData{
+public class ResponseOnCreateMovie implements ActionData {
 
-    MovieItem movie = new MovieItem();
+    private MovieItem movie;
 
-    public ActionShowMovie(MovieItem movie) {
+    public ResponseOnCreateMovie(MovieItem movie) {
         this.movie = movie;
     }
 

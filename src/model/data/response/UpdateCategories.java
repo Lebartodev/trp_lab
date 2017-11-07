@@ -1,4 +1,4 @@
-package model.data;
+package model.data.response;
 
 import base.ActionData;
 import model.CategoryItem;

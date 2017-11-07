@@ -1,4 +1,4 @@
-package model.data;
+package model.data.response;
 
 import base.ActionData;
 import model.CategoryItem;
@@ -14,18 +14,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class UpdateMovies implements ActionData {
 
     ConcurrentLinkedQueue<MovieItem> movies = new ConcurrentLinkedQueue<>();
-    String categoryName;
 
-    public UpdateMovies(String categoryName, ConcurrentLinkedQueue<MovieItem> movies) {
-        this.categoryName = categoryName;
+    public UpdateMovies(ConcurrentLinkedQueue<MovieItem> movies) {
         this.movies = movies;
     }
 
-    public ConcurrentLinkedQueue<MovieItem> getMoviesInCategory() {
+    public ConcurrentLinkedQueue<MovieItem> getMovies() {
         return movies;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
     }
 }
