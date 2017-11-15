@@ -2,6 +2,7 @@ package view;
 
 import base.View;
 import controller.MainController;
+import model.ClientModel;
 import model.MainModel;
 import model.data.response.OnCategoryEdited;
 
@@ -9,18 +10,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class CreateCategoryView extends View<MainModel, MainController> {
+public class CreateCategoryView extends View<ClientModel, MainController> {
     private JFrame frame;
     private int categoryId = Integer.MIN_VALUE;
     private JTextField textField = new JTextField();
 
-    public CreateCategoryView(MainModel model, MainController controller, JFrame frame) {
+    public CreateCategoryView(ClientModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
         this.frame = frame;
     }
 
-    public CreateCategoryView(MainModel model, MainController controller, JFrame frame, int categoryId) {
+    public CreateCategoryView(ClientModel model, MainController controller, JFrame frame, int categoryId) {
         this.setModel(model);
         this.controller(controller);
         this.frame = frame;
@@ -65,6 +66,6 @@ public class CreateCategoryView extends View<MainModel, MainController> {
 
     @Override
     public void onEditCategory(OnCategoryEdited data) {
-        textField.setText(data.getCategoryName());
+        textField.setText(data.getCategory().getName());
     }
 }

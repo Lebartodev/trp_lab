@@ -2,16 +2,17 @@ package view;
 
 import base.View;
 import controller.MainController;
+import model.ClientModel;
 import model.MainModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MenuView extends View<MainModel, MainController> {
+public class MenuView extends View<ClientModel, MainController> {
     private JFrame frame;
 
-    public MenuView(MainModel model, MainController controller, JFrame frame) {
+    public MenuView(ClientModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
         this.frame = frame;

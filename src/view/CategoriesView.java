@@ -3,11 +3,12 @@ package view;
 import base.View;
 import controller.MainController;
 import model.CategoryItem;
+import model.ClientModel;
 import model.MainModel;
 import model.MovieItem;
-import model.data.response.UpdateCategories;
-import model.data.ActionShowMovie;
-import model.data.response.UpdateMovies;
+import model.data.response.ResponseShowCategories;
+import model.data.response.ResponseShowMovie;
+import model.data.response.ResponseShowMovieList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,7 +16,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class CategoriesView extends View<MainModel, MainController> {
+public class CategoriesView extends View<ClientModel, MainController> {
     private JList<CategoryItem> categoriesList;
     private JList<MovieItem> moviesList;
     private JPanel viewPanel;
@@ -27,7 +28,7 @@ public class CategoriesView extends View<MainModel, MainController> {
     private JFrame frame;
 
 
-    public CategoriesView(MainModel model, MainController controller, JFrame frame) {
+    public CategoriesView(ClientModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
         this.frame = frame;
@@ -47,20 +48,20 @@ public class CategoriesView extends View<MainModel, MainController> {
     }
 
     @Override
-    public void onShowCategories(UpdateCategories data) {
+    public void onShowCategories(ResponseShowCategories data) {
         categoriesList.setListData(data.getCategories().toArray(new CategoryItem[data.getCategories().size()]));
 
     }
 
     @Override
-    public void onShowSingleCategory(UpdateMovies data) {
-        moviesList.setListData(data.getMoviesInCategory().toArray(new MovieItem[data.getMoviesInCategory().size()]));
-        moviesTitle.setText(data.getCategoryName());
+    public void onShowSingleCategory(ResponseShowMovieList data) {
+        moviesList.setListData(data.getMovies().toArray(new MovieItem[data.getMovies().size()]));
+        //TODO:Change
         moviesPanel.setVisible(true);
     }
 
     @Override
-    public void onShowMovie(ActionShowMovie data) {
+    public void onShowMovie(ResponseShowMovie data) {
         singleMovieTitle.setText(data.getMovie().getName());
         movieDescription.setText(data.getMovie().getDescription() + "\nBudget: " + data.getMovie().getBudget() + "\nYear:" + data.getMovie().getYear());
         moviePanel.setVisible(true);
@@ -93,8 +94,11 @@ public class CategoriesView extends View<MainModel, MainController> {
         categoriesPanel.setMaximumSize(new Dimension(120, Integer.MAX_VALUE));
         viewPanel.add(categoriesPanel);
         categoriesList.addListSelectionListener(e -> {
-            if (categoriesList.getSelectedValue() != null)
+            if (categoriesList.getSelectedValue() != null) {
                 controller().requestCategory(categoriesList.getSelectedValue().getId());
+                moviesTitle.setText(categoriesList.getSelectedValue().getName());
+            }
+
         });
         editLabel.addActionListener(e -> {
             if (categoriesList.getSelectedValue() != null) {

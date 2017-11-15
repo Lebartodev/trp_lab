@@ -1,10 +1,7 @@
 package base;
 
 import io.reactivex.disposables.Disposable;
-import model.data.response.ResponseOnCreateMovie;
-import model.data.response.OnCategoryEdited;
-import model.data.response.UpdateCategories;
-import model.data.response.UpdateMovies;
+import model.data.response.*;
 
 import javax.swing.*;
 
@@ -39,27 +36,39 @@ public abstract class View<M extends Model, C extends Controller> {
     private void subscribeOnModel() {
         if (model != null) {
             subscriptionModel = model.getPublisher().subscribe(actionData -> {
-                if (actionData instanceof UpdateCategories) {
-                    onShowCategories((UpdateCategories) actionData);
-                } else if (actionData instanceof UpdateMovies) {
-                    onShowSingleCategory((UpdateMovies) actionData);
-                } else if (actionData instanceof ActionShowMovie) {
-                    onShowMovie((ActionShowMovie) actionData);
+                if (actionData instanceof ResponseShowCategories) {
+                    onShowCategories((ResponseShowCategories) actionData);
+                } else if (actionData instanceof ResponseShowMovieList) {
+                    onShowSingleCategory((ResponseShowMovieList) actionData);
+                } else if (actionData instanceof ResponseShowMovie) {
+                    onShowMovie((ResponseShowMovie) actionData);
                 } else if (actionData instanceof ResponseOnCreateMovie) {
                     onCreateMovie((ResponseOnCreateMovie) actionData);
                 } else if (actionData instanceof OnCategoryEdited) {
                     onEditCategory((OnCategoryEdited) actionData);
+                } else if (actionData instanceof ResponseOnCreateCategory) {
+                    onCreateCategory((ResponseOnCreateCategory) actionData);
+                } else if (actionData instanceof ResponseMovieEditedData) {
+                    onShowCategoriesForEdit((ResponseMovieEditedData) actionData);
                 }
 
             }, Throwable::printStackTrace);
         }
     }
 
+    private void onCreateCategory(ResponseOnCreateCategory actionData) {
+
+    }
+
     public void onEditCategory(OnCategoryEdited data) {
 
     }
 
-    public void onShowCategories(UpdateCategories data) {
+    public void onShowCategories(ResponseShowCategories data) {
+
+    }
+
+    public void onShowCategoriesForEdit(ResponseMovieEditedData data) {
 
     }
 
@@ -67,11 +76,11 @@ public abstract class View<M extends Model, C extends Controller> {
 
     }
 
-    public void onShowMovie(ActionShowMovie data) {
+    public void onShowMovie(ResponseShowMovie data) {
 
     }
 
-    public void onShowSingleCategory(UpdateMovies data) {
+    public void onShowSingleCategory(ResponseShowMovieList data) {
 
     }
 

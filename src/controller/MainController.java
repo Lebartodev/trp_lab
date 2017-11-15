@@ -1,10 +1,11 @@
 package controller;
 
 import base.Controller;
+import model.ClientModel;
 import model.MainModel;
 import org.junit.platform.commons.util.StringUtils;
 
-public class MainController extends Controller<MainModel> {
+public class MainController extends Controller<ClientModel> {
 
 
     public void requestCategories() {

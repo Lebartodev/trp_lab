@@ -3,16 +3,18 @@ package view;
 import base.View;
 import controller.MainController;
 import model.CategoryItem;
+import model.ClientModel;
 import model.MainModel;
-import model.data.response.UpdateCategories;
-import model.data.ActionShowMovie;
+import model.data.response.ResponseMovieEditedData;
+import model.data.response.ResponseShowCategories;
+import model.data.response.ResponseShowMovie;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 
-public class CreateMovieView extends View<MainModel, MainController> {
+public class CreateMovieView extends View<ClientModel, MainController> {
     private JFrame frame;
     private JComboBox c;
     private int movieId = Integer.MIN_VALUE;
@@ -22,13 +24,13 @@ public class CreateMovieView extends View<MainModel, MainController> {
     private JTextField textYear = new JTextField();
     private int categoryId;
 
-    public CreateMovieView(MainModel model, MainController controller, JFrame frame) {
+    public CreateMovieView(ClientModel model, MainController controller, JFrame frame) {
         this.setModel(model);
         this.controller(controller);
         this.frame = frame;
     }
 
-    public CreateMovieView(MainModel model, MainController controller, JFrame frame, int movieId) {
+    public CreateMovieView(ClientModel model, MainController controller, JFrame frame, int movieId) {
         this.setModel(model);
         this.controller(controller);
         this.frame = frame;
@@ -129,7 +131,7 @@ public class CreateMovieView extends View<MainModel, MainController> {
     }
 
     @Override
-    public void onShowMovie(ActionShowMovie data) {
+    public void onShowMovie(ResponseShowMovie data) {
         textField.setText(data.getMovie().getName());
         textBudget.setText(String.valueOf(data.getMovie().getBudget()));
         textYear.setText(String.valueOf(data.getMovie().getYear()));
@@ -139,7 +141,7 @@ public class CreateMovieView extends View<MainModel, MainController> {
     }
 
     @Override
-    public void onShowCategories(UpdateCategories data) {
+    public void onShowCategoriesForEdit(ResponseMovieEditedData data) {
         if (c.getItemCount() == 0)
             for (CategoryItem categoryItem : data.getCategories()) {
                 c.addItem(categoryItem);
@@ -148,6 +150,6 @@ public class CreateMovieView extends View<MainModel, MainController> {
                 }
             }
 
-
     }
+
 }
