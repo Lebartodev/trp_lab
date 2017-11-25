@@ -1,7 +1,6 @@
 import base.Application;
 import controller.MainController;
 import model.ClientModel;
-import model.MainModel;
 import view.CategoriesView;
 import view.MenuView;
 

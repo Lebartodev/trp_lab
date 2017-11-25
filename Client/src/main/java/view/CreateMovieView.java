@@ -6,7 +6,6 @@ import model.CategoryItem;
 import model.ClientModel;
 import model.MainModel;
 import model.data.response.ResponseMovieEditedData;
-import model.data.response.ResponseShowCategories;
 import model.data.response.ResponseShowMovie;
 
 import javax.swing.*;

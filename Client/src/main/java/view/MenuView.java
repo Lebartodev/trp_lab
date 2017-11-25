@@ -3,7 +3,6 @@ package view;
 import base.View;
 import controller.MainController;
 import model.ClientModel;
-import model.MainModel;
 
 import javax.swing.*;
 import java.awt.*;
