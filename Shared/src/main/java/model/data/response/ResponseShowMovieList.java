@@ -1,11 +1,11 @@
-package model.data.response;
+package main.java.model.data.response;
 
-import base.ActionData;
-import model.MovieItem;
+import main.java.ActionData;
+import main.java.model.MovieItem;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ResponseShowMovieList implements ActionData{
+public class ResponseShowMovieList implements ActionData {
     ConcurrentLinkedQueue<MovieItem> movies = new ConcurrentLinkedQueue<>();
 
     public ResponseShowMovieList(ConcurrentLinkedQueue<MovieItem> movies) {

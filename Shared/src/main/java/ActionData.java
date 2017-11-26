@@ -1,4 +1,4 @@
-package base;
+package main.java;
 
 public interface ActionData {
 }

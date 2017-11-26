@@ -1,10 +1,9 @@
-package view;
+package main.java.view;
 
-import base.View;
-import controller.MainController;
-import model.ClientModel;
-import model.MainModel;
-import model.data.response.OnCategoryEdited;
+import main.java.ClientModel;
+import main.java.base.View;
+import main.java.controller.MainController;
+import main.java.model.data.response.OnCategoryEdited;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

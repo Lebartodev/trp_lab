@@ -1,17 +1,12 @@
-package model.data.response;
+package main.java.model.data.response;
 
-import base.ActionData;
-import model.CategoryItem;
-import model.MovieItem;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import main.java.ActionData;
+import main.java.model.CategoryItem;
 
 /**
  * Created by pavel on 27.09.17.
  */
-public class ResponseOnCreateCategory implements ActionData{
+public class ResponseOnCreateCategory implements ActionData {
     CategoryItem category;
 
     public ResponseOnCreateCategory(CategoryItem category) {

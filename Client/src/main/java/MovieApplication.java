@@ -1,8 +1,10 @@
-import base.Application;
-import controller.MainController;
-import model.ClientModel;
-import view.CategoriesView;
-import view.MenuView;
+package main.java;
+
+import main.java.ClientModel;
+import main.java.base.Application;
+import main.java.controller.MainController;
+import main.java.view.CategoriesView;
+import main.java.view.MenuView;
 
 import javax.swing.*;
 

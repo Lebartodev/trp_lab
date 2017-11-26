@@ -1,9 +1,9 @@
-import base.Model;
-import model.CategoryItem;
-import model.MovieItem;
-import model.data.response.OnCategoryEdited;
-import model.data.response.ResponseOnCreateMovie;
+package main.java;
 
+
+import main.java.model.Model;
+import main.java.model.CategoryItem;
+import main.java.model.MovieItem;
 
 import java.io.*;
 import java.util.ArrayList;

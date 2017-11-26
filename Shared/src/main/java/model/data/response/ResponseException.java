@@ -1,4 +1,4 @@
-package model.data.response;
+package main.java.model.data.response;
 
 public class ResponseException {
     private Exception exception;

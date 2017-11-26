@@ -1,4 +1,4 @@
-package model.data.request;
+package main.java.model.data.request;
 
 public class RequestUpdateCategories {
 }

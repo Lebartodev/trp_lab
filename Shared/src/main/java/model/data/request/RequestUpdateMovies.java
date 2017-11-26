@@ -1,6 +1,6 @@
-package model.data.request;
+package main.java.model.data.request;
 
-import model.CategoryItem;
+import main.java.model.CategoryItem;
 
 public class RequestUpdateMovies {
     private CategoryItem categoryItem;

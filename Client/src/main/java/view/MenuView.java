@@ -1,8 +1,8 @@
-package view;
+package main.java.view;
 
-import base.View;
-import controller.MainController;
-import model.ClientModel;
+import main.java.ClientModel;
+import main.java.base.View;
+import main.java.controller.MainController;
 
 import javax.swing.*;
 import java.awt.*;

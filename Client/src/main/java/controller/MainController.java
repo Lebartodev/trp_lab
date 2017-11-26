@@ -1,7 +1,7 @@
-package controller;
+package main.java.controller;
 
-import base.Controller;
-import model.ClientModel;
+import main.java.ClientModel;
+import main.java.base.Controller;
 import org.junit.platform.commons.util.StringUtils;
 
 public class MainController extends Controller<ClientModel> {

@@ -1,6 +1,6 @@
-package model.data;
+package main.java.model.data;
 
-import base.ActionData;
+import main.java.ActionData;
 
 public class ActionEmpty implements ActionData {
 }

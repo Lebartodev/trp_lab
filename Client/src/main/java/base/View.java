@@ -1,7 +1,8 @@
-package base;
+package main.java.base;
 
 import io.reactivex.disposables.Disposable;
-import model.data.response.*;
+import main.java.model.Model;
+import main.java.model.data.response.*;
 
 import javax.swing.*;
 

@@ -1,3 +1,5 @@
+package main.java;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -7,8 +9,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainServer extends Thread {
-    Socket socket;
+    private Socket socket;
     private static ConcurrentLinkedQueue<AtomicInteger> lockedObjects = new ConcurrentLinkedQueue<>();
+    private static
 
     public static void main(String args[]) {
         try {
@@ -38,8 +41,11 @@ public class MainServer extends Thread {
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             while (true) {
-                Object inputAction = inputStream.readObject();
+                ActionData inputAction = (ActionData) inputStream.readObject();
 
+                ActionData outputAction = RequestHandler.handleRequest(inputAction);
+
+                outputStream.writeObject(outputAction);
 
             }
 

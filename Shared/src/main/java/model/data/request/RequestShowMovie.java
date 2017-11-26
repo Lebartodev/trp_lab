@@ -1,6 +1,5 @@
-package model.data.request;
+package main.java.model.data.request;
 
-import model.MovieItem;
 
 public class RequestShowMovie {
 

@@ -1,4 +1,6 @@
-package base;
+package main.java.base;
+
+import main.java.model.Model;
 
 public abstract class Controller<M extends Model> {
 

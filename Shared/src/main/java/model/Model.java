@@ -1,6 +1,7 @@
-package base;
+package main.java.model;
 
 import io.reactivex.subjects.PublishSubject;
+import main.java.ActionData;
 
 public abstract class Model {
     private PublishSubject<ActionData> publisher = PublishSubject.create();
