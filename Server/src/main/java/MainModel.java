@@ -1,9 +1,8 @@
 package main.java;
 
-
-import main.java.model.Model;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
+import main.java.model.data.response.ResponseOnCreateMovie;
 
 import java.io.*;
 import java.util.ArrayList;

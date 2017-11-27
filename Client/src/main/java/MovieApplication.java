@@ -1,6 +1,5 @@
 package main.java;
 
-import main.java.ClientModel;
 import main.java.base.Application;
 import main.java.controller.MainController;
 import main.java.view.CategoriesView;

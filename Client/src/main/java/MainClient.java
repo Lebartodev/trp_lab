@@ -1,3 +1,5 @@
+package main.java;
+
 import java.net.Socket;
 
 public class MainClient extends Thread {
