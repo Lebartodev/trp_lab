@@ -3,42 +3,34 @@ package main.java;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Collection;
 
 public class ServerThread extends Thread  {
 
     private Socket socket;
-    private Collection<Integer> counter;
+    private DataObject dataObject;
 
-    public ServerThread(Socket socket, Collection<Integer> counter){
+    public ServerThread(Socket socket, DataObject dataObject){
         this.socket = socket;
-        this.counter = counter;
+        this.dataObject = dataObject;
         this.start();
     }
 
     public void run() {
         try {
-            /*ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             while (true) {
                 ActionData inputAction = (ActionData) inputStream.readObject();
 
-                ActionData outputAction = RequestHandler.handleRequest(inputAction);
+                ActionData outputAction = RequestHandler.handleRequest(inputAction, dataObject);
 
                 outputStream.writeObject(outputAction);
 
-            }*/
-            incCounter(counter);
-            System.out.println(counter.size());
-            Thread.sleep(10000);
-            System.out.println(counter.size());
-            socket.close();
+                socket.close();
+
+            }
         } catch (Exception e) {
             System.out.println("init error: " + e);
         }
-    }
-
-    public synchronized void incCounter(Collection<Integer> counter){
-        counter.add(counter.size());
     }
 }

@@ -16,19 +16,19 @@ public class MainModel extends Model {
 
     private List<CategoryItem> categories = new ArrayList<>();
 
-    //private List<MovieItem> movies = new ArrayList<>();
+    private List<MovieItem> movies = new ArrayList<>();
 
     private AtomicInteger filmId = new AtomicInteger();
 
     private AtomicInteger categoryId = new AtomicInteger();
 
     public MainModel() {
-        File file = new File("model.dat");
+        /*File file = new File("model.dat");
         if (file.exists()) {
             deserializeModel();
         } else {
             testData();
-        }
+        }*/
     }
 
     public void getCategories() {
@@ -63,13 +63,13 @@ public class MainModel extends Model {
 
     public void createCategory(String name) {
 
-        CategoryItem catNew = CategoryItem.newBuilder().id(createCategoryId())
+        /*CategoryItem catNew = CategoryItem.newBuilder().id(createCategoryId())
                 .name(name).movies(new ConcurrentLinkedQueue()).build();
 
         categories.add(catNew);
         serializeModel();
 
-//        emit(new UpdateCategories(categories));
+//        emit(new UpdateCategories(categories));*/
     }
 
     public void onCreateMovie(String name, int year, String description
@@ -120,7 +120,7 @@ public class MainModel extends Model {
 
     public void editMovie(int id, String name, int year,
                           String description, int genreId, int budget){
-        for (CategoryItem category : categories) {
+        /*for (CategoryItem category : categories) {
             for (MovieItem movieItem : category.getMovies()) {
                 if(movieItem.getId()==id){
                     movieItem.setName(name);
@@ -132,11 +132,11 @@ public class MainModel extends Model {
             }
         }
 
-        serializeModel();
+        serializeModel();*/
     }
 
     public void deleteMovie(int id){
-        for (CategoryItem category : categories) {
+        /*for (CategoryItem category : categories) {
             for (MovieItem movieItem : category.getMovies()) {
                 if(movieItem.getId()==id){
                     category.getMovies().remove(movieItem);
@@ -144,10 +144,10 @@ public class MainModel extends Model {
                 }
             }
         }
-        serializeModel();
+        serializeModel();*/
     }
 
-    private void testData(){
+    /*private void testData(){
         ConcurrentLinkedQueue<MovieItem> movies1 = new ConcurrentLinkedQueue<>();
         for (int i = 0; i < 4; i++) {
             movies1.add(MovieItem.newBuilder().id(i).name("Test film " + i)
@@ -178,34 +178,25 @@ public class MainModel extends Model {
 
         categories.add(CategoryItem.newBuilder().id(2)
                 .name("Category 2").movies(movies3).build());
-        
+
 
         filmId.set(11);
         categoryId.set(2);
 
-    }
+    }*/
 
     private void serializeModel() {
-
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(this.categories);
-            oos.writeObject(this.filmId);
-            oos.writeObject(this.categoryId);
-            System.out.println("Запись произведена");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void deserializeModel() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            this.categories = (ArrayList<CategoryItem>) ois.readObject();
-            this.filmId = (AtomicInteger) ois.readObject();
-            this.categoryId = (AtomicInteger) ois.readObject();
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        }
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+//            this.categories = (ArrayList<CategoryItem>) ois.readObject();
+//            this.filmId = (AtomicInteger) ois.readObject();
+//            this.categoryId = (AtomicInteger) ois.readObject();
+//        } catch (Exception ex) {
+//
+//            ex.printStackTrace();
+//        }
     }
 
     private int createFilmId() {
