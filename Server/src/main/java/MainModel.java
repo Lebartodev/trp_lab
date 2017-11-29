@@ -33,31 +33,31 @@ public class MainModel extends Model {
 
     public void getCategories() {
 
-        emit(new UpdateCategories(categories));
+//        emit(new UpdateCategories(categories));
     }
 
     public void getMoviesInCategory(int id) {
 
-        List<MovieItem> moviesInCategory = new ArrayList<>();
+        /*List<MovieItem> moviesInCategory = new ArrayList<>();
         for (CategoryItem category : categories) {
             if(category.getId()==id){
                 emit(new UpdateMovies(category
                         .getName(), category.getMovies()));
                 return;
             }
-        }
+        }*/
 
     }
 
     public void getMovie(int id) {
-        for (CategoryItem category : categories) {
+        /*for (CategoryItem category : categories) {
             for (MovieItem movieItem : category.getMovies()) {
                 if(movieItem.getId()==id){
                     emit(new ActionShowMovie(movieItem));
                     return;
                 }
             }
-        }
+        }*/
 
     }
 
@@ -69,32 +69,32 @@ public class MainModel extends Model {
         categories.add(catNew);
         serializeModel();
 
-        emit(new UpdateCategories(categories));
+//        emit(new UpdateCategories(categories));
     }
 
     public void onCreateMovie(String name, int year, String description
             , int genreId, int budget) {
-        MovieItem movieNew = MovieItem.newBuilder()
-                .id(createFilmId()).name(name).year(year).description(description)
-                .genreId(genreId).budget(budget).build();
-        for (CategoryItem category : categories) {
-            if(category.getId()==genreId){
-                category.getMovies().add(movieNew);
-                emit(new ResponseOnCreateMovie(categories, category
-                        , category.getMovies(), movieNew));
-                serializeModel();
-                return;
-            }
-        }
+//        MovieItem movieNew = MovieItem.newBuilder()
+//                .id(createFilmId()).name(name).year(year).description(description)
+//                .genreId(genreId).budget(budget).build();
+//        for (CategoryItem category : categories) {
+//            if(category.getId()==genreId){
+//                category.getMovies().add(movieNew);
+//                emit(new ResponseOnCreateMovie(categories, category
+//                        , category.getMovies(), movieNew));
+//                serializeModel();
+//                return;
+//            }
+//        }
     }
 
     public void onEditCategory(int id){
-        for (CategoryItem category : categories) {
+        /*for (CategoryItem category : categories) {
             if(category.getId()==id){
                 emit(new OnCategoryEdited(category.getName()));
                 return;
             }
-        }
+        }*/
     }
 
     public void editCategory(int id, String name){

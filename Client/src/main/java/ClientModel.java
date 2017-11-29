@@ -1,7 +1,7 @@
 package main.java;
 
 
-import main.java.model.Model;
+import main.java.base.Model;
 
 public class ClientModel extends Model {
 
