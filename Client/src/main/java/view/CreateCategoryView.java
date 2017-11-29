@@ -9,19 +9,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class CreateCategoryView extends View<ClientModel, MainController> {
+public class CreateCategoryView extends View< MainController> {
     private JFrame frame;
     private int categoryId = Integer.MIN_VALUE;
     private JTextField textField = new JTextField();
 
-    public CreateCategoryView(ClientModel model, MainController controller, JFrame frame) {
-        this.setModel(model);
+    public CreateCategoryView( MainController controller, JFrame frame) {
         this.controller(controller);
         this.frame = frame;
     }
 
-    public CreateCategoryView(ClientModel model, MainController controller, JFrame frame, int categoryId) {
-        this.setModel(model);
+    public CreateCategoryView( MainController controller, JFrame frame, int categoryId) {
         this.controller(controller);
         this.frame = frame;
         this.categoryId = categoryId;

@@ -1,20 +1,13 @@
 package main.java.base;
 
+import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
 import main.java.ActionData;
 
 public abstract class Model {
-    private PublishSubject<ActionData> publisher = PublishSubject.create();
 
-    protected final void emit(final ActionData event) {
-        this.publisher.onNext(event);
-    }
 
-    protected final void emitException(Exception ex){
-        this.publisher.onError(ex);
-    }
+    public abstract PublishSubject<ActionData> getPublisher();
 
-    public PublishSubject<ActionData> getPublisher() {
-        return publisher;
-    }
+    public abstract Single<? super ActionData> send(ActionData command);
 }

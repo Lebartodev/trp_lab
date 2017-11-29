@@ -8,11 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MenuView extends View<ClientModel, MainController> {
+public class MenuView extends View<MainController> {
     private JFrame frame;
 
-    public MenuView(ClientModel model, MainController controller, JFrame frame) {
-        this.setModel(model);
+    public MenuView(MainController controller, JFrame frame) {
         this.controller(controller);
         this.frame = frame;
     }
@@ -34,7 +33,7 @@ public class MenuView extends View<ClientModel, MainController> {
             frame.setSize(300, 100);
             frame.setMinimumSize(new Dimension(300, 100));
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(new CreateCategoryView(model(), controller(), frame).render());
+            frame.getContentPane().add(new CreateCategoryView(controller(), frame).render());
             frame.pack();
             frame.setVisible(true);
             frame.setLocation(100, 100);
@@ -52,7 +51,7 @@ public class MenuView extends View<ClientModel, MainController> {
             frame.setSize(300, 100);
             frame.setMinimumSize(new Dimension(300, 100));
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(new CreateMovieView(model(), controller(), frame).render());
+            frame.getContentPane().add(new CreateMovieView(controller(), frame).render());
             frame.pack();
             frame.setVisible(true);
             frame.setLocation(100, 100);

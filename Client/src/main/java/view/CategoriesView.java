@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class CategoriesView extends View<ClientModel, MainController> {
+public class CategoriesView extends View<MainController> {
     private JList<CategoryItem> categoriesList;
     private JList<MovieItem> moviesList;
     private JPanel viewPanel;
@@ -27,8 +27,7 @@ public class CategoriesView extends View<ClientModel, MainController> {
     private JFrame frame;
 
 
-    public CategoriesView(ClientModel model, MainController controller, JFrame frame) {
-        this.setModel(model);
+    public CategoriesView(MainController controller, JFrame frame) {
         this.controller(controller);
         this.frame = frame;
     }
@@ -178,12 +177,16 @@ public class CategoriesView extends View<ClientModel, MainController> {
 
     }
 
+    private void requestCategoryEdit() {
+
+    }
+
     private void openCategoryEditor() {
         JFrame frame = new JFrame("Edit category");
         frame.setSize(300, 100);
         frame.setMinimumSize(new Dimension(300, 100));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new CreateCategoryView(model(), controller(), frame, categoriesList.getSelectedValue().getId()).render());
+        frame.getContentPane().add(new CreateCategoryView(controller(), frame, categoriesList.getSelectedValue().getId()).render());
         frame.pack();
         frame.setVisible(true);
         frame.setLocation(100, 100);
@@ -202,7 +205,7 @@ public class CategoriesView extends View<ClientModel, MainController> {
         frame.setSize(300, 100);
         frame.setMinimumSize(new Dimension(300, 100));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new CreateMovieView(model(), controller(), frame, moviesList.getSelectedValue().getId()).render());
+        frame.getContentPane().add(new CreateMovieView(controller(), frame, moviesList.getSelectedValue().getId()).render());
         frame.pack();
         frame.setVisible(true);
         frame.setLocation(100, 100);
