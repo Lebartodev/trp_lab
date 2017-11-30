@@ -1,4 +1,6 @@
 package main.java.model.data.request;
 
-public class RequestShowCategories {
+import main.java.ActionData;
+
+public class RequestShowCategories implements ActionData {
 }

@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 
-public class CreateMovieView extends View<ClientModel, MainController> {
+public class CreateMovieView extends View< MainController> {
     private JFrame frame;
     private JComboBox c;
     private int movieId = Integer.MIN_VALUE;
@@ -22,14 +22,12 @@ public class CreateMovieView extends View<ClientModel, MainController> {
     private JTextField textYear = new JTextField();
     private int categoryId;
 
-    public CreateMovieView(ClientModel model, MainController controller, JFrame frame) {
-        this.setModel(model);
+    public CreateMovieView(MainController controller, JFrame frame) {
         this.controller(controller);
         this.frame = frame;
     }
 
-    public CreateMovieView(ClientModel model, MainController controller, JFrame frame, int movieId) {
-        this.setModel(model);
+    public CreateMovieView(MainController controller, JFrame frame, int movieId) {
         this.controller(controller);
         this.frame = frame;
         this.movieId = movieId;
@@ -113,7 +111,6 @@ public class CreateMovieView extends View<ClientModel, MainController> {
 
                 }
                 controller().requestCategory(((CategoryItem) c.getSelectedItem()).getId());
-                unsubscribe();
                 frame.dispose();
             }
 
