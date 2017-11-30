@@ -1,5 +1,7 @@
 package main.java;
 
+import main.java.model.data.request.RequestExit;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -22,11 +24,14 @@ public class ServerThread extends Thread  {
             while (true) {
                 ActionData inputAction = (ActionData) inputStream.readObject();
 
+                if(inputAction instanceof RequestExit){
+                    Operations.serializeModel(dataObject);
+                    socket.close();
+                }
+
                 ActionData outputAction = RequestHandler.handleRequest(inputAction, dataObject);
 
                 outputStream.writeObject(outputAction);
-
-                socket.close();
 
             }
         } catch (Exception e) {

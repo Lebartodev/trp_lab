@@ -3,10 +3,11 @@ package main.java;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DataObject {
+public class DataObject implements Serializable{
     private static String filename = "model.dat";
 
     private Map<Integer,CategoryItem> categories = new HashMap<Integer, CategoryItem>();
@@ -21,10 +22,10 @@ public class DataObject {
 
     private List<Integer> lockedCategories = new ArrayList<>();
 
-    public DataObject() {
+    DataObject() {
     }
 
-    public static String getFilename() {
+    static String getFilename() {
         return filename;
     }
 
@@ -32,39 +33,39 @@ public class DataObject {
         DataObject.filename = filename;
     }
 
-    public Map<Integer, CategoryItem> getCategories() {
+    Map<Integer, CategoryItem> getCategories() {
         return categories;
     }
 
-    public void setCategories(Map<Integer, CategoryItem> categories) {
+    void setCategories(Map<Integer, CategoryItem> categories) {
         this.categories = categories;
     }
 
-    public Map<Integer, MovieItem> getMovies() {
+    Map<Integer, MovieItem> getMovies() {
         return movies;
     }
 
-    public void setMovies(Map<Integer, MovieItem> movies) {
+    void setMovies(Map<Integer, MovieItem> movies) {
         this.movies = movies;
     }
 
-    public AtomicInteger getFilmId() {
+    AtomicInteger getFilmId() {
         return filmId;
     }
 
-    public void setFilmId(AtomicInteger filmId) {
+    void setFilmId(AtomicInteger filmId) {
         this.filmId = filmId;
     }
 
-    public AtomicInteger getCategoryId() {
+    AtomicInteger getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(AtomicInteger categoryId) {
+    void setCategoryId(AtomicInteger categoryId) {
         this.categoryId = categoryId;
     }
 
-    public List<Integer> getLockedMovies() {
+    List<Integer> getLockedMovies() {
         return lockedMovies;
     }
 

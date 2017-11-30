@@ -48,7 +48,7 @@ public class Operations {
         dataObject.setCategoryId(categoryId);
     }
 
-    public static void serializeModel(DataObject dataObject){
+    static void serializeModel(DataObject dataObject){
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DataObject.getFilename()))) {
             oos.writeObject(dataObject.getCategories());
             oos.writeObject(dataObject.getMovies());
@@ -60,7 +60,7 @@ public class Operations {
         }
     }
 
-    public static List<CategoryItem> getCategories(DataObject dataObject){
+    static List<CategoryItem> getCategories(DataObject dataObject){
         List<CategoryItem> categories = new LinkedList<>();
         Map<Integer, CategoryItem> categoryItemMap = dataObject.getCategories();
         for (Integer integer : categoryItemMap.keySet()) {
@@ -68,4 +68,25 @@ public class Operations {
         }
         return categories;
     }
+
+    static MovieItem getMovie(int id, DataObject dataObject){
+        MovieItem resultMovie = MovieItem.newBuilder().build();
+        if(dataObject.getMovies().containsKey(id) && !dataObject.getLockedMovies().contains(id)){
+            return dataObject.getMovies().get(id);
+        }
+        return resultMovie;
+    }
+
+    static List<MovieItem> getMoviesInCategory(int categoryId, DataObject dataObject){
+        List<MovieItem> movies = new LinkedList<>();
+        Map<Integer,MovieItem> movieItemMap = dataObject.getMovies();
+        for (Integer integer : movieItemMap.keySet()) {
+            if(movieItemMap.get(integer).getGenreId() == categoryId){
+                movies.add(movieItemMap.get(integer));
+            }
+        }
+        return movies;
+    }
+
+
 }
