@@ -4,7 +4,9 @@ package main.java.model.data.response;
 import main.java.ActionData;
 import main.java.model.MovieItem;
 
-public class ResponseShowMovie implements ActionData {
+import java.io.Serializable;
+
+public class ResponseShowMovie implements ActionData,Serializable {
     private MovieItem movie;
 
     public ResponseShowMovie(MovieItem movie) {

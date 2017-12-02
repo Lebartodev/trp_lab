@@ -20,7 +20,6 @@ public class RequestHandler {
 
         } else if(request instanceof RequestShowCategories){
             response = new ResponseShowCategories(Operations.getCategories(dataObject));
-
         } else if(request instanceof RequestShowMovie){
             response = new ResponseShowMovie(Operations.getMovie(((RequestShowMovie) request).getMovieId(),dataObject));
         } else if(request instanceof RequestShowMovieList){
