@@ -15,7 +15,7 @@ class RequestHandler {
         ActionData response = new ActionEmpty();
         try {
             if (request instanceof RequestStartCategoryEdit) {
-                response = Operations.lockCategory(((RequestDeleteCategory) request).getId(),dataObject);
+                response = Operations.lockCategory(((RequestStartCategoryEdit) request).getCategoryId(),dataObject);
                 outputStream.writeObject(response);
                 outputStream.flush();
             } else if (request instanceof RequestCreateCategory) {

@@ -2,7 +2,6 @@ package main.java;
 
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
-import main.java.model.data.request.RequestDeleteCategory;
 import main.java.model.data.response.ResponseException;
 import main.java.model.data.response.ResponseStartCategoryEdit;
 
