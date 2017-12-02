@@ -6,12 +6,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ServerThread extends Thread  {
+public class ServerThread extends Thread {
 
     private Socket socket;
     private DataObject dataObject;
 
-    public ServerThread(Socket socket, DataObject dataObject){
+    public ServerThread(Socket socket, DataObject dataObject) {
         this.socket = socket;
         this.dataObject = dataObject;
         this.start();
@@ -24,7 +24,7 @@ public class ServerThread extends Thread  {
             while (true) {
                 ActionData inputAction = (ActionData) inputStream.readObject();
 
-                if(inputAction instanceof RequestExit){
+                if (inputAction instanceof RequestExit) {
                     Operations.serializeModel(dataObject);
                     socket.close();
                 }
@@ -32,6 +32,7 @@ public class ServerThread extends Thread  {
                 ActionData outputAction = RequestHandler.handleRequest(inputAction, dataObject);
 
                 outputStream.writeObject(outputAction);
+                outputStream.flush();
 
             }
         } catch (Exception e) {

@@ -2,6 +2,9 @@ package main.java;
 
 
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 import main.java.base.Model;
 
@@ -19,11 +22,15 @@ public class ClientModel extends Model {
         return actionDataPublishSubject;
     }
 
+    public ClientModel() {
+        connect();
+    }
+
     @Override
     public Single<? super ActionData> send(ActionData command) {
         return Single.just(command).doOnSubscribe(disposable -> checkConnection())
                 .map(this::sendAction)
-                .map(actionData -> readAction());
+                .flatMap(actionData -> readAction());
     }
 
     private void checkConnection() {
@@ -42,8 +49,8 @@ public class ClientModel extends Model {
         return actionData;
     }
 
-    private ActionData readAction() throws IOException, ClassNotFoundException {
-        return (ActionData) in.readObject();
+    private Single<ActionData> readAction() throws IOException, ClassNotFoundException {
+        return Single.create(singleEmitter -> getPublisher().subscribe(actionData -> singleEmitter.onSuccess(actionData)));
     }
 
     private void connect() {
@@ -62,10 +69,19 @@ public class ClientModel extends Model {
 
     }
 
-    private void initSubscription() throws IOException, ClassNotFoundException {
-        while (!s.isOutputShutdown()) {
-            ActionData actionData = (ActionData) in.readObject();
-            actionDataPublishSubject.onNext(actionData);
-        }
+    private void initSubscription() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    ActionData actionData = (ActionData) in.readObject();
+                    actionDataPublishSubject.onNext(actionData);
+                    if (in.read() == -1) break;
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
     }
 }
