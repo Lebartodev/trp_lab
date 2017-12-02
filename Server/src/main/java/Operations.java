@@ -94,6 +94,10 @@ public class Operations {
         dataObject.getCategories().put(categoryItem.getId(), categoryItem);
     }
 
+    static void deleteCategory(int id){
+
+    }
+
     static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {
         for (Integer integer : clientMap.keySet()) {
             Client client = clientMap.get(integer);

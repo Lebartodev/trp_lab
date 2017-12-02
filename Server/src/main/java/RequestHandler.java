@@ -9,8 +9,8 @@ import main.java.model.data.response.ResponseShowMovieList;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
-public class RequestHandler {
-    public static ActionData handleRequest(ActionData request, DataObject dataObject
+class RequestHandler {
+    static ActionData handleRequest(ActionData request, DataObject dataObject
             , ObjectOutputStream outputStream, Map<Integer, Client> clientMap) {
         ActionData response = new ActionEmpty();
         try {
@@ -21,6 +21,7 @@ public class RequestHandler {
                 response = new ResponseShowCategories(Operations.getCategories(dataObject));
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestDeleteCategory) {
+
 
             } else if (request instanceof RequestStartMovieEdit) {
 
