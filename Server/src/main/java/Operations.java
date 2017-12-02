@@ -18,8 +18,8 @@ public class Operations {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DataObject.getFilename()))) {
                 dataObject.setCategories((Map<Integer,CategoryItem>) ois.readObject());
                 dataObject.setMovies((Map<Integer,MovieItem>) ois.readObject());
-                dataObject.setCategoryId((AtomicInteger) ois.readObject());
-                dataObject.setFilmId((AtomicInteger) ois.readObject());
+                dataObject.setCategoryId((Integer) ois.readObject());
+                dataObject.setFilmId((Integer) ois.readObject());
             } catch (Exception ex) {
 
                 ex.printStackTrace();
@@ -42,8 +42,8 @@ public class Operations {
             categories.put(i, CategoryItem.newBuilder().id(i)
                     .name("Category " + i).build());
         }
-        AtomicInteger filmId = new AtomicInteger(11);
-        AtomicInteger categoryId = new AtomicInteger(3);
+        int filmId = 11;
+        int categoryId = 3;
         dataObject.setMovies(movies);
         dataObject.setCategories(categories);
         dataObject.setFilmId(filmId);
@@ -90,9 +90,17 @@ public class Operations {
         return movies;
     }
 
-    static CategoryItem createCategory(String name, DataObject dataObject){
-        CategoryItem categoryItem = CategoryItem.newBuilder().id(id).name(name).build();
-        dataObject.getCategories().put()
-        return categoryItem;
+    static void createCategory(String name, DataObject dataObject){
+        CategoryItem categoryItem = CategoryItem.newBuilder().id(dataObject.getCategoryId()).name(name).build();
+        dataObject.getCategories().put(categoryItem.getId(), categoryItem);
+    }
+
+    static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {
+        for (Integer integer : clientMap.keySet()) {
+            Client client = clientMap.get(integer);
+            client.getObjectOutputStream().writeObject(response);
+            client.getObjectOutputStream().flush();
+
+        }
     }
 }
