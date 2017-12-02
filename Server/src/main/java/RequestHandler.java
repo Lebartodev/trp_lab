@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class RequestHandler {
     public static ActionData handleRequest(ActionData request, DataObject dataObject
-            , ObjectOutputStream outputStream, Map<Integer, Client> clientMap) throws IOException {
+            , ObjectOutputStream outputStream, Map<Integer, Client> clientMap) {
         ActionData response = new ActionEmpty();
         try {
             if (request instanceof RequestStartCategoryEdit) {
