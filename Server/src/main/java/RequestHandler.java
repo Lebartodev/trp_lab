@@ -2,7 +2,6 @@ package main.java;
 
 import main.java.model.data.ActionEmpty;
 import main.java.model.data.request.*;
-import main.java.model.data.response.ResponseCreateCategory;
 import main.java.model.data.response.ResponseShowCategories;
 import main.java.model.data.response.ResponseShowMovie;
 import main.java.model.data.response.ResponseShowMovieList;
