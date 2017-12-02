@@ -74,7 +74,8 @@ public class ClientModel extends Model {
                 try {
                     ActionData actionData = (ActionData) in.readObject();
                     actionDataPublishSubject.onNext(actionData);
-                    if (in.read() == -1) break;
+                    System.out.println("xyu");
+
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }

@@ -1,6 +1,5 @@
 package main.java.view;
 
-import main.java.ClientModel;
 import main.java.base.View;
 import main.java.controller.MainController;
 import main.java.model.CategoryItem;
@@ -30,6 +29,14 @@ public class CategoriesView extends View<MainController> {
     public CategoriesView(MainController controller, JFrame frame) {
         this.controller(controller);
         this.frame = frame;
+
+        this.frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                controller().close();
+                System.exit(0);
+            }
+        });
     }
 
     public JComponent render() {

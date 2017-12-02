@@ -7,6 +7,7 @@ public abstract class Controller<M extends Model, V extends View> {
 
     public final void setModel(M model) {
         this.model = model;
+        subscribeOnModel();
     }
 
     public final void setView(V view) {
@@ -19,4 +20,8 @@ public abstract class Controller<M extends Model, V extends View> {
     protected V view() {
         return view;
     }
+
+    protected abstract void subscribeOnModel();
+
+    public abstract void close();
 }

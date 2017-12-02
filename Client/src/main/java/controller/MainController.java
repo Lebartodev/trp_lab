@@ -1,9 +1,9 @@
 package main.java.controller;
 
-import io.reactivex.functions.Consumer;
-import main.java.ActionData;
+import io.reactivex.disposables.Disposable;
 import main.java.ClientModel;
 import main.java.base.Controller;
+import main.java.model.data.request.RequestExit;
 import main.java.model.data.request.RequestShowCategories;
 import main.java.model.data.request.RequestShowMovie;
 import main.java.model.data.request.RequestShowMovieList;
@@ -15,27 +15,22 @@ import org.junit.platform.commons.util.StringUtils;
 
 public class MainController extends Controller<ClientModel, CategoriesView> {
 
+    private Disposable subscriptionModel;
 
     public void requestCategories() {
-        this.model().send(new RequestShowCategories()).subscribe(actionData -> {
-            this.view().onShowCategories((ResponseShowCategories) actionData);
-        }, Throwable::printStackTrace);
+        this.model().send(new RequestShowCategories()).subscribe();
     }
 
     public void requestCategory(int id) {
-        this.model().send(new RequestShowMovieList(id)).subscribe(actionData -> {
-            this.view().onShowSingleCategory((ResponseShowMovieList) actionData);
-        }, Throwable::printStackTrace);
+        this.model().send(new RequestShowMovieList(id)).subscribe();
     }
 
     public void requestMovie(int id) {
-         this.model().send(new RequestShowMovie(id)).subscribe(actionData -> {
-             this.view().onShowMovie((ResponseShowMovie) actionData);
-         }, Throwable::printStackTrace);
+        this.model().send(new RequestShowMovie(id)).subscribe();
     }
 
     public void createCategory(String categoryName) {
-        //this.model().createCategory(categoryName);
+
     }
 
     public void createMovie(String name, int year, String description, int genreId, int budget) {
@@ -74,26 +69,23 @@ public class MainController extends Controller<ClientModel, CategoriesView> {
         // this.model().deleteCategory(id);
     }
 
-//    private void subscribeOnModel() {
-//        if (model != null) {
-//            subscriptionModel = model.getPublisher().subscribe(actionData -> {
-//                if (actionData instanceof ResponseShowCategories) {
-//                    onShowCategories((ResponseShowCategories) actionData);
-//                } else if (actionData instanceof ResponseShowMovieList) {
-//                    onShowSingleCategory((ResponseShowMovieList) actionData);
-//                } else if (actionData instanceof ResponseShowMovie) {
-//                    onShowMovie((ResponseShowMovie) actionData);
-//                } else if (actionData instanceof ResponseOnCreateMovie) {
-//                    onCreateMovie((ResponseOnCreateMovie) actionData);
-//                } else if (actionData instanceof OnCategoryEdited) {
-//                    onEditCategory((OnCategoryEdited) actionData);
-//                } else if (actionData instanceof ResponseOnCreateCategory) {
-//                    onCreateCategory((ResponseOnCreateCategory) actionData);
-//                } else if (actionData instanceof ResponseMovieEditedData) {
-//                    onShowCategoriesForEdit((ResponseMovieEditedData) actionData);
-//                }
-//
-//            }, Throwable::printStackTrace);
-//        }
-//    }
+    protected void subscribeOnModel() {
+        if (model() != null) {
+            subscriptionModel = model().getPublisher().subscribe(actionData -> {
+                if (actionData instanceof ResponseShowCategories) {
+                    view().onShowCategories((ResponseShowCategories) actionData);
+                } else if (actionData instanceof ResponseShowMovieList) {
+                    view().onShowSingleCategory((ResponseShowMovieList) actionData);
+                } else if (actionData instanceof ResponseShowMovie) {
+                    view().onShowMovie((ResponseShowMovie) actionData);
+                }
+
+            }, Throwable::printStackTrace);
+        }
+    }
+
+    @Override
+    public void close() {
+        model().send(new RequestExit());
+    }
 }
