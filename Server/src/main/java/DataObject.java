@@ -14,9 +14,9 @@ public class DataObject implements Serializable{
 
     private Map<Integer,MovieItem> movies = new HashMap<Integer, MovieItem>();
 
-    private AtomicInteger filmId = new AtomicInteger();
+    private int filmId;
 
-    private AtomicInteger categoryId = new AtomicInteger();
+    private int categoryId;
 
     private List<Integer> lockedMovies = new ArrayList<>();
 
@@ -49,19 +49,19 @@ public class DataObject implements Serializable{
         this.movies = movies;
     }
 
-    AtomicInteger getFilmId() {
-        return filmId;
+    synchronized int getFilmId() {
+        return filmId++;
     }
 
-    void setFilmId(AtomicInteger filmId) {
+    void setFilmId(int filmId) {
         this.filmId = filmId;
     }
 
-    AtomicInteger getCategoryId() {
-        return categoryId;
+    synchronized int getCategoryId() {
+        return categoryId++;
     }
 
-    void setCategoryId(AtomicInteger categoryId) {
+    void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -80,4 +80,5 @@ public class DataObject implements Serializable{
     public void setLockedCategories(List<Integer> lockedCategories) {
         this.lockedCategories = lockedCategories;
     }
+
 }

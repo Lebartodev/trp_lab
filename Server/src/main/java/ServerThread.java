@@ -5,15 +5,20 @@ import main.java.model.data.request.RequestExit;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
 public class ServerThread extends Thread {
 
     private Socket socket;
     private DataObject dataObject;
+    private int id;
+    private Map<Integer, Client> clientMap;
 
-    public ServerThread(Socket socket, DataObject dataObject) {
+    public ServerThread(Socket socket, DataObject dataObject, int id, Map<Integer, Client> clientMap) {
         this.socket = socket;
         this.dataObject = dataObject;
+        this.id = id;
+        this.clientMap = clientMap;
         this.start();
     }
 
@@ -21,18 +26,17 @@ public class ServerThread extends Thread {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            clientMap.put(id, new Client(socket, outputStream, inputStream));
             while (true) {
                 ActionData inputAction = (ActionData) inputStream.readObject();
 
                 if (inputAction instanceof RequestExit) {
                     Operations.serializeModel(dataObject);
+                    clientMap.remove(id);
                     socket.close();
                 }
 
-                ActionData outputAction = RequestHandler.handleRequest(inputAction, dataObject);
-
-                outputStream.writeObject(outputAction);
-                outputStream.flush();
+                ActionData outputAction = RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
 
             }
         } catch (Exception e) {
