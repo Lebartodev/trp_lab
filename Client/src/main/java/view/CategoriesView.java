@@ -61,7 +61,6 @@ public class CategoriesView extends View<MainController> {
     @Override
     public void onShowSingleCategory(ResponseShowMovieList data) {
         moviesList.setListData(data.getMovies().toArray(new MovieItem[data.getMovies().size()]));
-        //TODO:Change
         moviesPanel.setVisible(true);
     }
 

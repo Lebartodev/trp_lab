@@ -1,20 +1,22 @@
 package main.java.model.data.request;
 
 import main.java.ActionData;
-import main.java.model.CategoryItem;
 
-/**
- * Created by pavel on 27.09.17.
- */
-public class RequestStartCategoryEdit implements ActionData {
+import java.io.Serializable;
 
-    private CategoryItem category;
+public class RequestStartCategoryEdit implements ActionData, Serializable {
 
-    public RequestStartCategoryEdit(CategoryItem category) {
-        this.category = category;
+    private int categoryId;
+
+    public RequestStartCategoryEdit(int categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public CategoryItem getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -2,26 +2,28 @@ package main.java.view;
 
 import main.java.base.View;
 import main.java.controller.MainController;
+import main.java.model.data.response.ResponseException;
 import main.java.model.data.response.ResponseStartCategoryEdit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class CreateCategoryView extends View< MainController> {
+public class CreateCategoryView extends View<MainController> {
     private JFrame frame;
     private int categoryId = Integer.MIN_VALUE;
     private JTextField textField = new JTextField();
 
-    public CreateCategoryView( MainController controller, JFrame frame) {
+    public CreateCategoryView(MainController controller, JFrame frame) {
         this.controller(controller);
         this.frame = frame;
     }
 
-    public CreateCategoryView( MainController controller, JFrame frame, int categoryId) {
+    public CreateCategoryView(MainController controller, JFrame frame, int categoryId) {
         this.controller(controller);
         this.frame = frame;
         this.categoryId = categoryId;
+
     }
 
 
@@ -63,5 +65,18 @@ public class CreateCategoryView extends View< MainController> {
     @Override
     public void onEditCategory(ResponseStartCategoryEdit data) {
         textField.setText(data.getCategory().getName());
+    }
+
+    @Override
+    public void onEditCategoryError(ResponseException ex) {
+        int input = JOptionPane.showOptionDialog(frame,
+                ex.getException().getMessage(),
+                "Warning",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+        if (input == JOptionPane.OK_OPTION) {
+            if (frame != null) {
+
+            }
+        }
     }
 }

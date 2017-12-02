@@ -1,6 +1,10 @@
 package main.java.model.data.request;
 
-public class RequestCreateCategory {
+import main.java.ActionData;
+
+import java.io.Serializable;
+
+public class RequestCreateCategory implements Serializable, ActionData {
     private String categoryName;
 
     public RequestCreateCategory(String categoryName) {

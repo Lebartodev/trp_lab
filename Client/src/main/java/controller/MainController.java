@@ -3,13 +3,8 @@ package main.java.controller;
 import io.reactivex.disposables.Disposable;
 import main.java.ClientModel;
 import main.java.base.Controller;
-import main.java.model.data.request.RequestExit;
-import main.java.model.data.request.RequestShowCategories;
-import main.java.model.data.request.RequestShowMovie;
-import main.java.model.data.request.RequestShowMovieList;
-import main.java.model.data.response.ResponseShowCategories;
-import main.java.model.data.response.ResponseShowMovie;
-import main.java.model.data.response.ResponseShowMovieList;
+import main.java.model.data.request.*;
+import main.java.model.data.response.*;
 import main.java.view.CategoriesView;
 import org.junit.platform.commons.util.StringUtils;
 
@@ -58,7 +53,13 @@ public class MainController extends Controller<ClientModel, CategoriesView> {
     }
 
     public void requestCategoryForEdit(int id) {
-        // this.model().onEditCategory(id);
+       this.model().send(new RequestStartCategoryEdit(id)).subscribe(actiondata ->{
+           if(actiondata instanceof ResponseStartCategoryEdit)
+           view().onEditCategory((ResponseStartCategoryEdit) actiondata);
+           else if(actiondata instanceof ResponseException){
+               view().onEditCategoryError((ResponseException) actiondata);
+           }
+       });
     }
 
     public void deleteMovie(int id) {
