@@ -1,9 +1,8 @@
 package main.java.view;
 
-import main.java.ClientModel;
 import main.java.base.View;
 import main.java.controller.MainController;
-import main.java.model.data.response.OnCategoryEdited;
+import main.java.model.data.response.ResponseStartCategoryEdit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -62,7 +61,7 @@ public class CreateCategoryView extends View< MainController> {
     }
 
     @Override
-    public void onEditCategory(OnCategoryEdited data) {
+    public void onEditCategory(ResponseStartCategoryEdit data) {
         textField.setText(data.getCategory().getName());
     }
 }

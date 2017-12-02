@@ -6,10 +6,10 @@ import main.java.model.MovieItem;
 /**
  * Created by pavel on 29.09.17.
  */
-public class OnMovieEdited implements ActionData {
+public class ResponseStartMovieEdit implements ActionData {
     private MovieItem movie;
 
-    public OnMovieEdited(MovieItem movie) {
+    public ResponseStartMovieEdit(MovieItem movie) {
         this.movie = movie;
     }
 

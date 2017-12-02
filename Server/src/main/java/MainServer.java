@@ -3,9 +3,12 @@ package main.java;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainServer {
     private Socket socket;
+    List<Client> clientList = new ArrayList<>();
 
     public static void main(String args[]) {
         try {

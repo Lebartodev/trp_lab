@@ -6,11 +6,11 @@ import main.java.model.MovieItem;
 /**
  * Created by pavel on 27.09.17.
  */
-public class RequestMovieEdit implements ActionData {
+public class RequestStartMovieEdit implements ActionData {
 
     private MovieItem category;
 
-    public RequestMovieEdit(MovieItem category) {
+    public RequestStartMovieEdit(MovieItem category) {
         this.category = category;
     }
 

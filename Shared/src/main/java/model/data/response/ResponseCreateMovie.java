@@ -7,11 +7,11 @@ import main.java.model.MovieItem;
 /**
  * Created by pavel on 27.09.17.
  */
-public class ResponseOnCreateMovie implements ActionData {
+public class ResponseCreateMovie implements ActionData {
 
     private MovieItem movie;
 
-    public ResponseOnCreateMovie(MovieItem movie) {
+    public ResponseCreateMovie(MovieItem movie) {
         this.movie = movie;
     }
 

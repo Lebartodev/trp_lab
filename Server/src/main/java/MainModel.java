@@ -2,12 +2,9 @@ package main.java;
 
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
-import main.java.model.data.response.ResponseOnCreateMovie;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainModel extends Model {
@@ -80,7 +77,7 @@ public class MainModel extends Model {
 //        for (CategoryItem category : categories) {
 //            if(category.getId()==genreId){
 //                category.getMovies().add(movieNew);
-//                emit(new ResponseOnCreateMovie(categories, category
+//                emit(new ResponseCreateMovie(categories, category
 //                        , category.getMovies(), movieNew));
 //                serializeModel();
 //                return;
@@ -91,7 +88,7 @@ public class MainModel extends Model {
     public void onEditCategory(int id){
         /*for (CategoryItem category : categories) {
             if(category.getId()==id){
-                emit(new OnCategoryEdited(category.getName()));
+                emit(new ResponseStartCategoryEdit(category.getName()));
                 return;
             }
         }*/

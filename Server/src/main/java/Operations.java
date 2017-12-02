@@ -90,5 +90,9 @@ public class Operations {
         return movies;
     }
 
-
+    static CategoryItem createCategory(String name, DataObject dataObject){
+        CategoryItem categoryItem = CategoryItem.newBuilder().id(id).name(name).build();
+        dataObject.getCategories().put()
+        return categoryItem;
+    }
 }

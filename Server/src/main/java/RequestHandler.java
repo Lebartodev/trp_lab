@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.model.data.ActionEmpty;
 import main.java.model.data.request.*;
+import main.java.model.data.response.ResponseCreateCategory;
 import main.java.model.data.response.ResponseShowCategories;
 import main.java.model.data.response.ResponseShowMovie;
 import main.java.model.data.response.ResponseShowMovieList;
@@ -10,13 +11,14 @@ public class RequestHandler {
     public static ActionData handleRequest(ActionData request, DataObject dataObject){
         ActionData response = new ActionEmpty();
 
-        if(request instanceof RequestCategoryEdit){
+        if(request instanceof RequestStartCategoryEdit){
 
         } else if(request instanceof RequestCreateCategory){
+            response = new ResponseCreateCategory();
 
         } else if(request instanceof RequestDeleteCategory){
 
-        } else if(request instanceof RequestMovieEdit){
+        } else if(request instanceof RequestStartMovieEdit){
 
         } else if(request instanceof RequestShowCategories){
             response = new ResponseShowCategories(Operations.getCategories(dataObject));

@@ -6,11 +6,11 @@ import main.java.model.CategoryItem;
 /**
  * Created by pavel on 27.09.17.
  */
-public class RequestCategoryEdit implements ActionData {
+public class RequestStartCategoryEdit implements ActionData {
 
     private CategoryItem category;
 
-    public RequestCategoryEdit(CategoryItem category) {
+    public RequestStartCategoryEdit(CategoryItem category) {
         this.category = category;
     }
 

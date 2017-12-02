@@ -1,7 +1,6 @@
 package main.java.base;
 
 
-import io.reactivex.disposables.Disposable;
 import main.java.model.data.response.*;
 
 import javax.swing.*;
@@ -10,11 +9,11 @@ public abstract class View<C extends Controller> {
 
     private C controller;
 
-    private void onCreateCategory(ResponseOnCreateCategory actionData) {
+    private void onCreateCategory(ResponseCreateCategory actionData) {
 
     }
 
-    public void onEditCategory(OnCategoryEdited data) {
+    public void onEditCategory(ResponseStartCategoryEdit data) {
 
     }
 
@@ -26,7 +25,7 @@ public abstract class View<C extends Controller> {
 
     }
 
-    public void onCreateMovie(ResponseOnCreateMovie data) {
+    public void onCreateMovie(ResponseCreateMovie data) {
 
     }
 
