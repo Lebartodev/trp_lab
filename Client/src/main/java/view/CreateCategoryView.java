@@ -29,12 +29,19 @@ public class CreateCategoryView extends View<CategoryController> {
         this.frame = frame;
         this.categoryId = categoryId;
 
+        this.frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                controller().closeEditCategory();
+                System.exit(0);
+            }
+        });
+
     }
 
 
     @Override
     public JComponent render() {
-        //onEditCategoryError(new ResponseException(new Exception("HI")));
         JPanel viewPanel = new JPanel(new BorderLayout());
         viewPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         JLabel label = new JLabel("Category name");
@@ -57,7 +64,7 @@ public class CreateCategoryView extends View<CategoryController> {
                 if (categoryId == Integer.MIN_VALUE)
                     controller().createCategory(textField.getText());
                 else {
-                    //controller().editCategory(categoryId, textField.getText());
+                    controller().editCategory(categoryId, textField.getText());
                 }
                 if (frame != null) {
                     frame.dispose();

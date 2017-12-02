@@ -25,11 +25,6 @@ public class MainController extends Controller<ClientModel, View> {
         this.model().send(new RequestShowMovie(id)).subscribe();
     }
 
-    public void createCategory(String categoryName) {
-        this.model().send(new RequestCreateCategory(categoryName)).subscribe();
-
-    }
-
     public void createMovie(String name, int year, String description, int genreId, int budget) {
         if (StringUtils.isBlank(name)) {
             name = "New movie";
@@ -50,19 +45,8 @@ public class MainController extends Controller<ClientModel, View> {
         //this.model().editMovie(id, name, year, description, genreId, budget);
     }
 
-    public void editCategory(int id, String name) {
-        // this.model().editCategory(id, name);
-    }
 
-    public void requestCategoryForEdit(int id) {
-        this.model().send(new RequestStartCategoryEdit(id)).subscribe(actiondata -> {
-            if (actiondata instanceof ResponseStartCategoryEdit)
-                view().onEditCategory((ResponseStartCategoryEdit) actiondata);
-            else if (actiondata instanceof ResponseException) {
-                view().onEditCategoryError((ResponseException) actiondata);
-            }
-        });
-    }
+
 
     public void deleteMovie(int id) {
         // this.model().deleteMovie(id);

@@ -4,6 +4,7 @@ import main.java.ClientModel;
 import main.java.base.Controller;
 import main.java.base.View;
 import main.java.model.data.request.RequestCreateCategory;
+import main.java.model.data.request.RequestEndCategoryEdit;
 import main.java.model.data.request.RequestStartCategoryEdit;
 import main.java.model.data.response.ResponseException;
 import main.java.model.data.response.ResponseStartCategoryEdit;
@@ -25,6 +26,15 @@ public class CategoryController extends Controller<ClientModel, View> {
             }
         });
     }
+
+    public void editCategory(int id, String name) {
+        this.model().send(new RequestEndCategoryEdit(id, name)).subscribe();
+    }
+
+    public void closeEditCategory() {
+        this.model().send(new RequestEndCategoryEdit()).subscribe();
+    }
+
 
     @Override
     protected void subscribeOnModel() {
