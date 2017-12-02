@@ -6,7 +6,6 @@ import main.java.model.data.response.ResponseShowCategories;
 import main.java.model.data.response.ResponseShowMovie;
 import main.java.model.data.response.ResponseShowMovieList;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ public class RequestHandler {
 
             } else if (request instanceof RequestCreateCategory) {
                 Operations.createCategory(((RequestCreateCategory) request).getCategoryName(), dataObject);
+                response = new ResponseShowCategories(Operations.getCategories(dataObject));
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestDeleteCategory) {
 
