@@ -192,7 +192,7 @@ public class CategoriesView extends View<MainController> {
         frame.setSize(300, 100);
         frame.setMinimumSize(new Dimension(300, 100));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new CreateCategoryView(controller(), frame, categoriesList.getSelectedValue().getId()).render());
+        frame.getContentPane().add(new CreateCategoryView(controller().model(), frame, categoriesList.getSelectedValue().getId()).render());
         frame.pack();
         frame.setVisible(true);
         frame.setLocation(100, 100);

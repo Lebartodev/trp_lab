@@ -1,7 +1,8 @@
 package main.java.view;
 
+import main.java.ClientModel;
 import main.java.base.View;
-import main.java.controller.MainController;
+import main.java.controller.CategoryController;
 import main.java.model.data.response.ResponseException;
 import main.java.model.data.response.ResponseStartCategoryEdit;
 
@@ -9,18 +10,22 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class CreateCategoryView extends View<MainController> {
+public class CreateCategoryView extends View<CategoryController> {
     private JFrame frame;
     private int categoryId = Integer.MIN_VALUE;
     private JTextField textField = new JTextField();
 
-    public CreateCategoryView(MainController controller, JFrame frame) {
-        this.controller(controller);
+    public CreateCategoryView(ClientModel model, JFrame frame) {
+        CategoryController categoryController = new CategoryController();
+        categoryController.setModel(model);
+        this.controller(categoryController);
         this.frame = frame;
     }
 
-    public CreateCategoryView(MainController controller, JFrame frame, int categoryId) {
-        this.controller(controller);
+    public CreateCategoryView(ClientModel model, JFrame frame, int categoryId) {
+        CategoryController categoryController = new CategoryController();
+        categoryController.setModel(model);
+        this.controller(categoryController);
         this.frame = frame;
         this.categoryId = categoryId;
 
@@ -29,6 +34,7 @@ public class CreateCategoryView extends View<MainController> {
 
     @Override
     public JComponent render() {
+        //onEditCategoryError(new ResponseException(new Exception("HI")));
         JPanel viewPanel = new JPanel(new BorderLayout());
         viewPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         JLabel label = new JLabel("Category name");
@@ -51,7 +57,7 @@ public class CreateCategoryView extends View<MainController> {
                 if (categoryId == Integer.MIN_VALUE)
                     controller().createCategory(textField.getText());
                 else {
-                    controller().editCategory(categoryId, textField.getText());
+                    //controller().editCategory(categoryId, textField.getText());
                 }
                 if (frame != null) {
                     frame.dispose();

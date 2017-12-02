@@ -14,7 +14,7 @@ public abstract class Controller<M extends Model, V extends View> {
         this.view = view;
     }
 
-    protected M model() {
+    public M model() {
         return model;
     }
     protected V view() {
