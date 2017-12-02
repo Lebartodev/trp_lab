@@ -50,7 +50,7 @@ public class DataObject implements Serializable{
     }
 
     synchronized int getFilmId() {
-        return filmId++;
+        return ++filmId;
     }
 
     void setFilmId(int filmId) {
@@ -58,7 +58,7 @@ public class DataObject implements Serializable{
     }
 
     synchronized int getCategoryId() {
-        return categoryId++;
+        return ++categoryId;
     }
 
     void setCategoryId(int categoryId) {
