@@ -2,6 +2,9 @@ package main.java;
 
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
+import main.java.model.data.request.RequestDeleteCategory;
+import main.java.model.data.response.ResponseException;
+import main.java.model.data.response.ResponseStartCategoryEdit;
 
 import java.io.*;
 import java.util.HashMap;
@@ -94,8 +97,19 @@ public class Operations {
         dataObject.getCategories().put(categoryItem.getId(), categoryItem);
     }
 
-    static void deleteCategory(int id){
+    static void deleteCategory(int id, DataObject dataObject){
+        dataObject.getCategories().remove(id);
+    }
 
+    static ActionData lockCategory(int id, DataObject dataObject){
+        ActionData response;
+        if(dataObject.getLockedCategories().contains(id)){
+            response = new ResponseException(new Exception("This category is already in use."));
+        } else{
+            response = new ResponseStartCategoryEdit(dataObject.getCategories().get(id));
+            dataObject.getLockedCategories().add(id);
+        }
+        return response;
     }
 
     static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {

@@ -15,16 +15,19 @@ class RequestHandler {
         ActionData response = new ActionEmpty();
         try {
             if (request instanceof RequestStartCategoryEdit) {
-
+                response = Operations.lockCategory(((RequestDeleteCategory) request).getId(),dataObject);
+                outputStream.writeObject(response);
+                outputStream.flush();
             } else if (request instanceof RequestCreateCategory) {
                 Operations.createCategory(((RequestCreateCategory) request).getCategoryName(), dataObject);
                 response = new ResponseShowCategories(Operations.getCategories(dataObject));
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestDeleteCategory) {
-
-
+                Operations.deleteCategory(((RequestDeleteCategory) request).getId(), dataObject );
+                response = new ResponseShowCategories(Operations.getCategories(dataObject));
+                Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestStartMovieEdit) {
-
+                
             } else if (request instanceof RequestShowCategories) {
                 response = new ResponseShowCategories(Operations.getCategories(dataObject));
                 outputStream.writeObject(response);
@@ -39,10 +42,6 @@ class RequestHandler {
                         getMoviesInCategory(((RequestShowMovieList) request).getCategoryId(), dataObject));
                 outputStream.writeObject(response);
                 outputStream.flush();
-            } else if (request instanceof RequestUpdateCategories) {
-
-            } else if (request instanceof RequestUpdateMovies) {
-
             }
         } catch(Exception e){
             System.out.println("error in handler: " + e);

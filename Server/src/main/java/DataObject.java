@@ -4,8 +4,10 @@ import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 
 import java.io.Serializable;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataObject implements Serializable{
     private static String filename = "model.dat";
@@ -29,7 +31,7 @@ public class DataObject implements Serializable{
         return filename;
     }
 
-    public static void setFilename(String filename) {
+    static void setFilename(String filename) {
         DataObject.filename = filename;
     }
 
@@ -69,15 +71,15 @@ public class DataObject implements Serializable{
         return lockedMovies;
     }
 
-    public void setLockedMovies(List<Integer> lockedMovies) {
+    void setLockedMovies(List<Integer> lockedMovies) {
         this.lockedMovies = lockedMovies;
     }
 
-    public List<Integer> getLockedCategories() {
+    List<Integer> getLockedCategories() {
         return lockedCategories;
     }
 
-    public void setLockedCategories(List<Integer> lockedCategories) {
+    void setLockedCategories(List<Integer> lockedCategories) {
         this.lockedCategories = lockedCategories;
     }
 
