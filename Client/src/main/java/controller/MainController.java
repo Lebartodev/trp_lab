@@ -5,7 +5,11 @@ import main.java.ActionData;
 import main.java.ClientModel;
 import main.java.base.Controller;
 import main.java.model.data.request.RequestShowCategories;
-import main.java.model.data.response.*;
+import main.java.model.data.request.RequestShowMovie;
+import main.java.model.data.request.RequestShowMovieList;
+import main.java.model.data.response.ResponseShowCategories;
+import main.java.model.data.response.ResponseShowMovie;
+import main.java.model.data.response.ResponseShowMovieList;
 import main.java.view.CategoriesView;
 import org.junit.platform.commons.util.StringUtils;
 
@@ -15,15 +19,19 @@ public class MainController extends Controller<ClientModel, CategoriesView> {
     public void requestCategories() {
         this.model().send(new RequestShowCategories()).subscribe(actionData -> {
             this.view().onShowCategories((ResponseShowCategories) actionData);
-        },throwable -> throwable.printStackTrace());
+        }, Throwable::printStackTrace);
     }
 
     public void requestCategory(int id) {
-        //this.model().getMoviesInCategory(id);
+        this.model().send(new RequestShowMovieList(id)).subscribe(actionData -> {
+            this.view().onShowSingleCategory((ResponseShowMovieList) actionData);
+        }, Throwable::printStackTrace);
     }
 
     public void requestMovie(int id) {
-        // this.model().getMovie(id);
+         this.model().send(new RequestShowMovie(id)).subscribe(actionData -> {
+             this.view().onShowMovie((ResponseShowMovie) actionData);
+         }, Throwable::printStackTrace);
     }
 
     public void createCategory(String categoryName) {

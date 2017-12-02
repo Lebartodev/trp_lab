@@ -2,13 +2,12 @@ package main.java;
 
 
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
-import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 import main.java.base.Model;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientModel extends Model {
@@ -22,8 +21,8 @@ public class ClientModel extends Model {
         return actionDataPublishSubject;
     }
 
-    public ClientModel() {
-        connect();
+    ClientModel() {
+        checkConnection();
     }
 
     @Override

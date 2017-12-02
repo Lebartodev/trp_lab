@@ -1,7 +1,15 @@
 package main.java.model.data.request;
 
 
-public class RequestShowMovie {
+import main.java.ActionData;
+
+import java.io.Serializable;
+
+public class RequestShowMovie implements ActionData, Serializable {
+    public RequestShowMovie(int movieId) {
+        this.movieId = movieId;
+    }
+
     private int movieId;
 
     public int getMovieId() {
