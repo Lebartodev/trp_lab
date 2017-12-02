@@ -25,6 +25,7 @@ public class MainController extends Controller<ClientModel, CategoriesView> {
     }
 
     public void createCategory(String categoryName) {
+        this.model().send(new RequestCreateCategory(categoryName)).subscribe();
 
     }
 
