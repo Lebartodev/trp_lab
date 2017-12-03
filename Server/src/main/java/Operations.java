@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
+import main.java.model.data.request.RequestEndCategoryEdit;
 import main.java.model.data.response.ResponseException;
 import main.java.model.data.response.ResponseStartCategoryEdit;
 
@@ -109,6 +110,16 @@ public class Operations {
             dataObject.getLockedCategories().add(id);
         }
         return response;
+    }
+
+    static void releaseCategory(int id, DataObject dataObject){
+        dataObject.getLockedCategories().remove(id);
+    }
+
+    static void changeCategory(ActionData request, DataObject dataObject){
+        RequestEndCategoryEdit requestEndCategoryEdit = (RequestEndCategoryEdit) request;
+        dataObject.getCategories().get(requestEndCategoryEdit.getCategoryId()).setName(requestEndCategoryEdit.getCategoryName());
+        dataObject.getLockedCategories().remove(requestEndCategoryEdit.getCategoryId());
     }
 
     static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {

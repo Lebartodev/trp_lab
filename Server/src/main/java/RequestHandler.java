@@ -18,7 +18,16 @@ class RequestHandler {
                 response = Operations.lockCategory(((RequestStartCategoryEdit) request).getCategoryId(),dataObject);
                 outputStream.writeObject(response);
                 outputStream.flush();
-            } else if (request instanceof RequestCreateCategory) {
+            } else if (request instanceof RequestEndCategoryEdit){
+                if(((RequestEndCategoryEdit) request).getCategoryName() == null ){
+                    Operations.releaseCategory(((RequestEndCategoryEdit) request).getCategoryId(), dataObject);
+                } else{
+                    Operations.changeCategory(request, dataObject);
+                    response = new ResponseShowCategories(Operations.getCategories(dataObject));
+                    Operations.broadcast(response, clientMap);
+                }
+            }
+            else if (request instanceof RequestCreateCategory) {
                 Operations.createCategory(((RequestCreateCategory) request).getCategoryName(), dataObject);
                 response = new ResponseShowCategories(Operations.getCategories(dataObject));
                 Operations.broadcast(response, clientMap);
