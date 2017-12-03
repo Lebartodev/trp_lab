@@ -159,7 +159,7 @@ public class Operations {
         changedMovie.setName(requestEndMovieEdit.getName());
         changedMovie.setYear(requestEndMovieEdit.getYear());
         changedMovie.setDescription(requestEndMovieEdit.getDescription());
-        changedMovie.setGenreId(requestEndMovieEdit.getBudget());
+        changedMovie.setBudget(requestEndMovieEdit.getBudget());
         changedMovie.setGenreId(requestEndMovieEdit.getGenreId());
         dataObject.getLockedMovies().remove(dataObject.getLockedMovies().indexOf(changedMovie.getId()));
     }

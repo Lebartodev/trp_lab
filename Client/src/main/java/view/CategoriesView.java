@@ -4,10 +4,7 @@ import main.java.base.View;
 import main.java.controller.MainController;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
-import main.java.model.data.response.ResponseException;
-import main.java.model.data.response.ResponseShowCategories;
-import main.java.model.data.response.ResponseShowMovie;
-import main.java.model.data.response.ResponseShowMovieList;
+import main.java.model.data.response.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -61,8 +58,18 @@ public class CategoriesView extends View<MainController> {
 
     @Override
     public void onShowSingleCategory(ResponseShowMovieList data) {
-        moviesList.setListData(data.getMovies().toArray(new MovieItem[data.getMovies().size()]));
-        moviesPanel.setVisible(true);
+        if (categoriesList.getSelectedValue() != null && categoriesList.getSelectedValue().getId() == data.getCategoryItem().getId()) {
+
+            if (moviesList.getSelectedValue() != null) {
+                for (MovieItem movieItem : data.getMovies()) {
+                    if (movieItem.getId() == moviesList.getSelectedValue().getId())
+                        onShowMovie(new ResponseShowMovie(movieItem));
+                }
+
+            }
+            moviesList.setListData(data.getMovies().toArray(new MovieItem[data.getMovies().size()]));
+            moviesPanel.setVisible(true);
+        }
     }
 
     @Override
@@ -107,13 +114,12 @@ public class CategoriesView extends View<MainController> {
         });
         editLabel.addActionListener(e -> {
             if (categoriesList.getSelectedValue() != null) {
-                openCategoryEditor();
+                controller().requestCategoryForEdit(categoriesList.getSelectedValue().getId());
             }
         });
         deleteLabel.addActionListener(e -> {
             if (categoriesList.getSelectedValue() != null) {
                 controller().deleteCategory(categoriesList.getSelectedValue().getId());
-                //controller().requestCategories();
             }
         });
 
@@ -158,12 +164,11 @@ public class CategoriesView extends View<MainController> {
             if (moviesList.getSelectedValue() != null) {
 
                 controller().deleteMovie(moviesList.getSelectedValue().getId());
-                controller().requestCategory(moviesList.getSelectedValue().getGenreId());
             }
         });
         editLabel.addActionListener(e -> {
             if (moviesList.getSelectedValue() != null) {
-                openMovieEditor();
+                controller().requestMovieForEdit(moviesList.getSelectedValue().getId());
             }
         });
 
@@ -184,12 +189,13 @@ public class CategoriesView extends View<MainController> {
 
     }
 
-    private void openCategoryEditor() {
+    @Override
+    public void openCategoryEditor(ResponseStartCategoryEdit data) {
         JFrame frame = new JFrame("Edit category");
         frame.setSize(300, 100);
         frame.setMinimumSize(new Dimension(300, 100));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new CreateCategoryView(controller().model(), frame, categoriesList.getSelectedValue().getId()).render());
+        frame.getContentPane().add(new CreateCategoryView(controller(), frame, data).render());
         frame.pack();
         frame.setVisible(true);
         frame.setLocation(100, 100);
@@ -197,18 +203,18 @@ public class CategoriesView extends View<MainController> {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                super.windowClosed(e);
                 CategoriesView.this.frame.setEnabled(true);
             }
         });
     }
 
-    private void openMovieEditor() {
+    @Override
+    public void openMovieEditor(ResponseStartMovieEdit data) {
         JFrame frame = new JFrame("Edit movie");
         frame.setSize(300, 100);
         frame.setMinimumSize(new Dimension(300, 100));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().add(new CreateMovieView(controller(), frame, moviesList.getSelectedValue().getId()).render());
+        frame.getContentPane().add(new CreateMovieView(controller(), frame, data).render());
         frame.pack();
         frame.setVisible(true);
         frame.setLocation(100, 100);

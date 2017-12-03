@@ -1,36 +1,36 @@
 package main.java.view;
 
-import main.java.ClientModel;
 import main.java.base.View;
 import main.java.controller.MainController;
 import main.java.model.CategoryItem;
-import main.java.model.data.response.ResponseMovieEditedData;
-import main.java.model.data.response.ResponseShowMovie;
+import main.java.model.data.response.ResponseStartMovieEdit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 
-public class CreateMovieView extends View< MainController> {
+public class CreateMovieView extends View<MainController> {
     private JFrame frame;
     private JComboBox c;
-    private int movieId = Integer.MIN_VALUE;
     private JTextField textField = new JTextField();
     private JTextField textBudget = new JTextField();
     private JTextArea textDesc = new JTextArea();
     private JTextField textYear = new JTextField();
-    private int categoryId;
+    private MainController controller;
+    private ResponseStartMovieEdit data;
 
-    public CreateMovieView(MainController controller, JFrame frame) {
-        this.controller(controller);
+    public CreateMovieView(MainController controller, JFrame frame, ResponseStartMovieEdit data) {
+        this.controller = controller;
         this.frame = frame;
-    }
-
-    public CreateMovieView(MainController controller, JFrame frame, int movieId) {
-        this.controller(controller);
-        this.frame = frame;
-        this.movieId = movieId;
+        this.data = data;
+        this.frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (data.getMovie() != null)
+                    controller.closeEditMovie(data.getMovie().getId());
+            }
+        });
     }
 
     @Override
@@ -84,15 +84,14 @@ public class CreateMovieView extends View< MainController> {
         viewPanel.add(c);
 
 
-        JButton createButton = new JButton(movieId == Integer.MIN_VALUE ? "Create" : "Edit");
+        JButton createButton = new JButton(data.getMovie() == null ? "Create" : "Edit");
 
 
         viewPanel.add(createButton, BorderLayout.SOUTH);
         createButton.addActionListener(e -> {
             if (frame != null) {
-                if (movieId == Integer.MIN_VALUE) {
-                    textYear.getText().length();
-                    controller().createMovie(textField.getText(),
+                if (data.getMovie() == null) {
+                    controller.createMovie(textField.getText(),
                             textYear.getText().trim().length() == 0 ? 0
                                     : Integer.parseInt(textYear.getText()),
                             textDesc.getText(),
@@ -100,51 +99,39 @@ public class CreateMovieView extends View< MainController> {
                             textBudget.getText().trim().length() == 0 ? 0 : Integer.parseInt(textBudget.getText())
                     );
                 } else {
-                    controller().editMovie(movieId, textField.getText(),
+                    controller.editMovie(data.getMovie().getId(), textField.getText(),
                             textYear.getText().trim().length() == 0 ? 0
                                     : Integer.parseInt(textYear.getText()),
                             textDesc.getText(),
                             ((CategoryItem) c.getSelectedItem()).getId(),
                             textBudget.getText().trim().length() == 0 ? 0 : Integer.parseInt(textBudget.getText())
                     );
-                    controller().requestMovie(movieId);
 
                 }
-                controller().requestCategory(((CategoryItem) c.getSelectedItem()).getId());
+                controller.requestCategory(((CategoryItem) c.getSelectedItem()).getId());
                 frame.dispose();
             }
 
             // textField.getText()
         });
+        if (data.getMovie() != null) {
+            textField.setText(data.getMovie().getName());
+            textBudget.setText(String.valueOf(data.getMovie().getBudget()));
+            textYear.setText(String.valueOf(data.getMovie().getYear()));
+            textDesc.setText(data.getMovie().getDescription());
 
-        if (movieId != Integer.MIN_VALUE) {
-            controller().requestMovie(movieId);
-        } else {
-            controller().requestCategories();
+        }
+        for (CategoryItem categoryItem : data.getCategories()) {
+            c.addItem(categoryItem);
+            if (data.getMovie() != null) {
+                if (data.getMovie().getGenreId() == categoryItem.getId()) {
+                    c.setSelectedItem(categoryItem);
+                }
+
+
+            }
+
         }
         return viewPanel;
     }
-
-    @Override
-    public void onShowMovie(ResponseShowMovie data) {
-        textField.setText(data.getMovie().getName());
-        textBudget.setText(String.valueOf(data.getMovie().getBudget()));
-        textYear.setText(String.valueOf(data.getMovie().getYear()));
-        textDesc.setText(data.getMovie().getDescription());
-        categoryId = data.getMovie().getGenreId();
-        controller().requestCategories();
-    }
-
-    @Override
-    public void onShowCategoriesForEdit(ResponseMovieEditedData data) {
-        if (c.getItemCount() == 0)
-            for (CategoryItem categoryItem : data.getCategories()) {
-                c.addItem(categoryItem);
-                if (categoryId == categoryItem.getId()) {
-                    c.setSelectedItem(categoryItem);
-                }
-            }
-
-    }
-
 }

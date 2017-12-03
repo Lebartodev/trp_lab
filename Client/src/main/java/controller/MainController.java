@@ -6,8 +6,6 @@ import main.java.base.Controller;
 import main.java.base.View;
 import main.java.model.data.request.*;
 import main.java.model.data.response.*;
-import main.java.view.CategoriesView;
-import org.junit.platform.commons.util.StringUtils;
 
 public class MainController extends Controller<ClientModel, View> {
 
@@ -26,38 +24,75 @@ public class MainController extends Controller<ClientModel, View> {
     }
 
     public void createMovie(String name, int year, String description, int genreId, int budget) {
-        if (StringUtils.isBlank(name)) {
-            name = "New movie";
-        }
-        if (StringUtils.isBlank(description)) {
-            description = "Please add description.";
-        }
-        // this.model().onCreateMovie(name, year, description, genreId, budget);
+        this.model().send(new RequestCreateMovie(name, year, description, genreId, budget)).subscribe();
     }
+
+
+    public void createCategory(String categoryName) {
+        this.model().send(new RequestCreateCategory(categoryName)).subscribe();
+    }
+
+
+    public void requestCategoryForEdit(int id) {
+        this.model().send(new RequestStartCategoryEdit(id)).subscribe(actiondata -> {
+            if (actiondata instanceof ResponseStartCategoryEdit)
+                view().openCategoryEditor((ResponseStartCategoryEdit) actiondata);
+            else if (actiondata instanceof ResponseException) {
+                view().onError((ResponseException) actiondata);
+            }
+        });
+    }
+
+    public void requestMovieForCreate() {
+        this.model().send(new RequestStartCreateMovie()).subscribe(actiondata -> {
+            if (actiondata instanceof ResponseStartMovieEdit)
+                view().openMovieEditor((ResponseStartMovieEdit) actiondata);
+            else if (actiondata instanceof ResponseException) {
+                view().onError((ResponseException) actiondata);
+            }
+        });
+
+    }
+
+    public void editCategory(int id, String name) {
+        this.model().send(new RequestEndCategoryEdit(id, name)).subscribe();
+    }
+
+    public void requestMovieForEdit(int id) {
+        this.model().send(new RequestStartMovieEdit(id)).subscribe(actiondata -> {
+            if (actiondata instanceof ResponseStartMovieEdit)
+                view().openMovieEditor((ResponseStartMovieEdit) actiondata);
+            else if (actiondata instanceof ResponseException) {
+                view().onError((ResponseException) actiondata);
+            }
+        });
+
+    }
+
+    public void closeEditCategory(int id) {
+        this.model().send(new RequestEndCategoryEdit(id, null)).subscribe();
+    }
+
+    public void closeEditMovie(int id) {
+        this.model().send(new RequestEndMovieEdit(id, null, 0, null, 0, 0)).subscribe();
+    }
+
 
     public void editMovie(int id, String name, int year, String description, int genreId, int budget) {
-        if (StringUtils.isBlank(name)) {
-            name = "Edited movie";
-        }
-        if (StringUtils.isBlank(description)) {
-            description = "Please add description.";
-        }
-        //this.model().editMovie(id, name, year, description, genreId, budget);
+        this.model().send(new RequestEndMovieEdit(id, name, year, description, genreId, budget)).subscribe();
     }
-
-
 
 
     public void deleteMovie(int id) {
-        // this.model().deleteMovie(id);
+
     }
 
     public void deleteCategory(int id) {
-         this.model().send(new RequestDeleteCategory(id)).subscribe(actionData->{
-             if (actionData instanceof ResponseException) {
-                 view().onError((ResponseException) actionData);
-             }
-         });
+        this.model().send(new RequestDeleteCategory(id)).subscribe(actionData -> {
+            if (actionData instanceof ResponseException) {
+                view().onError((ResponseException) actionData);
+            }
+        });
     }
 
     protected void subscribeOnModel() {
@@ -79,4 +114,6 @@ public class MainController extends Controller<ClientModel, View> {
     public void close() {
         model().send(new RequestExit());
     }
+
+
 }

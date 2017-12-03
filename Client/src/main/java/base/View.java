@@ -18,9 +18,6 @@ public abstract class View<C extends Controller> {
 
     }
 
-    public void onShowCategoriesForEdit(ResponseMovieEditedData data) {
-
-    }
 
     public void onShowMovie(ResponseShowMovie data) {
 
@@ -29,6 +26,10 @@ public abstract class View<C extends Controller> {
     public void onShowSingleCategory(ResponseShowMovieList data) {
 
     }
+
+    public  void openCategoryEditor(ResponseStartCategoryEdit data){
+
+    };
 
     public void onError(ResponseException data) {
 
@@ -46,5 +47,9 @@ public abstract class View<C extends Controller> {
             this.controller.setView(this);
 
         }
+    }
+
+    public void openMovieEditor(ResponseStartMovieEdit actiondata) {
+
     }
 }
