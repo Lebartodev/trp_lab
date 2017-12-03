@@ -51,9 +51,6 @@ public class CreateCategoryView extends View<CategoryController> {
         viewPanel.add(textField, BorderLayout.CENTER);
         viewPanel.add(createButton, BorderLayout.SOUTH);
         viewPanel.setSize(300, 100);
-        if (categoryId != Integer.MIN_VALUE) {
-            controller().requestCategoryForEdit(categoryId);
-        }
         createButton.addActionListener(e -> {
             if (textField.getText().length() < 4) {
                 JOptionPane.showMessageDialog(frame,
