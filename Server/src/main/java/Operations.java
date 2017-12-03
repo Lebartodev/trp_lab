@@ -2,10 +2,10 @@ package main.java;
 
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
+import main.java.model.data.request.RequestCreateMovie;
 import main.java.model.data.request.RequestEndCategoryEdit;
-import main.java.model.data.response.ResponseException;
-import main.java.model.data.response.ResponseShowCategories;
-import main.java.model.data.response.ResponseStartCategoryEdit;
+import main.java.model.data.request.RequestEndMovieEdit;
+import main.java.model.data.response.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -82,7 +82,8 @@ public class Operations {
         return resultMovie;
     }
 
-    static List<MovieItem> getMoviesInCategory(int categoryId, DataObject dataObject) {
+    static ActionData getMoviesInCategory(int categoryId, DataObject dataObject) {
+        ResponseShowMovieList responseShowMovieList;
         List<MovieItem> movies = new LinkedList<>();
         Map<Integer, MovieItem> movieItemMap = dataObject.getMovies();
         for (Integer integer : movieItemMap.keySet()) {
@@ -90,7 +91,8 @@ public class Operations {
                 movies.add(movieItemMap.get(integer));
             }
         }
-        return movies;
+        responseShowMovieList = new ResponseShowMovieList(movies, dataObject.getCategories().get(categoryId));
+        return responseShowMovieList;
     }
 
     static void createCategory(String name, DataObject dataObject) {
@@ -99,7 +101,7 @@ public class Operations {
     }
 
     static ActionData deleteCategory(int id, DataObject dataObject) {
-        if(dataObject.getLockedCategories().contains(id)){
+        if (dataObject.getLockedCategories().contains(id)) {
             return new ResponseException(new Exception("This category is already in use."));
         } else {
             dataObject.getCategories().remove(id);
@@ -119,13 +121,47 @@ public class Operations {
     }
 
     static void releaseCategory(int id, DataObject dataObject) {
-        dataObject.getLockedCategories().remove(id);
+        dataObject.getLockedCategories().remove(dataObject.getLockedCategories().indexOf(id));
     }
 
     static void changeCategory(ActionData request, DataObject dataObject) {
         RequestEndCategoryEdit requestEndCategoryEdit = (RequestEndCategoryEdit) request;
         dataObject.getCategories().get(requestEndCategoryEdit.getCategoryId()).setName(requestEndCategoryEdit.getCategoryName());
         dataObject.getLockedCategories().remove(dataObject.getLockedCategories().indexOf(requestEndCategoryEdit.getCategoryId()));
+    }
+
+    static ActionData lockMovie(int id, DataObject dataObject) {
+        ActionData response;
+        if (dataObject.getLockedMovies().contains(id)) {
+            response = new ResponseException(new Exception("This movie is already in use."));
+        } else {
+            response = new ResponseStartMovieEdit(dataObject.getMovies().get(id), getCategories(dataObject));
+            dataObject.getLockedMovies().add(id);
+        }
+        return response;
+    }
+
+    static void releaseMovie(int id, DataObject dataObject) {
+        dataObject.getLockedMovies().remove(dataObject.getLockedMovies().indexOf(id));
+    }
+
+    static void createMovie(ActionData request, DataObject dataObject) {
+        RequestCreateMovie requestCreateMovie = (RequestCreateMovie) request;
+        MovieItem newMovie = MovieItem.newBuilder().id(dataObject.getFilmId()).name(requestCreateMovie.getName())
+                .description(requestCreateMovie.getDescription()).year(requestCreateMovie.getYear())
+                .genreId(requestCreateMovie.getGenreId()).budget(requestCreateMovie.getBudget()).build();
+        dataObject.getMovies().put(newMovie.getId(), newMovie);
+    }
+
+    static void changeMovie(ActionData request, DataObject dataObject) {
+        RequestEndMovieEdit requestEndMovieEdit = (RequestEndMovieEdit) request;
+        MovieItem changedMovie = dataObject.getMovies().get(requestEndMovieEdit.getId());
+        changedMovie.setName(requestEndMovieEdit.getName());
+        changedMovie.setYear(requestEndMovieEdit.getYear());
+        changedMovie.setDescription(requestEndMovieEdit.getDescription());
+        changedMovie.setGenreId(requestEndMovieEdit.getBudget());
+        changedMovie.setGenreId(requestEndMovieEdit.getGenreId());
+        dataObject.getLockedMovies().remove(dataObject.getLockedMovies().indexOf(changedMovie.getId()));
     }
 
     static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {

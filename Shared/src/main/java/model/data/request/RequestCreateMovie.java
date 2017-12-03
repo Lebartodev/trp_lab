@@ -4,29 +4,19 @@ import main.java.ActionData;
 
 import java.io.Serializable;
 
-public class RequestEndMovieEdit implements ActionData, Serializable {
-    private int id;
+public class RequestCreateMovie implements ActionData, Serializable{
     private String name;
     private int year;
     private String description;
     private int genreId;
     private int budget;
 
-    public RequestEndMovieEdit(int id, String name, int year, String description, int genreId, int budget) {
-        this.id = id;
+    public RequestCreateMovie(String name, int year, String description, int genreId, int budget) {
         this.name = name;
         this.year = year;
         this.description = description;
         this.genreId = genreId;
         this.budget = budget;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
