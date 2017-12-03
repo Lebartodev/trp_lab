@@ -125,9 +125,9 @@ public class Operations {
     static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {
         for (Integer integer : clientMap.keySet()) {
             Client client = clientMap.get(integer);
+            client.getObjectOutputStream().reset();
             client.getObjectOutputStream().writeObject(response);
             client.getObjectOutputStream().flush();
-
         }
     }
 }
