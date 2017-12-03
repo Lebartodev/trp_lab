@@ -55,7 +55,8 @@ public class Operations {
     }
 
     static void serializeModel(DataObject dataObject) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DataObject.getFilename()))) {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DataObject.getFilename()));
             oos.writeObject(dataObject.getCategories());
             oos.writeObject(dataObject.getMovies());
             oos.writeObject(dataObject.getCategoryId());
