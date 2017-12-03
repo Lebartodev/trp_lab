@@ -31,8 +31,8 @@ public class CategoryController extends Controller<ClientModel, View> {
         this.model().send(new RequestEndCategoryEdit(id, name)).subscribe();
     }
 
-    public void closeEditCategory() {
-        this.model().send(new RequestEndCategoryEdit()).subscribe();
+    public void closeEditCategory(int id) {
+        this.model().send(new RequestEndCategoryEdit(id,null)).subscribe();
     }
 
 

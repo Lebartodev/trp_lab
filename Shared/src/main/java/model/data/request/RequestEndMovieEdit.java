@@ -1,4 +1,8 @@
 package main.java.model.data.request;
 
-public class RequestEndMovieEdit {
+import main.java.ActionData;
+
+import java.io.Serializable;
+
+public class RequestEndMovieEdit implements ActionData, Serializable {
 }

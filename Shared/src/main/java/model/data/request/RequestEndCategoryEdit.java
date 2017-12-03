@@ -14,9 +14,6 @@ public class RequestEndCategoryEdit implements ActionData, Serializable {
         this.categoryName = categoryName;
     }
 
-    public RequestEndCategoryEdit() {
-    }
-
     public int getCategoryId() {
         return categoryId;
     }

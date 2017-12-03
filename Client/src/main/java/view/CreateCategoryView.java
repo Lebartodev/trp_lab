@@ -32,11 +32,11 @@ public class CreateCategoryView extends View<CategoryController> {
         this.frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                controller().closeEditCategory();
+                controller().closeEditCategory(categoryId);
                 System.exit(0);
             }
         });
-
+        controller().requestCategoryForEdit(categoryId);
     }
 
 
@@ -88,7 +88,7 @@ public class CreateCategoryView extends View<CategoryController> {
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
         if (input == JOptionPane.OK_OPTION) {
             if (frame != null) {
-
+                frame.dispose();
             }
         }
     }
