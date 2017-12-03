@@ -58,8 +58,14 @@ public class CategoriesView extends View<MainController> {
 
     @Override
     public void onShowSingleCategory(ResponseShowMovieList data) {
-        if (categoriesList.getSelectedValue() != null && categoriesList.getSelectedValue().getId() == data.getCategoryItem().getId()) {
 
+        if (data.getOldCategoryItem() != null && categoriesList.getSelectedValue().getId() == data.getOldCategoryItem().getId()) {
+            controller().requestCategory(data.getOldCategoryItem().getId());
+            for (MovieItem movieItem : data.getMovies()) {
+                if (movieItem.getId() == moviesList.getSelectedValue().getId())
+                    moviePanel.setVisible(false);
+            }
+        } else if (categoriesList.getSelectedValue() != null && categoriesList.getSelectedValue().getId() == data.getCategoryItem().getId()) {
             if (moviesList.getSelectedValue() != null) {
                 for (MovieItem movieItem : data.getMovies()) {
                     if (movieItem.getId() == moviesList.getSelectedValue().getId())
@@ -234,5 +240,14 @@ public class CategoriesView extends View<MainController> {
                 data.getException().getMessage(),
                 "Warning",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+    }
+
+    @Override
+    public void onServerNotStartedException() {
+        JOptionPane.showOptionDialog(frame,
+                "Server not started",
+                "Warning",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+        System.exit(0);
     }
 }

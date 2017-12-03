@@ -12,7 +12,11 @@ public class MainController extends Controller<ClientModel, View> {
     private Disposable subscriptionModel;
 
     public void requestCategories() {
-        this.model().send(new RequestShowCategories()).subscribe();
+        this.model().send(new RequestShowCategories()).subscribe(actionData->{
+
+        },throwable -> {
+            view().onServerNotStartedException();
+        });
     }
 
     public void requestCategory(int id) {
@@ -84,7 +88,11 @@ public class MainController extends Controller<ClientModel, View> {
 
 
     public void deleteMovie(int id) {
-
+        this.model().send(new RequestDeleteMovie(id)).subscribe(actionData -> {
+            if (actionData instanceof ResponseException) {
+                view().onError((ResponseException) actionData);
+            }
+        });
     }
 
     public void deleteCategory(int id) {

@@ -52,4 +52,8 @@ public abstract class View<C extends Controller> {
     public void openMovieEditor(ResponseStartMovieEdit actiondata) {
 
     }
+
+    public void onServerNotStartedException() {
+
+    }
 }
