@@ -3,6 +3,7 @@ package main.java;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 import main.java.model.data.request.RequestCreateMovie;
+import main.java.model.data.request.RequestDeleteMovie;
 import main.java.model.data.request.RequestEndCategoryEdit;
 import main.java.model.data.request.RequestEndMovieEdit;
 import main.java.model.data.response.*;
@@ -75,11 +76,7 @@ public class Operations {
     }
 
     static MovieItem getMovie(int id, DataObject dataObject) {
-        MovieItem resultMovie = MovieItem.newBuilder().build();
-        if (dataObject.getMovies().containsKey(id) && !dataObject.getLockedMovies().contains(id)) {
-            return dataObject.getMovies().get(id);
-        }
-        return resultMovie;
+        return dataObject.getMovies().get(id);
     }
 
     static ActionData getMoviesInCategory(int categoryId, DataObject dataObject) {
@@ -153,8 +150,10 @@ public class Operations {
         dataObject.getMovies().put(newMovie.getId(), newMovie);
     }
 
-    static void changeMovie(ActionData request, DataObject dataObject) {
+    static ActionData changeMovie(ActionData request, DataObject dataObject) {
+        ActionData response;
         RequestEndMovieEdit requestEndMovieEdit = (RequestEndMovieEdit) request;
+        int oldCategory = dataObject.getCategories().get(dataObject.getMovies().get(requestEndMovieEdit.getId()).getGenreId()).getId();
         MovieItem changedMovie = dataObject.getMovies().get(requestEndMovieEdit.getId());
         changedMovie.setName(requestEndMovieEdit.getName());
         changedMovie.setYear(requestEndMovieEdit.getYear());
@@ -162,6 +161,29 @@ public class Operations {
         changedMovie.setBudget(requestEndMovieEdit.getBudget());
         changedMovie.setGenreId(requestEndMovieEdit.getGenreId());
         dataObject.getLockedMovies().remove(dataObject.getLockedMovies().indexOf(changedMovie.getId()));
+        List<MovieItem> movies = new LinkedList<>();
+        Map<Integer, MovieItem> movieItemMap = dataObject.getMovies();
+        for (Integer integer : movieItemMap.keySet()) {
+            if (movieItemMap.get(integer).getGenreId() == changedMovie.getGenreId()) {
+                movies.add(movieItemMap.get(integer));
+            }
+        }
+        response = new ResponseShowMovieList(dataObject.getCategories().get(changedMovie.getGenreId()), movies, dataObject.getCategories().get(oldCategory));
+        return response;
+    }
+
+    static ActionData deleteMovie(ActionData request, DataObject dataObject){
+        RequestDeleteMovie requestDeleteMovie = (RequestDeleteMovie) request;
+        ActionData response;
+        if(dataObject.getLockedMovies().contains(requestDeleteMovie.getMovieId())){
+            response = new ResponseException(new Exception("This movie is already in use."));
+            return response;
+        } else {
+            int genreId = dataObject.getMovies().get(requestDeleteMovie.getMovieId()).getGenreId();
+            dataObject.getMovies().remove(requestDeleteMovie.getMovieId());
+            response = getMoviesInCategory(genreId, dataObject);
+            return response;
+        }
     }
 
     static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {

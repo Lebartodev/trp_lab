@@ -14,9 +14,17 @@ public class ResponseShowMovieList implements ActionData,Serializable {
 
     private List<MovieItem> movies = new LinkedList<>();
 
+    private CategoryItem oldCategoryItem;
+
     public ResponseShowMovieList(List<MovieItem> movies, CategoryItem categoryItem) {
         this.categoryItem = categoryItem;
         this.movies = movies;
+    }
+
+    public ResponseShowMovieList(CategoryItem categoryItem, List<MovieItem> movies, CategoryItem oldCategoryItem) {
+        this.categoryItem = categoryItem;
+        this.movies = movies;
+        this.oldCategoryItem = oldCategoryItem;
     }
 
     public List<MovieItem> getMovies() {
@@ -33,5 +41,13 @@ public class ResponseShowMovieList implements ActionData,Serializable {
 
     public void setMovies(List<MovieItem> movies) {
         this.movies = movies;
+    }
+
+    public CategoryItem getOldCategoryItem() {
+        return oldCategoryItem;
+    }
+
+    public void setOldCategoryItem(CategoryItem oldCategoryItem) {
+        this.oldCategoryItem = oldCategoryItem;
     }
 }

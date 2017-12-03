@@ -4,7 +4,6 @@ import main.java.model.data.ActionEmpty;
 import main.java.model.data.request.*;
 import main.java.model.data.response.ResponseShowCategories;
 import main.java.model.data.response.ResponseShowMovie;
-import main.java.model.data.response.ResponseShowMovieList;
 import main.java.model.data.response.ResponseStartMovieEdit;
 
 import java.io.ObjectOutputStream;
@@ -60,8 +59,7 @@ class RequestHandler {
                 if (((RequestEndMovieEdit) request).getName() == null) {
                     Operations.releaseMovie(((RequestEndMovieEdit) request).getId(), dataObject);
                 } else {
-                    Operations.changeMovie(request, dataObject);
-                    response = Operations.getMoviesInCategory(((RequestEndMovieEdit) request).getGenreId(), dataObject);
+                    response = Operations.changeMovie(request, dataObject);
                     Operations.broadcast(response, clientMap);
                 }
             } else if (request instanceof RequestCreateMovie) {
@@ -73,6 +71,9 @@ class RequestHandler {
                 outputStream.reset();
                 outputStream.writeObject(response);
                 outputStream.flush();
+            } else if(request instanceof RequestDeleteMovie){
+                response = Operations.deleteMovie(request, dataObject);
+                Operations.broadcast(response, clientMap);
             }
         } catch (Exception e) {
             System.out.println("error in handler: " + e);
