@@ -112,7 +112,7 @@ public class CategoriesView extends View<MainController> {
         deleteLabel.addActionListener(e -> {
             if (categoriesList.getSelectedValue() != null) {
                 controller().deleteCategory(categoriesList.getSelectedValue().getId());
-                controller().requestCategories();
+                //controller().requestCategories();
             }
         });
 

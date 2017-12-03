@@ -1,6 +1,10 @@
 package main.java.model.data.request;
 
-public class RequestDeleteCategory {
+import main.java.ActionData;
+
+import java.io.Serializable;
+
+public class RequestDeleteCategory implements ActionData, Serializable {
     private int id;
 
     public RequestDeleteCategory(int id) {
