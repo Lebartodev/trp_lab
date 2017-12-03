@@ -120,7 +120,7 @@ public class MainController extends Controller<ClientModel, View> {
 
     @Override
     public void close() {
-        model().send(new RequestExit());
+        model().send(new RequestExit()).subscribe();
     }
 
 

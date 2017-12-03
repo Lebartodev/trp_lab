@@ -35,7 +35,7 @@ public class MenuView extends View<MainController> {
             frame.setSize(300, 100);
             frame.setMinimumSize(new Dimension(300, 100));
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.getContentPane().add(new CreateCategoryView(controller(), frame).render());
+            frame.getContentPane().add(new CreateCategoryView(controller, frame).render());
             frame.pack();
             frame.setVisible(true);
             frame.setLocation(100, 100);
