@@ -1,7 +1,5 @@
 package main.java.model;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 public class CategoryItem implements java.io.Serializable{
     private int id;
     private String name;

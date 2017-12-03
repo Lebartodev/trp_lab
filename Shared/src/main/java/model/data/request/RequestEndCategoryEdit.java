@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class RequestEndCategoryEdit implements ActionData, Serializable {
 
-    private int categoryId = Integer.MIN_VALUE;
+    private int categoryId;
     private String categoryName;
 
     public RequestEndCategoryEdit(int categoryId, String categoryName) {

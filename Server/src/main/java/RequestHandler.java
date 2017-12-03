@@ -26,14 +26,12 @@ class RequestHandler {
                     response = new ResponseShowCategories(Operations.getCategories(dataObject));
                     Operations.broadcast(response, clientMap);
                 }
-            }
-            else if (request instanceof RequestCreateCategory) {
+            } else if (request instanceof RequestCreateCategory) {
                 Operations.createCategory(((RequestCreateCategory) request).getCategoryName(), dataObject);
                 response = new ResponseShowCategories(Operations.getCategories(dataObject));
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestDeleteCategory) {
-                Operations.deleteCategory(((RequestDeleteCategory) request).getId(), dataObject );
-                response = new ResponseShowCategories(Operations.getCategories(dataObject));
+                response = Operations.deleteCategory(((RequestDeleteCategory) request).getId(), dataObject );
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestStartMovieEdit) {
                 

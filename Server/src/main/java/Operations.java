@@ -4,6 +4,7 @@ import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 import main.java.model.data.request.RequestEndCategoryEdit;
 import main.java.model.data.response.ResponseException;
+import main.java.model.data.response.ResponseShowCategories;
 import main.java.model.data.response.ResponseStartCategoryEdit;
 
 import java.io.*;
@@ -97,8 +98,13 @@ public class Operations {
         dataObject.getCategories().put(categoryItem.getId(), categoryItem);
     }
 
-    static void deleteCategory(int id, DataObject dataObject) {
-        dataObject.getCategories().remove(id);
+    static ActionData deleteCategory(int id, DataObject dataObject) {
+        if(dataObject.getLockedCategories().contains(id)){
+            return new ResponseException(new Exception("This category is already in use."));
+        } else {
+            dataObject.getCategories().remove(id);
+            return new ResponseShowCategories(getCategories(dataObject));
+        }
     }
 
     static ActionData lockCategory(int id, DataObject dataObject) {

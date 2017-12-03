@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseShowCategories implements ActionData,Serializable {
-    List<CategoryItem> categories = new ArrayList<>();
+    private List<CategoryItem> categories = new ArrayList<>();
 
     public ResponseShowCategories(List<CategoryItem> categories) {
         this.categories = categories;

@@ -36,7 +36,7 @@ public class ServerThread extends Thread {
                     socket.close();
                 }
 
-                ActionData outputAction = RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
+                RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
 
             }
         } catch (Exception e) {
