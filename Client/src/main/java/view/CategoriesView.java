@@ -4,6 +4,7 @@ import main.java.base.View;
 import main.java.controller.MainController;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
+import main.java.model.data.response.ResponseException;
 import main.java.model.data.response.ResponseShowCategories;
 import main.java.model.data.response.ResponseShowMovie;
 import main.java.model.data.response.ResponseShowMovieList;
@@ -183,10 +184,6 @@ public class CategoriesView extends View<MainController> {
 
     }
 
-    private void requestCategoryEdit() {
-
-    }
-
     private void openCategoryEditor() {
         JFrame frame = new JFrame("Edit category");
         frame.setSize(300, 100);
@@ -225,4 +222,11 @@ public class CategoriesView extends View<MainController> {
         });
     }
 
+    @Override
+    public void onError(ResponseException data) {
+        JOptionPane.showOptionDialog(frame,
+                data.getException().getMessage(),
+                "Warning",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+    }
 }

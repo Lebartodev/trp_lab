@@ -53,7 +53,11 @@ public class MainController extends Controller<ClientModel, View> {
     }
 
     public void deleteCategory(int id) {
-         this.model().send(new RequestDeleteCategory(id)).subscribe();
+         this.model().send(new RequestDeleteCategory(id)).subscribe(actionData->{
+             if (actionData instanceof ResponseException) {
+                 view().onError((ResponseException) actionData);
+             }
+         });
     }
 
     protected void subscribeOnModel() {

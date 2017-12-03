@@ -30,6 +30,10 @@ public abstract class View<C extends Controller> {
 
     }
 
+    public void onError(ResponseException data) {
+
+    }
+
     abstract public JComponent render();
 
     protected final C controller() {
@@ -42,9 +46,5 @@ public abstract class View<C extends Controller> {
             this.controller.setView(this);
 
         }
-    }
-
-    public void onEditCategoryError(ResponseException ex){
-
     }
 }

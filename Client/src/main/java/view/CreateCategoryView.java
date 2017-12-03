@@ -78,7 +78,7 @@ public class CreateCategoryView extends View<CategoryController> {
     }
 
     @Override
-    public void onEditCategoryError(ResponseException ex) {
+    public void onError(ResponseException ex) {
         int input = JOptionPane.showOptionDialog(frame,
                 ex.getException().getMessage(),
                 "Warning",

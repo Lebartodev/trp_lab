@@ -22,7 +22,7 @@ public class CategoryController extends Controller<ClientModel, View> {
             if (actiondata instanceof ResponseStartCategoryEdit)
                 view().onEditCategory((ResponseStartCategoryEdit) actiondata);
             else if (actiondata instanceof ResponseException) {
-                view().onEditCategoryError((ResponseException) actiondata);
+                view().onError((ResponseException) actiondata);
             }
         });
     }
