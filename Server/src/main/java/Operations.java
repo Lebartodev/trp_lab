@@ -19,7 +19,8 @@ public class Operations {
         DataObject dataObject = new DataObject();
         File file = new File(DataObject.getFilename());
         if (file.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DataObject.getFilename()))) {
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DataObject.getFilename()));
                 dataObject.setCategories((Map<Integer, CategoryItem>) ois.readObject());
                 dataObject.setMovies((Map<Integer, MovieItem>) ois.readObject());
                 dataObject.setCategoryId((Integer) ois.readObject());
@@ -56,11 +57,18 @@ public class Operations {
 
     static void serializeModel(DataObject dataObject) {
         try {
+            System.out.println("Создание файла.");
+            File file = new File(DataObject.getFilename());
+            if(!file.exists()){
+                file.createNewFile();
+            }
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DataObject.getFilename()));
+            System.out.println("Начало сериализации.");
             oos.writeObject(dataObject.getCategories());
             oos.writeObject(dataObject.getMovies());
             oos.writeObject(dataObject.getCategoryId());
             oos.writeObject(dataObject.getFilmId());
+            //oos.flush();
             System.out.println("Запись произведена");
         } catch (Exception ex) {
             ex.printStackTrace();

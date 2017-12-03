@@ -34,10 +34,10 @@ public class ServerThread extends Thread {
                     Operations.serializeModel(dataObject);
                     clientMap.remove(id);
                     socket.close();
+                    break;
+                } else {
+                    RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
                 }
-
-                RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
-
             }
         } catch (Exception e) {
             System.out.println("init error: " + e);
