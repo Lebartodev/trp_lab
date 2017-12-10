@@ -1,5 +1,8 @@
 package main.java.model;
 
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(propOrder = {"id", "name"}, name = "categoryItem")
 public class CategoryItem implements java.io.Serializable{
     private int id;
     private String name;

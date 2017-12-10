@@ -1,6 +1,8 @@
 package main.java.model;
 
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(propOrder = {"id", "name", "year", "description", "genreId", "budget"}, name = "movieItem")
 public class MovieItem implements java.io.Serializable {
     private int id;
     private String name;

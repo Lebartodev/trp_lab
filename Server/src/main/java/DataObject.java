@@ -3,12 +3,18 @@ package main.java;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@XmlType(propOrder = {"categories", "movies", "filmId", "categoryId"}, name = "dataObject")
+@XmlRootElement
 public class DataObject implements Serializable{
     private static String filename = "model.dat";
 
@@ -24,7 +30,7 @@ public class DataObject implements Serializable{
 
     private List<Integer> lockedCategories = new ArrayList<>();
 
-    DataObject() {
+    public DataObject() {
     }
 
     static String getFilename() {
@@ -35,7 +41,9 @@ public class DataObject implements Serializable{
         DataObject.filename = filename;
     }
 
-    Map<Integer, CategoryItem> getCategories() {
+    @XmlElementWrapper(name = "categories")
+    @XmlElement(name = "categoryItem")
+    public Map<Integer, CategoryItem> getCategories() {
         return categories;
     }
 
@@ -43,7 +51,9 @@ public class DataObject implements Serializable{
         this.categories = categories;
     }
 
-    Map<Integer, MovieItem> getMovies() {
+    @XmlElementWrapper(name = "movies")
+    @XmlElement(name = "movieItem")
+    public Map<Integer, MovieItem> getMovies() {
         return movies;
     }
 
@@ -51,7 +61,7 @@ public class DataObject implements Serializable{
         this.movies = movies;
     }
 
-    synchronized int getFilmId() {
+    public synchronized int getFilmId() {
         return ++filmId;
     }
 
@@ -59,7 +69,7 @@ public class DataObject implements Serializable{
         this.filmId = filmId;
     }
 
-    synchronized int getCategoryId() {
+    public synchronized int getCategoryId() {
         return ++categoryId;
     }
 
