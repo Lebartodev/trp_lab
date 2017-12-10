@@ -22,8 +22,8 @@ public class XmlTest {
             //CategoryItem categoryItem = CategoryItem.newBuilder().id(1).name("name").build();
 
             File file = new File("Shared/src/main/java/model/file.xml");
-            File xsd = new File("Shared/src/main/java/model/movie_schema.xsd");
-            if(!file.exists()){
+            File xsd = SchemaPath.MovieSchema.getFile();
+            if (!file.exists()) {
                 file.createNewFile();
             }
             JAXBContext context = JAXBContext.newInstance(MovieItem.class);
@@ -31,7 +31,7 @@ public class XmlTest {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(movieItem, file);
 
-            System.out.println(validateXMLByXSD(file,xsd));
+            System.out.println(validateXMLByXSD(file, xsd));
         } catch (JAXBException exception) {
             System.out.println("marshallExample threw JAXBException");
             exception.printStackTrace();
