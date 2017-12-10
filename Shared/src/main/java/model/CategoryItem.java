@@ -1,9 +1,12 @@
 package main.java.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"id", "name"}, name = "categoryItem")
-public class CategoryItem implements java.io.Serializable{
+@XmlRootElement
+@XmlType(propOrder = {"name"}, name = "categoryItem")
+public class CategoryItem implements java.io.Serializable {
     private int id;
     private String name;
 
@@ -15,6 +18,7 @@ public class CategoryItem implements java.io.Serializable{
         return id;
     }
 
+    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
@@ -57,23 +61,23 @@ public class CategoryItem implements java.io.Serializable{
         return new CategoryItem().new Builder();
     }
 
-    public class Builder{
-        private Builder(){
+    public class Builder {
+        private Builder() {
 
         }
 
-        public Builder id(int id){
+        public Builder id(int id) {
             CategoryItem.this.id = id;
             return this;
         }
 
-        public Builder name(String name){
+        public Builder name(String name) {
             CategoryItem.this.name = name;
             return this;
         }
 
 
-        public CategoryItem build(){
+        public CategoryItem build() {
             return CategoryItem.this;
         }
     }

@@ -1,8 +1,11 @@
 package main.java.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"id", "name", "year", "description", "genreId", "budget"}, name = "movieItem")
+@XmlRootElement
+@XmlType(propOrder = {"name", "year", "description", "genreId", "budget"}, name = "movieItem")
 public class MovieItem implements java.io.Serializable {
     private int id;
     private String name;
@@ -19,6 +22,7 @@ public class MovieItem implements java.io.Serializable {
         return id;
     }
 
+    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
