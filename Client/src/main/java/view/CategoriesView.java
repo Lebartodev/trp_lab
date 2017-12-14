@@ -103,7 +103,7 @@ public class CategoriesView extends View<MainController> {
         categoriesPanel.add(editLayout, BorderLayout.SOUTH);
         categoriesLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
         categoriesList = new JList<CategoryItem>();
-        categoriesList.setCellRenderer(new CategoryRenderer());
+        categoriesList.setCellRenderer(new main.java.view.CategoryRenderer());
         categoriesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane categoriesScroll = new JScrollPane(categoriesList);
         categoriesScroll.setBorder(new EmptyBorder(0, 10, 0, 10));

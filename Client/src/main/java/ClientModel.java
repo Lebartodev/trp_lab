@@ -4,6 +4,7 @@ package main.java;
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
 import main.java.base.Model;
+import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,13 +12,13 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientModel extends Model {
-    private PublishSubject<ActionData> actionDataPublishSubject = PublishSubject.create();
+    private PublishSubject<Document> actionDataPublishSubject = PublishSubject.create();
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Socket s;
 
     @Override
-    public PublishSubject<ActionData> getPublisher() {
+    public PublishSubject<Document> getPublisher() {
         return actionDataPublishSubject;
     }
 
@@ -26,7 +27,7 @@ public class ClientModel extends Model {
     }
 
     @Override
-    public Single<? super ActionData> send(ActionData command) {
+    public Single<? super Document> send(Document command) {
         return Single.just(command).doOnSubscribe(disposable -> checkConnection())
                 .map(this::sendAction)
                 .flatMap(actionData -> readAction());
@@ -42,13 +43,13 @@ public class ClientModel extends Model {
         return s != null && s.isConnected();
     }
 
-    private ActionData sendAction(ActionData actionData) throws IOException {
+    private Document sendAction(Document actionData) throws IOException {
         out.writeObject(actionData);
         out.flush();
         return actionData;
     }
 
-    private Single<ActionData> readAction() throws IOException, ClassNotFoundException {
+    private Single<Document> readAction() throws IOException, ClassNotFoundException {
         return Single.create(singleEmitter -> getPublisher().subscribe(actionData -> singleEmitter.onSuccess(actionData)));
     }
 
@@ -72,7 +73,7 @@ public class ClientModel extends Model {
         new Thread(() -> {
             while (true) {
                 try {
-                    ActionData actionData = (ActionData) in.readObject();
+                    Document actionData = (Document) in.readObject();
                     actionDataPublishSubject.onNext(actionData);
 
                 } catch (IOException | ClassNotFoundException e) {

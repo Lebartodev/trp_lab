@@ -1,4 +1,4 @@
-package main.java.model;
+package main.java.util;
 
 import java.io.File;
 

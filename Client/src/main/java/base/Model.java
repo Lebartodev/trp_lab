@@ -2,12 +2,12 @@ package main.java.base;
 
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
-import main.java.ActionData;
+import org.w3c.dom.Document;
 
 public abstract class Model {
 
 
-    public abstract PublishSubject<ActionData> getPublisher();
+    public abstract PublishSubject<Document> getPublisher();
 
-    public abstract Single<? super ActionData> send(ActionData command);
+    public abstract Single<? super Document> send(Document command);
 }

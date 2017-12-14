@@ -1,5 +1,6 @@
 package main.java.model;
 
+import main.java.util.SchemaPath;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
