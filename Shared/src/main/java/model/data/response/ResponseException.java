@@ -1,10 +1,7 @@
 package main.java.model.data.response;
 
-import main.java.ActionData;
 
-import java.io.Serializable;
-
-public class ResponseException implements ActionData, Serializable {
+public class ResponseException  {
     private Exception exception;
 
     public ResponseException(Exception exception) {

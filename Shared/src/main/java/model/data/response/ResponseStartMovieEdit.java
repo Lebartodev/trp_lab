@@ -1,6 +1,5 @@
 package main.java.model.data.response;
 
-import main.java.ActionData;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 
@@ -10,7 +9,7 @@ import java.util.List;
 /**
  * Created by pavel on 29.09.17.
  */
-public class ResponseStartMovieEdit implements ActionData, Serializable {
+public class ResponseStartMovieEdit {
     private MovieItem movie;
     private List<CategoryItem> categories;
 

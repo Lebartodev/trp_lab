@@ -1,10 +1,7 @@
 package main.java.model.data.request;
 
-import main.java.ActionData;
 
-import java.io.Serializable;
-
-public class RequestCreateMovie implements ActionData, Serializable{
+public class RequestCreateMovie {
     private String name;
     private int year;
     private String description;

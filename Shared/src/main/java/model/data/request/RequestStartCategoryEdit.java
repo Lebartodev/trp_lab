@@ -1,10 +1,7 @@
 package main.java.model.data.request;
 
-import main.java.ActionData;
 
-import java.io.Serializable;
-
-public class RequestStartCategoryEdit implements ActionData, Serializable {
+public class RequestStartCategoryEdit {
 
     private int categoryId;
 

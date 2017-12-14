@@ -1,13 +1,7 @@
 package main.java.model.data.request;
 
-import main.java.ActionData;
 
-import java.io.Serializable;
-
-/**
- * Created by pavel on 27.09.17.
- */
-public class RequestStartMovieEdit implements ActionData, Serializable {
+public class RequestStartMovieEdit  {
     private int movieId;
 
 

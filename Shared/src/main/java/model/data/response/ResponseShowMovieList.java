@@ -1,6 +1,5 @@
 package main.java.model.data.response;
 
-import main.java.ActionData;
 import main.java.model.CategoryItem;
 import main.java.model.MovieItem;
 
@@ -9,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ResponseShowMovieList implements ActionData,Serializable {
+public class ResponseShowMovieList  {
     private CategoryItem categoryItem;
 
     private List<MovieItem> movies = new LinkedList<>();

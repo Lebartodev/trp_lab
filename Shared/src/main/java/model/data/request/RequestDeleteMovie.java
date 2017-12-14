@@ -1,14 +1,18 @@
 package main.java.model.data.request;
 
-import main.java.ActionData;
-
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
-
-public class RequestDeleteMovie implements ActionData, Serializable{
+@XmlRootElement
+@XmlType(propOrder = {"movieId"}, name = "requestDeleteMovie")
+public class RequestDeleteMovie implements  Serializable{
     private int movieId;
 
     public RequestDeleteMovie(int movieId) {
         this.movieId = movieId;
+    }
+
+    public RequestDeleteMovie() {
     }
 
     public int getMovieId() {

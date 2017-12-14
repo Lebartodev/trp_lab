@@ -1,13 +1,24 @@
 package main.java.model.data.request;
 
-import main.java.ActionData;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-public class RequestCreateCategory implements Serializable, ActionData {
+@XmlRootElement
+@XmlType(propOrder = {"categoryName"}, name = "requestCreateCategory")
+public class RequestCreateCategory implements Serializable {
     private String categoryName;
 
     public RequestCreateCategory(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public RequestCreateCategory() {
+
+    }
+
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
