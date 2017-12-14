@@ -1,6 +1,10 @@
 package main.java.model.data.request;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement
+@XmlType(propOrder = {"id", "name", "year", "description", "genreId", "budget"}, name = "requestEndMovieEdit")
 public class RequestEndMovieEdit {
     private int id;
     private String name;
@@ -8,6 +12,9 @@ public class RequestEndMovieEdit {
     private String description;
     private int genreId;
     private int budget;
+
+    public RequestEndMovieEdit() {
+    }
 
     public RequestEndMovieEdit(int id, String name, int year, String description, int genreId, int budget) {
         this.id = id;

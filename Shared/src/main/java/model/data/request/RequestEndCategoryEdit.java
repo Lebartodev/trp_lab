@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 @XmlRootElement
-@XmlType(propOrder = {"categoryId", "categoryName"}, name = "requestDeleteCategory")
+@XmlType(propOrder = {"categoryId", "categoryName"}, name = "requestEndCategoryEdit")
 public class RequestEndCategoryEdit {
 
     private int categoryId;

@@ -1,12 +1,19 @@
 package main.java.model.data.request;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement
+@XmlType(propOrder = {"name", "year", "description", "genreId", "budget"}, name = "requestCreateMovie")
 public class RequestCreateMovie {
     private String name;
     private int year;
     private String description;
     private int genreId;
     private int budget;
+
+    public RequestCreateMovie() {
+    }
 
     public RequestCreateMovie(String name, int year, String description, int genreId, int budget) {
         this.name = name;

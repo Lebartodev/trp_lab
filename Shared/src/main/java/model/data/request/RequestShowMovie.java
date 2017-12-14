@@ -1,10 +1,16 @@
 package main.java.model.data.request;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
-
+@XmlRootElement
+@XmlType(propOrder = {"movieId"}, name = "requestShowMovie")
 public class RequestShowMovie {
     public RequestShowMovie(int movieId) {
         this.movieId = movieId;
+    }
+
+    public RequestShowMovie() {
     }
 
     private int movieId;

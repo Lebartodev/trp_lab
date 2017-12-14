@@ -1,6 +1,9 @@
 package main.java.model.data.request;
 
-import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-public class RequestShowCategories{
+@XmlRootElement
+@XmlType(name = "requestShowCategories")
+public class RequestShowCategories {
 }
