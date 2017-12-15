@@ -1,6 +1,6 @@
 package main.java;
 
-import main.java.model.data.request.RequestExit;
+import model.data.request.RequestExit;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

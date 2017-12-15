@@ -1,9 +1,7 @@
-package main.java;
-
 
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
-import main.java.base.Model;
+import base.Model;
 import org.w3c.dom.Document;
 
 import java.io.IOException;

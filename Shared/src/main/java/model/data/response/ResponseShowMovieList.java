@@ -1,7 +1,7 @@
-package main.java.model.data.response;
+package model.data.response;
 
-import main.java.model.CategoryItem;
-import main.java.model.MovieItem;
+import model.CategoryItem;
+import model.MovieItem;
 
 import java.io.Serializable;
 import java.util.LinkedList;

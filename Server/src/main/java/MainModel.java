@@ -1,7 +1,7 @@
 package main.java;
 
-import main.java.model.CategoryItem;
-import main.java.model.MovieItem;
+import model.CategoryItem;
+import model.MovieItem;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,11 @@
-package main.java.controller;
+package controller;
 
+import base.Model;
 import io.reactivex.disposables.Disposable;
-import main.java.ClientModel;
-import main.java.base.Controller;
-import main.java.base.View;
-import main.java.model.data.request.*;
-import main.java.model.data.response.*;
+import base.Controller;
+import base.View;
 
-public class MainController extends Controller<ClientModel, View> {
+public class MainController extends Controller<Model, View> {
 
     private Disposable subscriptionModel;
 

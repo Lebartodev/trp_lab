@@ -1,6 +1,6 @@
-package main.java.model.data.response;
+package model.data.response;
 
-import main.java.model.CategoryItem;
+import model.CategoryItem;
 
 import java.util.ArrayList;
 import java.util.List;

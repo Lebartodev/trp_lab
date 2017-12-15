@@ -1,4 +1,4 @@
-package main.java.model.data.request;
+package model.data.request;
 
 
 import javax.xml.bind.annotation.XmlRootElement;

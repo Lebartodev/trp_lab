@@ -1,7 +1,7 @@
-package main.java.base;
+package base;
 
 
-import main.java.model.data.response.*;
+import model.data.response.*;
 
 import javax.swing.*;
 

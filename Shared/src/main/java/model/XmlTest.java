@@ -1,7 +1,7 @@
-package main.java.model;
+package model;
 
-import main.java.util.SchemaPath;
 import org.xml.sax.SAXException;
+import util.SchemaPath;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;

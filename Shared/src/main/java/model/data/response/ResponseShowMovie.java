@@ -1,6 +1,6 @@
-package main.java.model.data.response;
+package model.data.response;
 
-import main.java.model.MovieItem;
+import model.MovieItem;
 
 import java.io.Serializable;
 

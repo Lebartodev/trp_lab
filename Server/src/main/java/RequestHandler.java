@@ -1,10 +1,10 @@
 package main.java;
 
-import main.java.model.data.ActionEmpty;
-import main.java.model.data.request.*;
-import main.java.model.data.response.ResponseShowCategories;
-import main.java.model.data.response.ResponseShowMovie;
-import main.java.model.data.response.ResponseStartMovieEdit;
+import model.data.ActionEmpty;
+import model.data.request.*;
+import model.data.response.ResponseShowCategories;
+import model.data.response.ResponseShowMovie;
+import model.data.response.ResponseStartMovieEdit;
 
 import java.io.ObjectOutputStream;
 import java.util.Map;

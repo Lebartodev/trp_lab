@@ -1,9 +1,7 @@
-package main.java;
-
-import main.java.base.Application;
-import main.java.controller.MainController;
-import main.java.view.CategoriesView;
-import main.java.view.MenuView;
+import base.Application;
+import controller.MainController;
+import view.CategoriesView;
+import view.MenuView;
 
 import javax.swing.*;
 

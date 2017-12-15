@@ -1,6 +1,6 @@
-package main.java.view;
+package view;
 
-import main.java.model.MovieItem;
+import model.MovieItem;
 
 import javax.swing.*;
 import java.awt.*;

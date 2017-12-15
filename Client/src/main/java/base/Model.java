@@ -1,4 +1,4 @@
-package main.java.base;
+package base;
 
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;

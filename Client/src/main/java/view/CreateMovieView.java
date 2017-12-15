@@ -1,9 +1,9 @@
-package main.java.view;
+package view;
 
-import main.java.base.View;
-import main.java.controller.MainController;
-import main.java.model.CategoryItem;
-import main.java.model.data.response.ResponseStartMovieEdit;
+import base.View;
+import controller.MainController;
+import model.CategoryItem;
+import model.data.response.ResponseStartMovieEdit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

@@ -1,12 +1,12 @@
 package main.java;
 
-import main.java.model.CategoryItem;
-import main.java.model.MovieItem;
-import main.java.model.data.request.RequestCreateMovie;
-import main.java.model.data.request.RequestDeleteMovie;
-import main.java.model.data.request.RequestEndCategoryEdit;
-import main.java.model.data.request.RequestEndMovieEdit;
-import main.java.model.data.response.*;
+import model.CategoryItem;
+import model.MovieItem;
+import model.data.request.RequestCreateMovie;
+import model.data.request.RequestDeleteMovie;
+import model.data.request.RequestEndCategoryEdit;
+import model.data.request.RequestEndMovieEdit;
+import model.data.response.*;
 
 import java.io.*;
 import java.util.HashMap;

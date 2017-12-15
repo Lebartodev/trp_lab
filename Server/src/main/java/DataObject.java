@@ -1,7 +1,5 @@
-package main.java;
-
-import main.java.model.CategoryItem;
-import main.java.model.MovieItem;
+import model.CategoryItem;
+import model.MovieItem;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

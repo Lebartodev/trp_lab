@@ -1,6 +1,6 @@
-package main.java.view;
+package view;
 
-import main.java.model.CategoryItem;
+import model.CategoryItem;
 
 import javax.swing.*;
 import java.awt.*;

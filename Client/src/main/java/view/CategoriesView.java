@@ -1,10 +1,10 @@
-package main.java.view;
+package view;
 
-import main.java.base.View;
-import main.java.controller.MainController;
-import main.java.model.CategoryItem;
-import main.java.model.MovieItem;
-import main.java.model.data.response.*;
+import base.View;
+import controller.MainController;
+import model.CategoryItem;
+import model.MovieItem;
+import model.data.response.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -103,7 +103,7 @@ public class CategoriesView extends View<MainController> {
         categoriesPanel.add(editLayout, BorderLayout.SOUTH);
         categoriesLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
         categoriesList = new JList<CategoryItem>();
-        categoriesList.setCellRenderer(new main.java.view.CategoryRenderer());
+        categoriesList.setCellRenderer(new view.CategoryRenderer());
         categoriesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane categoriesScroll = new JScrollPane(categoriesList);
         categoriesScroll.setBorder(new EmptyBorder(0, 10, 0, 10));
