@@ -47,7 +47,7 @@ public class ClientModel extends Model {
         return actionData;
     }
 
-    private Single<Document> readAction() throws IOException, ClassNotFoundException {
+    private Single<Document> readAction() {
         return Single.create(singleEmitter -> getPublisher().subscribe(actionData -> singleEmitter.onSuccess(actionData)));
     }
 
