@@ -16,9 +16,9 @@ import java.util.Map;
 public class DataObject implements Serializable{
     private static String filename = "model.dat";
 
-    private Map<Integer,CategoryItem> categories = new HashMap<Integer, CategoryItem>();
+    private Map<Integer, CategoryItem> categories = new HashMap<Integer, CategoryItem>();
 
-    private Map<Integer,MovieItem> movies = new HashMap<Integer, MovieItem>();
+    private Map<Integer, MovieItem> movies = new HashMap<Integer, MovieItem>();
 
     private int filmId;
 
@@ -45,7 +45,7 @@ public class DataObject implements Serializable{
         return categories;
     }
 
-    void setCategories(Map<Integer, CategoryItem> categories) {
+    public void setCategories(Map<Integer, CategoryItem> categories) {
         this.categories = categories;
     }
 
@@ -55,23 +55,23 @@ public class DataObject implements Serializable{
         return movies;
     }
 
-    void setMovies(Map<Integer, MovieItem> movies) {
+    public void setMovies(Map<Integer, MovieItem> movies) {
         this.movies = movies;
     }
 
-    public synchronized int getFilmId() {
+    public int getFilmId() {
         return ++filmId;
     }
 
-    void setFilmId(int filmId) {
+    public void setFilmId(int filmId) {
         this.filmId = filmId;
     }
 
-    public synchronized int getCategoryId() {
+    public int getCategoryId() {
         return ++categoryId;
     }
 
-    void setCategoryId(int categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
