@@ -21,6 +21,15 @@ public enum SchemaPath {
     RequestStartCategoryEditSchema("Shared/src/main/java/model/data/request/schema/request_start_category_edit.xsd"),
     RequestStartCreateMovieSchema("Shared/src/main/java/model/data/request/schema/request_start_create_movie.xsd"),
     RequestStartMovieEditSchema("Shared/src/main/java/model/data/request/schema/request_start_movie_edit.xsd"),
+
+    //responses
+    ResponseExceptionSchema("Shared/src/main/java/model/data/response/schema/response_exception.xsd"),
+    ResponseMovieEditedDataSchema("Shared/src/main/java/model/data/response/schema/response_movie_edited_data.xsd"),
+    ResponseShowCategoriesSchema("Shared/src/main/java/model/data/response/schema/response_show_categories.xsd"),
+    ResponseShowMovieSchema("Shared/src/main/java/model/data/response/schema/response_show_movie.xsd"),
+    ResponseShowMovieListSchema("Shared/src/main/java/model/data/response/schema/response_show_movie_list.xsd"),
+    ResponseStartCategoryEditSchema("Shared/src/main/java/model/data/response/schema/response_start_category_edit.xsd"),
+    ResponseStartMovieEditSchema("Shared/src/main/java/model/data/response/schema/response_start_movie_edit.xsd")
     ;
 
 
