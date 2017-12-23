@@ -7,9 +7,13 @@ import model.data.request.RequestEndMovieEdit;
 import model.data.response.*;
 import org.w3c.dom.Document;
 import util.MarshallerUtil;
+import util.XmlReceiver;
 import util.XmlSender;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.validation.SchemaFactory;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,11 +26,13 @@ public class Operations {
         File file = new File(DataObject.getFilename());
         if (file.exists()) {
             try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DataObject.getFilename()));
-                dataObject.setCategories((Map<Integer, CategoryItem>) ois.readObject());
-                dataObject.setMovies((Map<Integer, MovieItem>) ois.readObject());
-                dataObject.setCategoryId((Integer) ois.readObject());
-                dataObject.setFilmId((Integer) ois.readObject());
+                InputStream ois = new FileInputStream(DataObject.getFilename());
+                Document document = XmlReceiver.receive(ois);
+                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+                        .newSchema(new File("Server/src/main/java/data_object.xsd"))
+                        .newValidator()
+                        .validate(new DOMSource(document));
+                dataObject = (DataObject) MarshallerUtil.unmarshallAction(document);
             } catch (Exception ex) {
 
                 ex.printStackTrace();
@@ -64,13 +70,9 @@ public class Operations {
             if(!file.exists()){
                 file.createNewFile();
             }
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DataObject.getFilename()));
             System.out.println("Начало сериализации.");
-            oos.writeObject(dataObject.getCategories());
-            oos.writeObject(dataObject.getMovies());
-            oos.writeObject(dataObject.getCategoryId());
-            oos.writeObject(dataObject.getFilmId());
-            //oos.flush();
+            OutputStream oos = new FileOutputStream(DataObject.getFilename());
+            XmlSender.send(MarshallerUtil.marshallAction(dataObject, DataObject.class), oos);
             System.out.println("Запись произведена");
         } catch (Exception ex) {
             ex.printStackTrace();

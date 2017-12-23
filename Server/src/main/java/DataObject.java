@@ -14,7 +14,7 @@ import java.util.Map;
 @XmlType(propOrder = {"categories", "movies", "filmId", "categoryId"}, name = "dataObject")
 @XmlRootElement
 public class DataObject implements Serializable{
-    private static String filename = "model.dat";
+    private static String filename = "model.xml";
 
     private Map<Integer, CategoryItem> categories = new HashMap<Integer, CategoryItem>();
 
