@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include schemaLocation="file:response_show_categories.xsd"/>
   <xs:element name="requestShowCategories" type="requestShowCategories"/>
 
   <xs:complexType name="requestShowCategories">
