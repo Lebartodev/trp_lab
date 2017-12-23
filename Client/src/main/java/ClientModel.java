@@ -67,7 +67,7 @@ public class ClientModel extends Model {
             initSubscription();
 
         } catch (Exception e) {
-            System.out.println("init error: " + e);
+            e.printStackTrace();
         }
 
 

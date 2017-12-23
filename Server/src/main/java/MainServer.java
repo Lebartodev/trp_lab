@@ -23,7 +23,7 @@ public class MainServer {
                 new ServerThread(server.accept(), dataObject, id, clientMap);
             }
         } catch (Exception e) {
-            System.out.println("init error: " + e);
+            e.printStackTrace();
         }
     }
 
