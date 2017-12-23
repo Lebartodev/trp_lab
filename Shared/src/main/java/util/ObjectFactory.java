@@ -1,5 +1,6 @@
 package util;
 
+import model.data.request.RequestCreateCategory;
 import model.data.request.RequestShowCategories;
 import model.data.response.*;
 
@@ -11,6 +12,9 @@ public class ObjectFactory {
     // request
     public RequestShowCategories createRequestShowCategories() {
         return new RequestShowCategories();
+    }
+    public RequestCreateCategory createRequestCreateCategory(){
+        return new RequestCreateCategory();
     }
 
 

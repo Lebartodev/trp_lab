@@ -3,8 +3,8 @@ import org.w3c.dom.Document;
 import util.MarshallerUtil;
 import util.XmlReceiver;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
 
@@ -25,8 +25,8 @@ public class ServerThread extends Thread {
 
     public void run() {
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
             clientMap.put(id, new Client(socket, outputStream, inputStream));
             while (true) {
                 Document document = XmlReceiver.receive(inputStream);

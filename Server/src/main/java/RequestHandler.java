@@ -6,12 +6,12 @@ import org.w3c.dom.Document;
 import util.MarshallerUtil;
 import util.XmlSender;
 
-import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 class RequestHandler {
     static void handleRequest(Object request, DataObject dataObject
-            , ObjectOutputStream outputStream, Map<Integer, Client> clientMap) {
+            , OutputStream outputStream, Map<Integer, Client> clientMap) {
         Document response;
         try {
             if (request instanceof RequestStartCategoryEdit) {

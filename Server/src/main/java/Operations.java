@@ -197,7 +197,7 @@ public class Operations {
     static void broadcast(Document response, Map<Integer, Client> clientMap) throws IOException, TransformerConfigurationException {
         for (Integer integer : clientMap.keySet()) {
             Client client = clientMap.get(integer);
-            XmlSender.send(response, client.getObjectOutputStream());
+            XmlSender.send(response, client.getOutputStream());
         }
     }
 }
