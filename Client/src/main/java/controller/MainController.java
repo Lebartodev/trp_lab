@@ -5,13 +5,15 @@ import base.Model;
 import base.View;
 import io.reactivex.disposables.Disposable;
 import model.data.request.*;
+import model.data.response.*;
 import util.MarshallerUtil;
 
 public class MainController extends Controller<Model, View> {
     private Disposable subscriptionModel;
 
     public void requestCategories() {
-        this.model().send(MarshallerUtil.marshallAction(new RequestShowCategories(), RequestShowCategories.class)).subscribe(actionData -> {
+        this.model().send(MarshallerUtil.marshallAction(new RequestShowCategories(), RequestShowCategories.class))
+                .subscribe(actionData -> {
 
         }, throwable -> {
             view().onServerNotStartedException();
@@ -38,21 +40,21 @@ public class MainController extends Controller<Model, View> {
 
     public void requestCategoryForEdit(int id) {
         this.model().send(MarshallerUtil.marshallAction(new RequestStartCategoryEdit(id), RequestStartCategoryEdit.class)).subscribe(actiondata -> {
-//            if (actiondata instanceof ResponseStartCategoryEdit)
-//                view().openCategoryEditor((ResponseStartCategoryEdit) actiondata);
-//            else if (actiondata instanceof ResponseException) {
-//                view().onError((ResponseException) actiondata);
-//            }
+            if (actiondata instanceof ResponseStartCategoryEdit)
+                view().openCategoryEditor((ResponseStartCategoryEdit) actiondata);
+            else if (actiondata instanceof ResponseException) {
+                view().onError((ResponseException) actiondata);
+            }
         });
     }
 
     public void requestMovieForCreate() {
         this.model().send(MarshallerUtil.marshallAction(new RequestStartCreateMovie(), RequestStartCreateMovie.class)).subscribe(actiondata -> {
-//            if (actiondata instanceof ResponseStartMovieEdit)
-//                view().openMovieEditor((ResponseStartMovieEdit) actiondata);
-//            else if (actiondata instanceof ResponseException) {
-//                view().onError((ResponseException) actiondata);
-//            }
+            if (actiondata instanceof ResponseStartMovieEdit)
+                view().openMovieEditor((ResponseStartMovieEdit) actiondata);
+            else if (actiondata instanceof ResponseException) {
+                view().onError((ResponseException) actiondata);
+            }
         });
 
     }
@@ -63,11 +65,11 @@ public class MainController extends Controller<Model, View> {
 
     public void requestMovieForEdit(int id) {
         this.model().send(MarshallerUtil.marshallAction(new RequestStartMovieEdit(id), RequestStartMovieEdit.class)).subscribe(actiondata -> {
-//            if (actiondata instanceof ResponseStartMovieEdit)
-//                view().openMovieEditor((ResponseStartMovieEdit) actiondata);
-//            else if (actiondata instanceof ResponseException) {
-//                view().onError((ResponseException) actiondata);
-//            }
+            if (actiondata instanceof ResponseStartMovieEdit)
+                view().openMovieEditor((ResponseStartMovieEdit) actiondata);
+            else if (actiondata instanceof ResponseException) {
+                view().onError((ResponseException) actiondata);
+            }
         });
 
     }
@@ -88,9 +90,9 @@ public class MainController extends Controller<Model, View> {
 
     public void deleteMovie(int id) {
         this.model().send(MarshallerUtil.marshallAction(new RequestDeleteMovie(id), RequestDeleteMovie.class)).subscribe(actionData -> {
-//            if (actionData instanceof ResponseException) {
-//                view().onError((ResponseException) actionData);
-//            }
+            if (actionData instanceof ResponseException) {
+                view().onError((ResponseException) actionData);
+            }
         });
     }
 
@@ -105,13 +107,13 @@ public class MainController extends Controller<Model, View> {
     protected void subscribeOnModel() {
         if (model() != null) {
             subscriptionModel = model().getPublisher().subscribe(actionData -> {
-//                if (actionData instanceof ResponseShowCategories) {
-//                    view().onShowCategories((ResponseShowCategories) actionData);
-//                } else if (actionData instanceof ResponseShowMovieList) {
-//                    view().onShowSingleCategory((ResponseShowMovieList) actionData);
-//                } else if (actionData instanceof ResponseShowMovie) {
-//                    view().onShowMovie((ResponseShowMovie) actionData);
-//                }
+                if (actionData instanceof ResponseShowCategories) {
+                    view().onShowCategories((ResponseShowCategories) actionData);
+                } else if (actionData instanceof ResponseShowMovieList) {
+                    view().onShowSingleCategory((ResponseShowMovieList) actionData);
+                } else if (actionData instanceof ResponseShowMovie) {
+                    view().onShowMovie((ResponseShowMovie) actionData);
+                }
 
             }, Throwable::printStackTrace);
         }

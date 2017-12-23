@@ -29,5 +29,6 @@ public class XmlSender {
         }
 
         out.send();
+        out.flush();
     }
 }

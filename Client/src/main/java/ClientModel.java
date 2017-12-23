@@ -3,7 +3,13 @@ import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
 import base.Model;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import util.MarshallerUtil;
+import util.XmlReceiver;
+import util.XmlSender;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,8 +17,6 @@ import java.net.Socket;
 
 public class ClientModel extends Model {
     private PublishSubject<Document> actionDataPublishSubject = PublishSubject.create();
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
     private Socket s;
 
     @Override
@@ -41,9 +45,14 @@ public class ClientModel extends Model {
         return s != null && s.isConnected();
     }
 
-    private Document sendAction(Document actionData) throws IOException {
-        out.writeObject(actionData);
-        out.flush();
+    private Document sendAction(Document actionData)  {
+        try {
+            XmlSender.send(actionData,s.getOutputStream());
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return actionData;
     }
 
@@ -55,9 +64,6 @@ public class ClientModel extends Model {
         try {
             s = new Socket("localhost", 3128);
 
-            out = new ObjectOutputStream(s.getOutputStream());
-
-            in = new ObjectInputStream(s.getInputStream());
             initSubscription();
 
         } catch (Exception e) {
@@ -71,10 +77,16 @@ public class ClientModel extends Model {
         new Thread(() -> {
             while (true) {
                 try {
-                    Document actionData = (Document) in.readObject();
+                    Document actionData = XmlReceiver.receive(s.getInputStream());
                     actionDataPublishSubject.onNext(actionData);
 
-                } catch (IOException | ClassNotFoundException e) {
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (TransformerConfigurationException e) {
+                    e.printStackTrace();
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                } catch (SAXException e) {
                     e.printStackTrace();
                 }
 

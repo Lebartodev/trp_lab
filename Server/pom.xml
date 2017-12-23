@@ -26,6 +26,11 @@
             <artifactId>rxjava</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>trp_lab2_actions</groupId>
+            <artifactId>Actions</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

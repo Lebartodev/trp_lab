@@ -237,7 +237,7 @@ public class CategoriesView extends View<MainController> {
     @Override
     public void onError(ResponseException data) {
         JOptionPane.showOptionDialog(frame,
-                data.getException().getMessage(),
+                data.getException(),
                 "Warning",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
     }
