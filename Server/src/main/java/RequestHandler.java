@@ -1,60 +1,53 @@
-package main.java;
-
-import model.data.ActionEmpty;
 import model.data.request.*;
 import model.data.response.ResponseShowCategories;
 import model.data.response.ResponseShowMovie;
 import model.data.response.ResponseStartMovieEdit;
+import org.w3c.dom.Document;
+import util.MarshallerUtil;
+import util.XmlSender;
 
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
 class RequestHandler {
-    static ActionData handleRequest(ActionData request, DataObject dataObject
+    static void handleRequest(Object request, DataObject dataObject
             , ObjectOutputStream outputStream, Map<Integer, Client> clientMap) {
-        ActionData response = new ActionEmpty();
+        Document response;
         try {
             if (request instanceof RequestStartCategoryEdit) {
                 response = Operations.lockCategory(((RequestStartCategoryEdit) request).getCategoryId(), dataObject);
-                outputStream.reset();
-                outputStream.writeObject(response);
-                outputStream.flush();
+                XmlSender.send(response, outputStream);
             } else if (request instanceof RequestEndCategoryEdit) {
                 if (((RequestEndCategoryEdit) request).getCategoryName() == null) {
                     Operations.releaseCategory(((RequestEndCategoryEdit) request).getCategoryId(), dataObject);
                 } else {
                     Operations.changeCategory(request, dataObject);
-                    response = new ResponseShowCategories(Operations.getCategories(dataObject));
+                    response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories(dataObject)))
+                            ,ResponseShowCategories.class);
                     Operations.broadcast(response, clientMap);
                 }
             } else if (request instanceof RequestCreateCategory) {
                 Operations.createCategory(((RequestCreateCategory) request).getCategoryName(), dataObject);
-                response = new ResponseShowCategories(Operations.getCategories(dataObject));
+                response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories(dataObject)))
+                        , ResponseShowCategories.class);
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestDeleteCategory) {
                 response = Operations.deleteCategory(((RequestDeleteCategory) request).getId(), dataObject);
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestStartMovieEdit) {
                 response = Operations.lockMovie(((RequestStartMovieEdit) request).getMovieId(), dataObject);
-                outputStream.reset();
-                outputStream.writeObject(response);
-                outputStream.flush();
+                XmlSender.send(response, outputStream);
             } else if (request instanceof RequestShowCategories) {
-                response = new ResponseShowCategories(Operations.getCategories(dataObject));
-                outputStream.reset();
-                outputStream.writeObject(response);
-                outputStream.flush();
+                response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories(dataObject)))
+                        , ResponseShowCategories.class);
+                XmlSender.send(response, outputStream);
             } else if (request instanceof RequestShowMovie) {
-                response = new ResponseShowMovie(Operations.
-                        getMovie(((RequestShowMovie) request).getMovieId(), dataObject));
-                outputStream.reset();
-                outputStream.writeObject(response);
-                outputStream.flush();
+                response = MarshallerUtil.marshallAction((new ResponseShowMovie(Operations.
+                        getMovie(((RequestShowMovie) request).getMovieId(), dataObject))), ResponseShowMovie.class);
+                XmlSender.send(response, outputStream);
             } else if (request instanceof RequestShowMovieList) {
                 response = Operations.getMoviesInCategory(((RequestShowMovieList) request).getCategoryId(), dataObject);
-                outputStream.reset();
-                outputStream.writeObject(response);
-                outputStream.flush();
+                XmlSender.send(response, outputStream);
             } else if (request instanceof RequestEndMovieEdit) {
                 if (((RequestEndMovieEdit) request).getName() == null) {
                     Operations.releaseMovie(((RequestEndMovieEdit) request).getId(), dataObject);
@@ -67,10 +60,9 @@ class RequestHandler {
                 response = Operations.getMoviesInCategory(((RequestCreateMovie) request).getGenreId(),dataObject );
                 Operations.broadcast(response, clientMap);
             } else if(request instanceof RequestStartCreateMovie){
-                response = new ResponseStartMovieEdit(null, Operations.getCategories(dataObject));
-                outputStream.reset();
-                outputStream.writeObject(response);
-                outputStream.flush();
+                response = MarshallerUtil.marshallAction((new ResponseStartMovieEdit(null, Operations.getCategories(dataObject)))
+                        , ResponseStartMovieEdit.class);
+                XmlSender.send(response, outputStream);
             } else if(request instanceof RequestDeleteMovie){
                 response = Operations.deleteMovie(request, dataObject);
                 Operations.broadcast(response, clientMap);
@@ -79,6 +71,6 @@ class RequestHandler {
             System.out.println("error in handler: " + e);
         }
 
-        return response;
+        //return response;
     }
 }

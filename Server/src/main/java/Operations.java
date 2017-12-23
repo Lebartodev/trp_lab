@@ -1,5 +1,3 @@
-package main.java;
-
 import model.CategoryItem;
 import model.MovieItem;
 import model.data.request.RequestCreateMovie;
@@ -7,7 +5,11 @@ import model.data.request.RequestDeleteMovie;
 import model.data.request.RequestEndCategoryEdit;
 import model.data.request.RequestEndMovieEdit;
 import model.data.response.*;
+import org.w3c.dom.Document;
+import util.MarshallerUtil;
+import util.XmlSender;
 
+import javax.xml.transform.TransformerConfigurationException;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -88,7 +90,7 @@ public class Operations {
         return dataObject.getMovies().get(id);
     }
 
-    static ActionData getMoviesInCategory(int categoryId, DataObject dataObject) {
+    static Document getMoviesInCategory(int categoryId, DataObject dataObject) {
         ResponseShowMovieList responseShowMovieList;
         List<MovieItem> movies = new LinkedList<>();
         Map<Integer, MovieItem> movieItemMap = dataObject.getMovies();
@@ -98,7 +100,7 @@ public class Operations {
             }
         }
         responseShowMovieList = new ResponseShowMovieList(movies, dataObject.getCategories().get(categoryId));
-        return responseShowMovieList;
+        return MarshallerUtil.marshallAction(responseShowMovieList, ResponseShowMovieList.class);
     }
 
     static void createCategory(String name, DataObject dataObject) {
@@ -106,52 +108,52 @@ public class Operations {
         dataObject.getCategories().put(categoryItem.getId(), categoryItem);
     }
 
-    static ActionData deleteCategory(int id, DataObject dataObject) {
+    static Document deleteCategory(int id, DataObject dataObject) {
         if (dataObject.getLockedCategories().contains(id)) {
-            return new ResponseException(new Exception("This category is already in use."));
+            return MarshallerUtil.marshallAction((new ResponseException("This category is already in use.")), ResponseException.class);
         } else {
             dataObject.getCategories().remove(id);
-            return new ResponseShowCategories(getCategories(dataObject));
+            return MarshallerUtil.marshallAction((new ResponseShowCategories(getCategories(dataObject))), ResponseShowCategories.class);
         }
     }
 
-    static ActionData lockCategory(int id, DataObject dataObject) {
-        ActionData response;
+    static Document lockCategory(int id, DataObject dataObject) {
         if (dataObject.getLockedCategories().contains(id)) {
-            response = new ResponseException(new Exception("This category is already in use."));
+            ResponseException response = new ResponseException("This category is already in use.");
+            return MarshallerUtil.marshallAction(response, ResponseException.class);
         } else {
-            response = new ResponseStartCategoryEdit(dataObject.getCategories().get(id));
+            ResponseStartCategoryEdit response = new ResponseStartCategoryEdit(dataObject.getCategories().get(id));
             dataObject.getLockedCategories().add(id);
+            return MarshallerUtil.marshallAction(response, ResponseStartCategoryEdit.class);
         }
-        return response;
     }
 
     static void releaseCategory(int id, DataObject dataObject) {
         dataObject.getLockedCategories().remove(dataObject.getLockedCategories().indexOf(id));
     }
 
-    static void changeCategory(ActionData request, DataObject dataObject) {
+    static void changeCategory(Object request, DataObject dataObject) {
         RequestEndCategoryEdit requestEndCategoryEdit = (RequestEndCategoryEdit) request;
         dataObject.getCategories().get(requestEndCategoryEdit.getCategoryId()).setName(requestEndCategoryEdit.getCategoryName());
         dataObject.getLockedCategories().remove(dataObject.getLockedCategories().indexOf(requestEndCategoryEdit.getCategoryId()));
     }
 
-    static ActionData lockMovie(int id, DataObject dataObject) {
-        ActionData response;
+    static Document lockMovie(int id, DataObject dataObject) {
         if (dataObject.getLockedMovies().contains(id)) {
-            response = new ResponseException(new Exception("This movie is already in use."));
+            ResponseException response = new ResponseException("This movie is already in use.");
+            return MarshallerUtil.marshallAction(response, ResponseException.class);
         } else {
-            response = new ResponseStartMovieEdit(dataObject.getMovies().get(id), getCategories(dataObject));
+            ResponseStartMovieEdit response = new ResponseStartMovieEdit(dataObject.getMovies().get(id), getCategories(dataObject));
             dataObject.getLockedMovies().add(id);
+            return MarshallerUtil.marshallAction(response, ResponseStartMovieEdit.class);
         }
-        return response;
     }
 
     static void releaseMovie(int id, DataObject dataObject) {
         dataObject.getLockedMovies().remove(dataObject.getLockedMovies().indexOf(id));
     }
 
-    static void createMovie(ActionData request, DataObject dataObject) {
+    static void createMovie(Object request, DataObject dataObject) {
         RequestCreateMovie requestCreateMovie = (RequestCreateMovie) request;
         MovieItem newMovie = MovieItem.newBuilder().id(dataObject.getFilmId()).name(requestCreateMovie.getName())
                 .description(requestCreateMovie.getDescription()).year(requestCreateMovie.getYear())
@@ -159,8 +161,8 @@ public class Operations {
         dataObject.getMovies().put(newMovie.getId(), newMovie);
     }
 
-    static ActionData changeMovie(ActionData request, DataObject dataObject) {
-        ActionData response;
+    static Document changeMovie(Object request, DataObject dataObject) {
+        ResponseShowMovieList response;
         RequestEndMovieEdit requestEndMovieEdit = (RequestEndMovieEdit) request;
         int oldCategory = dataObject.getCategories().get(dataObject.getMovies().get(requestEndMovieEdit.getId()).getGenreId()).getId();
         MovieItem changedMovie = dataObject.getMovies().get(requestEndMovieEdit.getId());
@@ -178,29 +180,24 @@ public class Operations {
             }
         }
         response = new ResponseShowMovieList(dataObject.getCategories().get(changedMovie.getGenreId()), movies, dataObject.getCategories().get(oldCategory));
-        return response;
+        return MarshallerUtil.marshallAction(response, ResponseShowMovieList.class);
     }
 
-    static ActionData deleteMovie(ActionData request, DataObject dataObject){
+    static Document deleteMovie(Object request, DataObject dataObject){
         RequestDeleteMovie requestDeleteMovie = (RequestDeleteMovie) request;
-        ActionData response;
         if(dataObject.getLockedMovies().contains(requestDeleteMovie.getMovieId())){
-            response = new ResponseException(new Exception("This movie is already in use."));
-            return response;
+            return MarshallerUtil.marshallAction((new ResponseException("This movie is already in use.")), ResponseException.class);
         } else {
             int genreId = dataObject.getMovies().get(requestDeleteMovie.getMovieId()).getGenreId();
             dataObject.getMovies().remove(requestDeleteMovie.getMovieId());
-            response = getMoviesInCategory(genreId, dataObject);
-            return response;
+            return getMoviesInCategory(genreId, dataObject);
         }
     }
 
-    static void broadcast(ActionData response, Map<Integer, Client> clientMap) throws IOException {
+    static void broadcast(Document response, Map<Integer, Client> clientMap) throws IOException, TransformerConfigurationException {
         for (Integer integer : clientMap.keySet()) {
             Client client = clientMap.get(integer);
-            client.getObjectOutputStream().reset();
-            client.getObjectOutputStream().writeObject(response);
-            client.getObjectOutputStream().flush();
+            XmlSender.send(response, client.getObjectOutputStream());
         }
     }
 }

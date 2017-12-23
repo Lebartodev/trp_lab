@@ -1,6 +1,7 @@
-package main.java;
-
 import model.data.request.RequestExit;
+import org.w3c.dom.Document;
+import util.MarshallerUtil;
+import util.XmlReceiver;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,7 +29,9 @@ public class ServerThread extends Thread {
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             clientMap.put(id, new Client(socket, outputStream, inputStream));
             while (true) {
-                ActionData inputAction = (ActionData) inputStream.readObject();
+                Document document = XmlReceiver.receive(inputStream);
+
+                Object inputAction = MarshallerUtil.unmarshallAction(document);
 
                 if (inputAction instanceof RequestExit) {
                     Operations.serializeModel(dataObject);
