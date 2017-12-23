@@ -33,6 +33,5 @@ public class MarshallerUtilTest {
     public void unmarshallAction() throws TransformerConfigurationException, JAXBException {
 
         RequestShowCategories  d = (RequestShowCategories) MarshallerUtil.unmarshallAction(MarshallerUtil.marshallAction(new RequestShowCategories(),RequestShowCategories.class));
-
     }
 }

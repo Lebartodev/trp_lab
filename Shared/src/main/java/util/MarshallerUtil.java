@@ -29,11 +29,17 @@ public class MarshallerUtil {
         return document;
     }
 
-    public static Object unmarshallAction(Document document) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
-        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
-        Object obj = jaxbUnmarshaller.unmarshal(document);
+    public static Object unmarshallAction(Document document) {
+        Object obj = null;
 
+        try {
+            JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
+
+            Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+            obj = jaxbUnmarshaller.unmarshal(document);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         return obj;
     }
 }
