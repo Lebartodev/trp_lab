@@ -3,6 +3,8 @@ import org.w3c.dom.Document;
 import util.MarshallerUtil;
 import util.XmlReceiver;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
 
@@ -23,11 +25,11 @@ public class ServerThread extends Thread {
 
     public void run() {
         try {
-//            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
- //           ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
- //           clientMap.put(id, new Client(socket, outputStream, inputStream));
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+            clientMap.put(id, new Client(socket, outputStream, inputStream));
             while (true) {
-                Document document = XmlReceiver.receive(socket.getInputStream());
+                Document document = XmlReceiver.receive(inputStream);
 
                 Object inputAction = MarshallerUtil.unmarshallAction(document);
 
@@ -37,11 +39,11 @@ public class ServerThread extends Thread {
                     socket.close();
                     break;
                 } else {
-                    //RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
+                    RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("init error: " + e);
         }
     }
 }
