@@ -7,7 +7,7 @@ import org.w3c.dom.Document;
 public abstract class Model {
 
 
-    public abstract PublishSubject<Document> getPublisher();
+    public abstract PublishSubject<Object> getPublisher();
 
-    public abstract Single<? super Document> send(Document command);
+    public abstract Single<? super Object> send(Document command);
 }

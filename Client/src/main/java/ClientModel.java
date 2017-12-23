@@ -4,6 +4,7 @@ import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import util.MarshallerUtil;
 import util.XmlReceiver;
 import util.XmlSender;
 
@@ -13,11 +14,11 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ClientModel extends Model {
-    private PublishSubject<Document> actionDataPublishSubject = PublishSubject.create();
+    private PublishSubject<Object> actionDataPublishSubject = PublishSubject.create();
     private Socket s;
 
     @Override
-    public PublishSubject<Document> getPublisher() {
+    public PublishSubject<Object> getPublisher() {
         return actionDataPublishSubject;
     }
 
@@ -26,7 +27,7 @@ public class ClientModel extends Model {
     }
 
     @Override
-    public Single<? super Document> send(Document command) {
+    public Single<? super Object> send(Document command) {
         return Single.just(command).doOnSubscribe(disposable -> checkConnection())
                 .map(this::sendAction)
                 .flatMap(actionData -> readAction());
@@ -53,7 +54,7 @@ public class ClientModel extends Model {
         return actionData;
     }
 
-    private Single<Document> readAction() {
+    private Single<Object> readAction() {
         return Single.create(singleEmitter -> getPublisher().subscribe(actionData -> singleEmitter.onSuccess(actionData)));
     }
 
@@ -75,7 +76,8 @@ public class ClientModel extends Model {
             while (true) {
                 try {
                     Document actionData = XmlReceiver.receive(s.getInputStream());
-                    actionDataPublishSubject.onNext(actionData);
+                    Object inputAction = MarshallerUtil.unmarshallAction(actionData);
+                    actionDataPublishSubject.onNext(inputAction);
 
                 } catch (IOException e) {
                     e.printStackTrace();
