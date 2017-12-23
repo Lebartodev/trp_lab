@@ -1,3 +1,4 @@
+/*
 package util;
 
 import model.data.request.RequestShowCategories;
@@ -34,4 +35,4 @@ public class MarshallerUtilTest {
 
         RequestShowCategories  d = (RequestShowCategories) MarshallerUtil.unmarshallAction(MarshallerUtil.marshallAction(new RequestShowCategories(),RequestShowCategories.class));
     }
-}
+}*/

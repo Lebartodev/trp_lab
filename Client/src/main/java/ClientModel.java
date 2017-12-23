@@ -1,18 +1,15 @@
 
+import base.Model;
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
-import base.Model;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import util.MarshallerUtil;
 import util.XmlReceiver;
 import util.XmlSender;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientModel extends Model {
