@@ -2,6 +2,7 @@ import model.data.request.RequestExit;
 import org.w3c.dom.Document;
 import util.MarshallerUtil;
 import util.XmlReceiver;
+import util.XmlValidator;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,16 +31,17 @@ public class ServerThread extends Thread {
             clientMap.put(id, new Client(socket, outputStream, inputStream));
             while (true) {
                 Document document = XmlReceiver.receive(inputStream);
+                if (XmlValidator.validate(document)) {
+                    Object inputAction = MarshallerUtil.unmarshallAction(document);
 
-                Object inputAction = MarshallerUtil.unmarshallAction(document);
-
-                if (inputAction instanceof RequestExit) {
-                    Operations.serializeModel(dataObject);
-                    clientMap.remove(id);
-                    socket.close();
-                    break;
-                } else {
-                    RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
+                    if (inputAction instanceof RequestExit) {
+                        Operations.serializeModel(dataObject);
+                        clientMap.remove(id);
+                        socket.close();
+                        break;
+                    } else {
+                        RequestHandler.handleRequest(inputAction, dataObject, outputStream, clientMap);
+                    }
                 }
             }
         } catch (Exception e) {

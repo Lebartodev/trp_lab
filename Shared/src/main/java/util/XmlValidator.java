@@ -51,7 +51,7 @@ public class XmlValidator {
             validator.validate(source);
             return true;
         } catch (SAXException e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

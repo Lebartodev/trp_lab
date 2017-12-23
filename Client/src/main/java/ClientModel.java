@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 import util.MarshallerUtil;
 import util.XmlReceiver;
 import util.XmlSender;
+import util.XmlValidator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
@@ -43,9 +44,9 @@ public class ClientModel extends Model {
         return s != null && s.isConnected();
     }
 
-    private Document sendAction(Document actionData)  {
+    private Document sendAction(Document actionData) {
         try {
-            XmlSender.send(actionData,s.getOutputStream());
+            XmlSender.send(actionData, s.getOutputStream());
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -76,8 +77,10 @@ public class ClientModel extends Model {
             while (true) {
                 try {
                     Document actionData = XmlReceiver.receive(s.getInputStream());
-                    Object inputAction = MarshallerUtil.unmarshallAction(actionData);
-                    actionDataPublishSubject.onNext(inputAction);
+                    if (XmlValidator.validate(actionData)) {
+                        Object inputAction = MarshallerUtil.unmarshallAction(actionData);
+                        actionDataPublishSubject.onNext(inputAction);
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
