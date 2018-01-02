@@ -1,24 +1,8 @@
-import model.CategoryItem;
-import model.MovieItem;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@XmlType(propOrder = {"categories", "movies", "filmId", "categoryId"}, name = "dataObject")
-@XmlRootElement
 public class DataObject implements Serializable{
-    private static String filename = "model.xml";
-
-    private Map<Integer, CategoryItem> categories = new HashMap<Integer, CategoryItem>();
-
-    private Map<Integer, MovieItem> movies = new HashMap<Integer, MovieItem>();
 
     private int filmId;
 
@@ -29,34 +13,6 @@ public class DataObject implements Serializable{
     private List<Integer> lockedCategories = new ArrayList<>();
 
     public DataObject() {
-    }
-
-    static String getFilename() {
-        return filename;
-    }
-
-    static void setFilename(String filename) {
-        DataObject.filename = filename;
-    }
-
-    @XmlElementWrapper(name = "categories")
-    @XmlElement(name = "categoryItem")
-    public Map<Integer, CategoryItem> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Map<Integer, CategoryItem> categories) {
-        this.categories = categories;
-    }
-
-    @XmlElementWrapper(name = "movies")
-    @XmlElement(name = "movieItem")
-    public Map<Integer, MovieItem> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(Map<Integer, MovieItem> movies) {
-        this.movies = movies;
     }
 
     public int getFilmId() {

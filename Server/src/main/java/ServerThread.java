@@ -35,7 +35,6 @@ public class ServerThread extends Thread {
                     Object inputAction = MarshallerUtil.unmarshallAction(document);
 
                     if (inputAction instanceof RequestExit) {
-                        Operations.serializeModel(dataObject);
                         clientMap.remove(id);
                         socket.close();
                         break;

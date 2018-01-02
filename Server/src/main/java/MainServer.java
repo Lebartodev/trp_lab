@@ -1,16 +1,13 @@
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainServer {
 
     public static void main(String args[]) {
         try {
-            DataObject dataObject = Operations.deserealizeModel();
+            DataObject dataObject = DBMethods.getModel();
             ServerSocket server = new ServerSocket(3128, 0,
                     InetAddress.getByName("localhost"));
             int id = 0;

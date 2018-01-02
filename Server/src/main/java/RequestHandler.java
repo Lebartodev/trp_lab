@@ -22,13 +22,13 @@ class RequestHandler {
                     Operations.releaseCategory(((RequestEndCategoryEdit) request).getCategoryId(), dataObject);
                 } else {
                     Operations.changeCategory(request, dataObject);
-                    response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories(dataObject)))
+                    response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories()))
                             ,ResponseShowCategories.class);
                     Operations.broadcast(response, clientMap);
                 }
             } else if (request instanceof RequestCreateCategory) {
                 Operations.createCategory(((RequestCreateCategory) request).getCategoryName(), dataObject);
-                response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories(dataObject)))
+                response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories()))
                         , ResponseShowCategories.class);
                 Operations.broadcast(response, clientMap);
             } else if (request instanceof RequestDeleteCategory) {
@@ -38,15 +38,15 @@ class RequestHandler {
                 response = Operations.lockMovie(((RequestStartMovieEdit) request).getMovieId(), dataObject);
                 XmlSender.send(response, outputStream);
             } else if (request instanceof RequestShowCategories) {
-                response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories(dataObject)))
+                response = MarshallerUtil.marshallAction((new ResponseShowCategories(Operations.getCategories()))
                         , ResponseShowCategories.class);
                 XmlSender.send(response, outputStream);
             } else if (request instanceof RequestShowMovie) {
                 response = MarshallerUtil.marshallAction((new ResponseShowMovie(Operations.
-                        getMovie(((RequestShowMovie) request).getMovieId(), dataObject))), ResponseShowMovie.class);
+                        getMovie(((RequestShowMovie) request).getMovieId()))), ResponseShowMovie.class);
                 XmlSender.send(response, outputStream);
             } else if (request instanceof RequestShowMovieList) {
-                response = Operations.getMoviesInCategory(((RequestShowMovieList) request).getCategoryId(), dataObject);
+                response = Operations.getMoviesInCategory(((RequestShowMovieList) request).getCategoryId());
                 XmlSender.send(response, outputStream);
             } else if (request instanceof RequestEndMovieEdit) {
                 if (((RequestEndMovieEdit) request).getName() == null) {
@@ -57,10 +57,10 @@ class RequestHandler {
                 }
             } else if (request instanceof RequestCreateMovie) {
                 Operations.createMovie(request, dataObject);
-                response = Operations.getMoviesInCategory(((RequestCreateMovie) request).getGenreId(),dataObject );
+                response = Operations.getMoviesInCategory(((RequestCreateMovie) request).getGenreId());
                 Operations.broadcast(response, clientMap);
             } else if(request instanceof RequestStartCreateMovie){
-                response = MarshallerUtil.marshallAction((new ResponseStartMovieEdit(null, Operations.getCategories(dataObject)))
+                response = MarshallerUtil.marshallAction((new ResponseStartMovieEdit(null, Operations.getCategories()))
                         , ResponseStartMovieEdit.class);
                 XmlSender.send(response, outputStream);
             } else if(request instanceof RequestDeleteMovie){
