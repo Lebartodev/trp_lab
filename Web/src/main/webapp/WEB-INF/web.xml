@@ -10,6 +10,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/TaskManager</url-pattern>
+        <url-pattern>/MovieCatalog</url-pattern>
     </servlet-mapping>
 </web-app>

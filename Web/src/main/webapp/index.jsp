@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<jsp:include page="/TaskManager"/>
+<jsp:include page="/MovieCatalog"/>
 <%@ include file="/resources/include/table.jsp" %>
 <h4><%
     String error = (String) request.getAttribute("error");

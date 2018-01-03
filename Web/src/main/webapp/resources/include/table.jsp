@@ -95,22 +95,8 @@ limitations under the License
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 
-            <a href="?command=show" class="mdl-layout__tab is-active">Home</a>
-            <a href="?command=tasksEmployees" class="mdl-layout__tab">Employees tasks</a>
-            <a href="?command=listEmployees" class="mdl-layout__tab">List of employees</a>
-            <a href="?command=logout" class="mdl-layout__tab">Logout</a>
+            <a href="" class="mdl-layout__tab is-active">Home</a>
 
-            <form action="TaskManager">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                    <label class="mdl-button mdl-js-button mdl-button--icon" for="inputSearch">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input type="hidden" name="command" value="search">
-                        <input class="mdl-textfield__input" name="search" type="text" id="inputSearch">
-                    </div>
-                </div>
-            </form>
             <a href="?command=add">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">
@@ -126,35 +112,42 @@ limitations under the License
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <%
                 List<CategoryItem> categories = (List<CategoryItem>) request.getAttribute("categoriesList");
-                if(categories!=null)
-                for (CategoryItem categoryItem : categories) {
-                    out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
-                            "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
-                            "<i class=\"material-icons\">play_circle_filled</i>\n" +
-                            "</header>" +
-                            "<div class=\"mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone\">\n" +
-                            "<div class=\"mdl-card__supporting-text\">" + "<h4>" + categoryItem.getName() + "</h4> " +
-                            "</div>" +
-                            " <div class=\"mdl-card__actions\">\n" +
-                            "<table>\n" +
-                            "    <tr>\n" +
-                            "        <td>" + "<form method=\"post\" action=\"TaskManager\">\n" +
-                            " <input type=\"hidden\" name=\"name\" value = \"" + categoryItem.getName() + "\"/> \n" +
-                            "<input type=\"submit\" class=\"mdl-button\"  value = \"Edit\">" +
-                            "</form>" + "</td>\n" +
-                            "        <td>" + "<form method=\"post\" action=\"TaskManager\">\n" +
+                if (categories != null)
+                    for (CategoryItem categoryItem : categories) {
+                        out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
+                                "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
+                                "<i class=\"material-icons\">play_circle_filled</i>\n" +
+                                "</header>" +
+                                "<div class=\"mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone\">\n" +
+                                "<div class=\"mdl-card__supporting-text\">" + "<h4>" + categoryItem.getName() + "</h4> " +
+                                "</div>" +
+                                " <div class=\"mdl-card__actions\">\n" +
+                                "<table>\n" +
+                                "    <tr>\n" +
+                                "        <td>" + "<form method=\"post\" action=\"MovieCatalog\">\n" +
+                                "<input type=\"hidden\" name=\"command\" value=\"listMoviesInCategory\">" +
+                                " <input type=\"hidden\" name=\"categoryId\" value = \"" + categoryItem.getId() + "\"/> \n" +
+                                "<input type=\"submit\" class=\"mdl-button\"  value = \"Show Movies\">" +
+                                "</form>" + "</td>\n" +
+                                "        <td>" + "<form method=\"post\" action=\"MovieCatalog\">\n" +
+                                " <input type=\"hidden\" name=\"name\" value = \"" + categoryItem.getName() + "\"/> \n" +
+                                "<input type=\"submit\" class=\"mdl-button\"  value = \"Edit\">" +
+                                "</form>" + "</td>\n" +
 
-                            "<input type=\"hidden\" name=\"command\" value=\"deleteEvent\">" +
-                            "<input type=\"submit\" class=\"mdl-button\"  value = \"Delete\">" +
-                            "</form>" + "</td>\n" +
-                            "    </tr>\n" +
-                            "</table>" +
+                                "        <td>" + "<form method=\"post\" action=\"MovieCatalog\">\n" +
+
+                                "<input type=\"hidden\" name=\"command\" value=\"deleteEvent\">" +
+                                " <input type=\"hidden\" name=\"taskID\" value = \"" + categoryItem.getId() + "\"/> \n" +
+                                "<input type=\"submit\" class=\"mdl-button\"  value = \"Delete\">" +
+                                "</form>" + "</td>\n" +
+                                "    </tr>\n" +
+                                "</table>" +
 
 
-                            "</div>" +
-                            " </div></section>"
-                    );
-                }
+                                "</div>" +
+                                " </div></section>"
+                        );
+                    }
             %>
 
 

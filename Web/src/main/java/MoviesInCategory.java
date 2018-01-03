@@ -18,6 +18,6 @@ public class MoviesInCategory implements Command {
         request.setAttribute("moviesList",arrayList);
 
 
-        return "/resources/include/table.jsp";
+        return "/resources/include/tableMovies.jsp";
     }
 }
