@@ -12,7 +12,12 @@ import java.util.List;
 public class CategoriesList implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
         /*ControllerSQL c = ControllerSQL.getInstance();*/
-        List<CategoryItem> arrayList = ControllerSQL.getCategories();
+        List<CategoryItem> arrayList = null;
+        try {
+            arrayList = ControllerSQL.getCategories();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("kek");
         request.setAttribute("categoriesList",arrayList);
 

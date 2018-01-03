@@ -11,7 +11,8 @@ public class ControllerSQL {
     // JDBC variables for opening and managing connection
     private static Connection con;
 
-    public static ArrayList<CategoryItem> getCategories() throws SQLException {
+    public static ArrayList<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "SELECT * FROM Category";
         Statement statement = con.createStatement();
