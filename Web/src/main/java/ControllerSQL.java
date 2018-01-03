@@ -81,4 +81,37 @@ public class ControllerSQL {
         statement.close();
         con.close();
     }
+
+    public static void deleteCategory(int id) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        deleteMoviesInCategory(id);
+        con = DriverManager.getConnection(url, user, password);
+        String query = "delete from Category where id = " + id;
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
+
+    public static void deleteMoviesInCategory(int id) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "delete from Movie where genreId = " + id;
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
+
+    public static void createCategory(CategoryItem categoryItem) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "insert into Category(id, name) values("
+                + categoryItem.getId()
+                + ", '" + categoryItem.getName() + "');";
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
 }

@@ -8,6 +8,9 @@ import java.util.Map;
 public class RequestHelper {
     Map<String,Command> commands = new HashMap<String, Command>();
     public RequestHelper(){
+        commands.put("endCreateCategory",new EndCreateCategory());
+        commands.put("startCreateCategory",new StartCreateCategory());
+        commands.put("deleteCategory",new DeleteCategory());
         commands.put("endEditCategory",new EndEditCategory());
         commands.put("startEditCategory",new StartEditCategory());
         commands.put("listMoviesInCategory",new MoviesInCategory());

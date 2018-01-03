@@ -3,14 +3,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-public class DeleteCategory implements Command {
+public class StartCreateCategory implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
-        try {
-            ControllerSQL.deleteCategory(Integer.parseInt(request.getParameter("categoryId")));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return "/MovieCatalog";
+        return "/resources/include/addCategory.jsp";
     }
 }
