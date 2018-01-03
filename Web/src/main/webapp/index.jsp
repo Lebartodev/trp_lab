@@ -9,11 +9,12 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Sign in</title>
+    <title>Slll</title>
 
 </head>
 
 <body>
+<jsp:include page="/TaskManager"/>
 <%@ include file="/resources/include/table.jsp" %>
 <h4><%
     String error = (String) request.getAttribute("error");
