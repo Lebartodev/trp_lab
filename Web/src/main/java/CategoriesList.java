@@ -13,10 +13,10 @@ public class CategoriesList implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
         /*ControllerSQL c = ControllerSQL.getInstance();*/
         List<CategoryItem> arrayList = ControllerSQL.getCategories();
-
+        System.out.println("kek");
         request.setAttribute("categoriesList",arrayList);
 
 
-        return "/resources/include/tableEmployees.jsp";
+        return "/resources/include/table.jsp";
     }
 }

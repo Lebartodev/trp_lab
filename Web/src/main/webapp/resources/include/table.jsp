@@ -1,6 +1,6 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Task" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="model.CategoryItem" %>
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: Nastya
   Date: 20.03.2016
@@ -73,6 +73,7 @@ limitations under the License
             margin-bottom: 40px;
             z-index: 900;
         }
+
         #rightcol {
             position: absolute; /* Абсолютное позиционирование */
             right: 0; /* Положение от правого края окна */
@@ -87,7 +88,8 @@ limitations under the License
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-            <h3><%= session.getAttribute("user")%></h3>
+            <h3><%= session.getAttribute("user")%>
+            </h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
@@ -98,17 +100,17 @@ limitations under the License
             <a href="?command=listEmployees" class="mdl-layout__tab">List of employees</a>
             <a href="?command=logout" class="mdl-layout__tab">Logout</a>
 
-                <form action="TaskManager">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                        <label class="mdl-button mdl-js-button mdl-button--icon" for="inputSearch">
-                            <i class="material-icons">search</i>
-                        </label>
-                        <div class="mdl-textfield__expandable-holder">
-                            <input type="hidden" name="command" value="search">
-                            <input class="mdl-textfield__input" name="search" type="text" id="inputSearch">
-                        </div>
+            <form action="TaskManager">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="inputSearch">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input type="hidden" name="command" value="search">
+                        <input class="mdl-textfield__input" name="search" type="text" id="inputSearch">
                     </div>
-                </form>
+                </div>
+            </form>
             <a href="?command=add">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">
@@ -123,47 +125,30 @@ limitations under the License
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <%
-                Integer mode_emp = (Integer) request.getAttribute("mode_emp");
-                String s = "";
-                List<Task> tasks = (List<Task>) request.getAttribute("arrayList");
-                for (Task task : tasks) {
-
-                    if(mode_emp==1){
-                         s ="("+task.getUserID()+")";
-                    }
+                List<CategoryItem> categories = (List<CategoryItem>) request.getAttribute("categoriesList");
+                if(categories!=null)
+                for (CategoryItem categoryItem : categories) {
                     out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
                             "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
                             "<i class=\"material-icons\">play_circle_filled</i>\n" +
                             "</header>" +
                             "<div class=\"mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone\">\n" +
-                            "<div class=\"mdl-card__supporting-text\">" + "<h4>" + task.getName()+ s+ "</h4> " +
-                            "\n"
-                            + task.getDateStr() + " "
-                            + task.getDescription()
-                            + " " + task.getContacts() +
+                            "<div class=\"mdl-card__supporting-text\">" + "<h4>" + categoryItem.getName() + "</h4> " +
                             "</div>" +
                             " <div class=\"mdl-card__actions\">\n" +
                             "<table>\n" +
-                                    "    <tr>\n" +
-                                    "        <td>"+ "<form method=\"post\" action=\"TaskManager\">\n" +
-
-                            "<input type=\"hidden\" name=\"command\" value=\"edit\">" +
-                            " <input type=\"hidden\" name=\"task\" value = \"" + task.getId() + "\"/> \n" +
-                            " <input type=\"hidden\" name=\"name\" value = \"" + task.getName() + "\"/> \n" +
-                            " <input type=\"hidden\" name=\"description\" value = \"" + task.getDescription() + "\"/> \n" +
-                            " <input type=\"hidden\" name=\"contacts\" value = \"" + task.getDateStr() + "\"/> \n" +
+                            "    <tr>\n" +
+                            "        <td>" + "<form method=\"post\" action=\"TaskManager\">\n" +
+                            " <input type=\"hidden\" name=\"name\" value = \"" + categoryItem.getName() + "\"/> \n" +
                             "<input type=\"submit\" class=\"mdl-button\"  value = \"Edit\">" +
-                            "</form>" +"</td>\n" +
-                                    "        <td>"+"<form method=\"post\" action=\"TaskManager\">\n" +
+                            "</form>" + "</td>\n" +
+                            "        <td>" + "<form method=\"post\" action=\"TaskManager\">\n" +
 
                             "<input type=\"hidden\" name=\"command\" value=\"deleteEvent\">" +
-                            " <input type=\"hidden\" name=\"taskID\" value = \"" + task.getId() + "\"/> \n" +
                             "<input type=\"submit\" class=\"mdl-button\"  value = \"Delete\">" +
-                            "</form>" +"</td>\n" +
-                                    "    </tr>\n" +
-                                    "</table>"+
-
-
+                            "</form>" + "</td>\n" +
+                            "    </tr>\n" +
+                            "</table>" +
 
 
                             "</div>" +
@@ -171,34 +156,6 @@ limitations under the License
                     );
                 }
             %>
-
-
-        </div>
-        <div id="rightcol">
-            <%
-                Integer a = (Integer) request.getAttribute("mode_emp");
-                if(a!=1){
-                    out.print("<form action=\"Upload\">\n" +
-                            "            <div class=\"mui-textfield\">\n" +
-                            "                <input name=\"file\"  type=\"text\" placeholder=\"File\">\n" +
-                            "                <input type=\"hidden\" name=\"mode\" value=\"tasks\">\n" +
-                            "                <input type=\"hidden\" name=\"command\" value=\"save\">\n" +
-                            "            </div>\n" +
-                            "            <button type=\"submit\" class=\"mui-btn mui-btn--raised\">Save current tasks</button> </form>");
-                }
-
-        %>
-            <form action="Upload" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="command" value="save">
-                <input type="file" name="filename_1" size="50"/>
-                <input type="submit" value="submit" size="100"/>
-
-            </form>
-
-
-
-
-
 
 
         </div>

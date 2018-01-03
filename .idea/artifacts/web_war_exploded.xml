@@ -8,7 +8,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="archive" name="Actions-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="Shared" />
+            <element id="module-output" name="Actions" />
           </element>
         </element>
       </element>

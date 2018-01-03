@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<%@ include file="/resources/include/auth.jsp" %>
+<%@ include file="/resources/include/table.jsp" %>
 <h4><%
     String error = (String) request.getAttribute("error");
     if(error!=null) {out.print(error);}

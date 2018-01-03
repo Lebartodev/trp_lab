@@ -44,11 +44,8 @@ public class MainServlet extends HttpServlet {
     }
     protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, NoSuchAlgorithmException, NamingException, ClassNotFoundException {
         response.setContentType("text/html");
-
-        Command command = requestHelper.getCommand(request);
+        Command command = new CategoriesList();
         String page  = command.execute(request,response);
-        if(request.getSession().getAttribute("user")==null)
-            page = "index.jsp";
         request.getRequestDispatcher(page).forward(request, response);
 
     }
