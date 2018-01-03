@@ -130,7 +130,8 @@ limitations under the License
                                 "<input type=\"submit\" class=\"mdl-button\"  value = \"Show Movies\">" +
                                 "</form>" + "</td>\n" +
                                 "        <td>" + "<form method=\"post\" action=\"MovieCatalog\">\n" +
-                                " <input type=\"hidden\" name=\"name\" value = \"" + categoryItem.getName() + "\"/> \n" +
+                                "<input type=\"hidden\" name=\"command\" value=\"startEditCategory\">" +
+                                " <input type=\"hidden\" name=\"categoryId\" value = \"" + categoryItem.getId() + "\"/> \n" +
                                 "<input type=\"submit\" class=\"mdl-button\"  value = \"Edit\">" +
                                 "</form>" + "</td>\n" +
 

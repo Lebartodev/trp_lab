@@ -12,6 +12,6 @@ public class EndEditCategory implements Command {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return "/MovieCatalog";
+        return "/MovieCatalog?command=listCategories";
     }
 }

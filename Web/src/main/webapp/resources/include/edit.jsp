@@ -6,24 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <%@ page import="java.util.Enumeration" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Task" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="model.CategoryItem" %><%--
   Created by IntelliJ IDEA.
   User: Nastya
   Date: 20.03.2016
@@ -104,28 +92,14 @@
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 
-            <a href="?command=show" class="mdl-layout__tab is-active">Home</a>
-            <a href="?command=tasksEmployees" class="mdl-layout__tab">Employees tasks</a>
-            <a href="?command=listEmployees" class="mdl-layout__tab">List of employees</a>
-            <a href="?command=logout" class="mdl-layout__tab">Logout</a>
-
-
-            <a href="?command=add">
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
-                        id="add">
-
-                    <i class="material-icons" role="presentation">add</i>
-                    <span class="visuallyhidden">Edit</span>
-
-                </button>
-            </a>
+            <a href="" class="mdl-layout__tab is-active">Home</a>
         </div>
     </header>
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <hgroup>
 
-                <h3>Add Task</h3>
+                <h3>Edit category</h3>
             </hgroup>
             <script type="text/javascript">
                 $(window, document, undefined).ready(function() {
@@ -164,22 +138,14 @@
 
                 });
             </script>
-            <form action="TaskManager" method="POST">
+            <form method="POST">
                 <div class="group">
-                    <input type="hidden" name="command" value="editEvent">
-                    <input type="name" id="inputEmail" name="name" value="<%=((Task)(request.getAttribute("task"))).getName()%>" class="form-control"required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
+                    <input type="hidden" name="command" value="endEditCategory">
+                    <input type="hidden" name="categoryId" value ="<%=((CategoryItem)(request.getAttribute("category"))).getId()%>" />
+                    <input type="name" id="categoryName" name="categoryName" value="<%=((CategoryItem)(request.getAttribute("category"))).getName()%>" class="form-control" required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
 
                 </div>
-                <div class="group">
-                    <input type="text"  name="description" class="form-control" value="<%=((Task)(request.getAttribute("task"))).getDescription()%>" required placeholder="Description"><span class="highlight"></span><span class="bar"></span>
-                </div>
-                <div class="group">
-                    <input type="text"  name="date" class="form-control" value="<%=((Task)(request.getAttribute("task"))).getDateStr()%>" required placeholder="Date"><span class="highlight"></span><span class="bar"></span>
-                </div>
-                <div class="group">
-                    <input type="text"  name="contacts" class="form-control" value="<%=((Task)(request.getAttribute("task"))).getContacts()%>" required placeholder="Contacts"><span class="highlight"></span><span class="bar"></span>
-                </div>
-                <button type="submit" class="button buttonBlue">Edit Task
+                <button type="submit" class="button buttonBlue">Edit Category
                     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
                 </button>
             </form>

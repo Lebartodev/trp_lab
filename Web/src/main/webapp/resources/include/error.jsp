@@ -29,6 +29,6 @@
 <script type="text/javascript" src="resources/js/bootstrap-datepicker.js"></script>
 
 <%--Navbar panel--%>
-<c:redirect url="/TaskManager?command=show">
+<c:redirect url="/TaskManager">
 </c:redirect>
 </html>
