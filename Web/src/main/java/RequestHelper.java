@@ -8,9 +8,9 @@ import java.util.Map;
 public class RequestHelper {
     Map<String,Command> commands = new HashMap<String, Command>();
     public RequestHelper(){
-        commands.put("auth",new AuthCommand());
-        commands.put("logout",new LogoutCommand());
-        commands.put("show",new ShowCommand());
+        //commands.put("auth",new AuthCommand());
+        //commands.put("logout",new LogoutCommand());
+        /*commands.put("show",new ShowCommand());
         commands.put("add",new AddCommand());
         commands.put("addNew",new AddNewTaskCommand());
         commands.put("editEvent",new EditTaskCommand());
@@ -20,14 +20,14 @@ public class RequestHelper {
         commands.put("register",new RegisterCommand());
         commands.put("registerNewUser",new RegisterUserCommand());
         commands.put("search",new SearchCommand());
-        commands.put("save",new SaveCommand());
-        commands.put("listEmployees",new EmployeesList());
+        commands.put("save",new SaveCommand());*/
+        commands.put("listEmployees",new CategoriesList());
 
     }
     public Command getCommand(HttpServletRequest request){
         String command =  request.getParameter("command");
         if(command == null){
-            return new NoCommand();
+            return null;
         }
         return commands.get(command);
     }

@@ -6,6 +6,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="web" />
         </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="Actions-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="Shared" />
+          </element>
+        </element>
       </element>
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/Web/target/web/META-INF/MANIFEST.MF" />
