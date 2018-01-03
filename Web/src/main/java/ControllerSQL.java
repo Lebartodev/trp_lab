@@ -54,4 +54,31 @@ public class ControllerSQL {
         rs.close();
         return movieItems;
     }
+
+    public static CategoryItem getCategory(int id) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "select * from Category where id = " + id;
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        CategoryItem categoryItem = CategoryItem.newBuilder().build();
+        while (rs.next()) {
+            categoryItem.setId(rs.getInt(1));
+            categoryItem.setName(rs.getString(2));
+        }
+        con.close();
+        statement.close();
+        rs.close();
+        return categoryItem;
+    }
+
+    public static void updateCategory(int id, String name) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "update Category set name = " + "'" + name + "'" + " where id = " + id;
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
 }
