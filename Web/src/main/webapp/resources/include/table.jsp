@@ -97,7 +97,7 @@ limitations under the License
 
             <a href="" class="mdl-layout__tab is-active">Home</a>
 
-            <a href="?command=add">
+            <a href="?command=startCreateCategory">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">
 
@@ -137,8 +137,8 @@ limitations under the License
 
                                 "        <td>" + "<form method=\"post\" action=\"MovieCatalog\">\n" +
 
-                                "<input type=\"hidden\" name=\"command\" value=\"deleteEvent\">" +
-                                " <input type=\"hidden\" name=\"taskID\" value = \"" + categoryItem.getId() + "\"/> \n" +
+                                "<input type=\"hidden\" name=\"command\" value=\"deleteCategory\">" +
+                                " <input type=\"hidden\" name=\"categoryId\" value = \"" + categoryItem.getId() + "\"/> \n" +
                                 "<input type=\"submit\" class=\"mdl-button\"  value = \"Delete\">" +
                                 "</form>" + "</td>\n" +
                                 "    </tr>\n" +

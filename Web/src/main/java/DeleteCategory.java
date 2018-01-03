@@ -11,6 +11,6 @@ public class DeleteCategory implements Command {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return "/MovieCatalog";
+        return "/MovieCatalog?command=listCategories";
     }
 }
