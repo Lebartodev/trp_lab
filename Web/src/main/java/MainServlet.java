@@ -44,7 +44,8 @@ public class MainServlet extends HttpServlet {
     }
     protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, NoSuchAlgorithmException, NamingException, ClassNotFoundException {
         response.setContentType("text/html");
-        Command command = new CategoriesList();
+
+        Command command = requestHelper.getCommand(request);
         String page  = command.execute(request,response);
         request.getRequestDispatcher(page).forward(request, response);
 
