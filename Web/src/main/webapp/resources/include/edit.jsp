@@ -86,7 +86,7 @@
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-            <h3><%= session.getAttribute("user")%></h3>
+            <h3>Movie Catalog</h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>

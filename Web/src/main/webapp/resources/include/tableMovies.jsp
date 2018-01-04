@@ -77,7 +77,7 @@ limitations under the License
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-            <h3><%= session.getAttribute("user")%>
+            <h3>Movie Catalog
             </h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
@@ -125,8 +125,9 @@ limitations under the License
                             "</form>" +
                             "<form method=\"post\" action=\"MovieCatalog\">\n" +
 
-                            "<input type=\"hidden\" name=\"command\" value=\"deleteEvent\">" +
+                            "<input type=\"hidden\" name=\"command\" value=\"deleteMovie\">" +
                             " <input type=\"hidden\" name=\"movieId\" value = \"" + movie.getId() + "\"/> \n" +
+                            " <input type=\"hidden\" name=\"movieGenreId\" value = \"" + movie.getGenreId() + "\"/> \n" +
                             "<input type=\"submit\" class=\"mdl-button\"  value = \"Delete\">" +
                             "</form>" +
 
