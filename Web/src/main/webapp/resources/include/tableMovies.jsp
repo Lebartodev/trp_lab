@@ -86,7 +86,7 @@ limitations under the License
 
             <a href="" class="mdl-layout__tab">Home</a>
 
-            <a href="?command=register">
+            <a href="?command=startCreateMovie">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">
 

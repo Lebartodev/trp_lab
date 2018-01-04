@@ -8,7 +8,7 @@ public class EndCreateMovie implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
         try {
             ControllerSQL.createMovie(request.getParameter("movieName"),
-                    Integer.parseInt(request.getParameter("moveYear")),
+                    Integer.parseInt(request.getParameter("movieYear")),
                     request.getParameter("movieDescription"),
                     Integer.parseInt(request.getParameter("movieGenreId")),
                     Integer.parseInt(request.getParameter("movieBudget")));
