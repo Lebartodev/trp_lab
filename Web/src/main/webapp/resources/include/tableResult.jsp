@@ -96,7 +96,7 @@ limitations under the License
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 
-            <a href="" class="mdl-layout__tab is-active">Home</a>
+            <a href="?command=listCategories" class="mdl-layout__tab is-active">Home</a>
 
             <form action="MovieCatalog">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
