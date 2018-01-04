@@ -6,6 +6,6 @@ import java.sql.SQLException;
 public class Error implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
-        return "/MovieCatalog?command=error";
+        return "resources/include/tableResult.jsp";
     }
 }

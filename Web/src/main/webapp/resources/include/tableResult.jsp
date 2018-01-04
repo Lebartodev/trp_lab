@@ -1,4 +1,5 @@
 <%@ page import="model.CategoryItem" %>
+<%@ page import="model.MovieItem" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -97,17 +98,17 @@ limitations under the License
 
             <a href="" class="mdl-layout__tab is-active">Home</a>
 
-                <form action="MovieCatalog">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                        <label class="mdl-button mdl-js-button mdl-button--icon" for="inputSearch">
-                            <i class="material-icons">search</i>
-                        </label>
-                        <div class="mdl-textfield__expandable-holder">
-                            <input type="hidden" name="command" value="search">
-                            <input class="mdl-textfield__input" name="inputSearch" type="text" id="inputSearch">
-                        </div>
+            <form action="MovieCatalog">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="inputSearch">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input type="hidden" name="command" value="search">
+                        <input class="mdl-textfield__input" name="inputSearch" type="text" id="inputSearch">
                     </div>
-                </form>
+                </div>
+            </form>
             <a href="?command=startCreateCategory">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">
@@ -122,8 +123,9 @@ limitations under the License
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <%
-                List<CategoryItem> categories = (List<CategoryItem>) request.getAttribute("categoriesList");
-                if (categories != null)
+                List<CategoryItem> categories = (List<CategoryItem>) request.getAttribute("categoryList");
+                if (categories != null) {
+                    out.println("<h4>Categories</h4>");
                     for (CategoryItem categoryItem : categories) {
                         out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
                                 "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
@@ -160,6 +162,51 @@ limitations under the License
                                 " </div></section>"
                         );
                     }
+                }
+
+
+                List<MovieItem> movieItems = (List<MovieItem>) request.getAttribute("movieList");
+                if (movieItems != null) {
+                    out.println("<h4>Movies</h4>");
+                    for (MovieItem movie : movieItems) {
+
+                        out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
+                                "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
+                                "<i class=\"material-icons\">play_circle_filled</i>\n" +
+                                "</header>" +
+                                "<div class=\"mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone\">\n" +
+                                "<div class=\"mdl-card__supporting-text\">" + "<h4>" + movie.getName() + "</h4> " +
+                                "<br> Budget: "
+                                + movie.getBudget() + " $" +
+                                "<br> Year: "
+                                + movie.getYear() + " " +
+                                "<br> Description: "
+                                + movie.getDescription() + " " +
+                                "</div>" +
+                                " <div class=\"mdl-card__actions\">\n" +
+                                "<form method=\"post\" action=\"MovieCatalog\">\n" +
+
+                                "<input type=\"hidden\" name=\"command\" value=\"startEditMovie\">" +
+                                " <input type=\"hidden\" name=\"movieId\" value = \"" + movie.getId() + "\"/> \n" +
+                                "<input type=\"submit\" class=\"mdl-button\"  value = \"Edit\">" +
+                                "</form>" +
+                                "<form method=\"post\" action=\"MovieCatalog\">\n" +
+
+                                "<input type=\"hidden\" name=\"command\" value=\"deleteMovie\">" +
+                                " <input type=\"hidden\" name=\"movieId\" value = \"" + movie.getId() + "\"/> \n" +
+                                " <input type=\"hidden\" name=\"movieGenreId\" value = \"" + movie.getGenreId() + "\"/> \n" +
+                                "<input type=\"submit\" class=\"mdl-button\"  value = \"Delete\">" +
+                                "</form>" +
+
+
+                                "</div>" +
+
+
+                                "</div>" +
+                                " </section>"
+                        );
+                    }
+                }
             %>
 
 

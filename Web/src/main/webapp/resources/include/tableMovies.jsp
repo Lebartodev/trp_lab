@@ -85,7 +85,17 @@ limitations under the License
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 
             <a href="" class="mdl-layout__tab">Home</a>
-
+            <form action="MovieCatalog">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="inputSearch">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input type="hidden" name="command" value="search">
+                        <input class="mdl-textfield__input" name="inputSearch" type="text" id="inputSearch">
+                    </div>
+                </div>
+            </form>
             <a href="?command=startCreateMovie">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">

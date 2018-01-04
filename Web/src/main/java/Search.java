@@ -12,6 +12,6 @@ public class Search implements Command {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return "/MovieCatalog?command=search";
+        return "resources/include/tableResult.jsp";
     }
 }
