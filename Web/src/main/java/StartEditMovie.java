@@ -8,6 +8,7 @@ public class StartEditMovie implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
         try {
             request.setAttribute("movie", ControllerSQL.getMovie(Integer.parseInt(request.getParameter("movieId"))));
+            request.setAttribute("categoryList", ControllerSQL.getCategories());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -119,7 +119,7 @@ limitations under the License
                             " <div class=\"mdl-card__actions\">\n" +
                             "<form method=\"post\" action=\"MovieCatalog\">\n" +
 
-                            "<input type=\"hidden\" name=\"command\" value=\"editEvent\">" +
+                            "<input type=\"hidden\" name=\"command\" value=\"startEditMovie\">" +
                             " <input type=\"hidden\" name=\"movieId\" value = \"" + movie.getId() + "\"/> \n" +
                             "<input type=\"submit\" class=\"mdl-button\"  value = \"Edit\">" +
                             "</form>" +

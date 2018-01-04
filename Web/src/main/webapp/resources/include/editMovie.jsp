@@ -1,6 +1,7 @@
 <%@ page import="model.CategoryItem" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.MovieItem" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -93,7 +94,7 @@
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <hgroup>
-                <h3>Add Movie</h3>
+                <h3>Edit Movie</h3>
             </hgroup>
             <script type="text/javascript">
                 $(window, document, undefined).ready(function () {
@@ -134,25 +135,49 @@
             </script>
             <form action="MovieCatalog" method="POST">
                 <div class="group">
-                    <input type="hidden" name="command" value="endCreateMovie">
-                    <input type="name" id="movieName" name="movieName" class="form-control" required autofocus
+                    <input type="hidden" name="command" value="endEditMovie">
+                    <input type="hidden" name="movieId"
+                           value="<%=((MovieItem)(request.getAttribute("movie"))).getId()%>"/>
+                    <input type="name" id="movieName" name="movieName"
+                           value="<%=((MovieItem)(request.getAttribute("movie"))).getName()%>" class="form-control"
+                           required autofocus
                            placeholder="Name"><span class="highlight"></span><span class="bar"></span>
-                    <input type="text" id="movieYear" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="movieYear" class="form-control" placeholder="Year" required><span
+                </div>
+                <div class="group">
+                    <input type="text" id="movieYear" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                           name="movieYear" value="<%=((MovieItem)(request.getAttribute("movie"))).getYear()%>"
+                           class="form-control" placeholder="Year" required><span
                         class="highlight"></span><span class="bar"></span>
-                    <input type="text" id="movieBudget"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="movieBudget" class="form-control"  placeholder="Budget" required><span
+                </div>
+                <div class="group">
+                    <input type="text" id="movieBudget" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                           name="movieBudget" value="<%=((MovieItem)(request.getAttribute("movie"))).getBudget()%>"
+                           class="form-control" placeholder="Budget" required><span
                         class="highlight"></span><span class="bar"></span>
-                    <input type="text" id="movieDescription" name="movieDescription" class="form-control"  placeholder="Description"><span
+                </div>
+                <div class="group">
+                    <input type="text" id="movieDescription" name="movieDescription" class="form-control"
+                           placeholder="Description"
+                           value="<%=((MovieItem)(request.getAttribute("movie"))).getDescription()%>"><span
                         class="highlight"></span><span class="bar"></span>
+                </div>
+                <div class="group">
                     <p><select name="movieGenreId" class="form-control" required>
                         <%
                             List<CategoryItem> categoryItems = (List<CategoryItem>) request.getAttribute("categoryList");
+                            int selected = ((MovieItem) (request.getAttribute("movie"))).getGenreId();
                             for (CategoryItem categoryItem : categoryItems) {
-                                out.print("<option value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
+                                if (selected != categoryItem.getId()) {
+                                    out.print("<option value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
+                                } else {
+                                    out.print("<option selected value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
+                                }
                             }
                         %>
                     </select>
                 </div>
-                <button type="submit" class="button buttonBlue">Add Movie
+
+                <button type="submit" class="button buttonBlue">Edit Movie
                     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
                 </button>
             </form>

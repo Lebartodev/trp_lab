@@ -137,12 +137,23 @@
                     <input type="hidden" name="command" value="endCreateMovie">
                     <input type="name" id="movieName" name="movieName" class="form-control" required autofocus
                            placeholder="Name"><span class="highlight"></span><span class="bar"></span>
-                    <input type="text" id="movieYear" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="movieYear" class="form-control" placeholder="Year" required><span
+                </div>
+                <div class="group">
+                    <input type="text" id="movieYear" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                           name="movieYear" class="form-control" placeholder="Year" required><span
                         class="highlight"></span><span class="bar"></span>
-                    <input type="text" id="movieBudget"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="movieBudget" class="form-control"  placeholder="Budget" required><span
+                </div>
+                <div class="group">
+                    <input type="text" id="movieBudget" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                           name="movieBudget" class="form-control" placeholder="Budget" required><span
                         class="highlight"></span><span class="bar"></span>
-                    <input type="text" id="movieDescription" name="movieDescription" class="form-control"  placeholder="Description"><span
+                </div>
+                <div class="group">
+                    <input type="text" id="movieDescription" name="movieDescription" class="form-control"
+                           placeholder="Description"><span
                         class="highlight"></span><span class="bar"></span>
+                </div>
+                <div class="group">
                     <p><select name="movieGenreId" class="form-control" required>
                         <%
                             List<CategoryItem> categoryItems = (List<CategoryItem>) request.getAttribute("categoryList");
@@ -151,6 +162,7 @@
                             }
                         %>
                     </select>
+
                 </div>
                 <button type="submit" class="button buttonBlue">Add Movie
                     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
