@@ -113,4 +113,22 @@ public class ControllerSQL {
         statement.close();
         con.close();
     }
+
+    public static void createMovie(String name, int year, String description, int genreId, int budget) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        if(description == null){
+            description = "Add some description!";
+        }
+        String query = "insert into Movie(name, year, description, genreId, budget) values("
+                + "'" + name + "'"
+                + ", " + year
+                + ", '" + description + "'"
+                + ", " + genreId
+                + ", " + budget + ");";
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
 }

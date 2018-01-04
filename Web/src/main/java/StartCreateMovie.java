@@ -6,6 +6,6 @@ import java.sql.SQLException;
 public class StartCreateMovie implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
-        return null;
+        return "/resources/include/addMovie.jsp";
     }
 }
