@@ -1,4 +1,5 @@
 import model.MovieItem;
+import util.MarshallerUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ public class MoviesInCategory implements Command {
             e.printStackTrace();
         }
         System.out.println("kek");
-        request.setAttribute("moviesList",arrayList);
+        request.setAttribute("moviesList", MarshallerUtil.marshallAction(new MovList(arrayList), MovList.class));
 
 
         return "/resources/include/tableMovies.jsp";
