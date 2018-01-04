@@ -141,4 +141,43 @@ public class ControllerSQL {
         statement.close();
         con.close();
     }
+
+    public static MovieItem getMovie(int id) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "select * from Movie where id = " + id;
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        MovieItem movieItem = MovieItem.newBuilder().build();
+        while (rs.next()) {
+            movieItem.setId(rs.getInt(1));
+            movieItem.setName(rs.getString(2));
+            movieItem.setYear(rs.getInt(3));
+            movieItem.setDescription(rs.getString(4));
+            movieItem.setGenreId(rs.getInt(5));
+            movieItem.setBudget(rs.getInt(6));
+        }
+        con.close();
+        statement.close();
+        rs.close();
+        return movieItem;
+    }
+
+    public static void updateMovie(int id, String name, int year, String description, int genreId, int budget) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        if(description == null){
+            description = "Add some description!";
+        }
+        String query = "update Movie set name = " + "'" + name + "'"
+                +", year = " + year
+                +", description = " + "'" + description + "'"
+                +", genreId = " + genreId
+                +", budget = " + budget
+                + " where id = " + id;
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
 }
