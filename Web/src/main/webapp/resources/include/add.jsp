@@ -22,8 +22,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Task" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="model.CategoryItem" %><%--
   Created by IntelliJ IDEA.
   User: Nastya
   Date: 20.03.2016
@@ -110,7 +110,7 @@
             <a href="?command=logout" class="mdl-layout__tab">Logout</a>
 
 
-            <a href="?command=add">
+            <a href="?command=startCreateCategory">
                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
                         id="add">
 
@@ -124,8 +124,7 @@
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <hgroup>
-
-                <h3>Add Task</h3>
+                <h3>Add Category</h3>
             </hgroup>
             <script type="text/javascript">
                 $(window, document, undefined).ready(function() {
@@ -164,22 +163,13 @@
 
                 });
             </script>
-            <form action="TaskManager" method="POST">
+            <form method="POST">
                 <div class="group">
-                    <input type="hidden" name="command" value="addNew">
-                    <input type="name" id="inputEmail" name="name" class="form-control"required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
+                    <input type="hidden" name="command" value="endCreateCategory">
+                    <input type="name" id="categoryName" name="categoryName" class="form-control" required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
 
                 </div>
-                <div class="group">
-                    <input type="text"  name="description" class="form-control" required placeholder="Description"><span class="highlight"></span><span class="bar"></span>
-                </div>
-                <div class="group">
-                    <input type="text"  name="date" class="form-control" required placeholder="Date"><span class="highlight"></span><span class="bar"></span>
-                </div>
-                <div class="group">
-                    <input type="text"  name="contacts" class="form-control" required placeholder="Contacts"><span class="highlight"></span><span class="bar"></span>
-                </div>
-                <button type="submit" class="button buttonBlue">Add Task
+                <button type="submit" class="button buttonBlue">Edit Category
                     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
                 </button>
             </form>

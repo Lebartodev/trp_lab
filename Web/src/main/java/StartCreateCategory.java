@@ -6,6 +6,6 @@ import java.sql.SQLException;
 public class StartCreateCategory implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
-        return "/resources/include/addCategory.jsp";
+        return "/resources/include/add.jsp";
     }
 }
