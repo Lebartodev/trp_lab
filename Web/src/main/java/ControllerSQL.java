@@ -180,4 +180,47 @@ public class ControllerSQL {
         statement.close();
         con.close();
     }
+
+    public static ArrayList<CategoryItem> searchCategory(String name) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "SELECT * FROM Category where name like '%" + name + "%'";
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        ArrayList<CategoryItem> categoryItems = new ArrayList<>();
+        while (rs.next()) {
+            CategoryItem categoryItem = CategoryItem.newBuilder()
+                    .id(rs.getInt(1))
+                    .name(rs.getString(2))
+                    .build();
+            categoryItems.add(categoryItem);
+        }
+        con.close();
+        statement.close();
+        rs.close();
+        return categoryItems;
+    }
+
+    public static ArrayList<MovieItem> searchMovie(String name) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "SELECT * FROM Movie where name like '%" + name + "%'";
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        ArrayList<MovieItem> movieItems = new ArrayList<>();
+        while (rs.next()) {
+            MovieItem newMovie = MovieItem.newBuilder().id(rs.getInt(1))
+                    .name(rs.getString(2))
+                    .year(rs.getInt(3))
+                    .description(rs.getString(4))
+                    .genreId(rs.getInt(5))
+                    .budget(rs.getInt(6))
+                    .build();
+            movieItems.add(newMovie);
+        }
+        con.close();
+        statement.close();
+        rs.close();
+        return movieItems;
+    }
 }

@@ -9,7 +9,7 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.6" />
           <element id="archive" name="Actions-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="Actions" />
+            <element id="module-output" name="Shared" />
           </element>
         </element>
       </element>
