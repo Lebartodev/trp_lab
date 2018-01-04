@@ -1,5 +1,8 @@
 <%@ page import="model.MovieItem" %>
 <%@ page import="java.util.List" %>
+<%@ page import="util.MovList" %>
+<%@ page import="org.w3c.dom.Document" %>
+<%@ page import="util.Util" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya
@@ -110,8 +113,8 @@ limitations under the License
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <%
-                List<MovieItem> movieItems = (List<MovieItem>) request.getAttribute("moviesList");
-                for (MovieItem movie : movieItems) {
+                MovList movieItems = (MovList) Util.unmarshall((Document) request.getAttribute("moviesList"), MovList.class);
+                for (MovieItem movie : movieItems.getMovieItemList()) {
 
                     out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
                             "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +

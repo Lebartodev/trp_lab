@@ -11,7 +11,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.CategoryItem" %><%--
+<%@ page import="model.CategoryItem" %>
+<%@ page import="util.Util" %>
+<%@ page import="org.w3c.dom.Document" %><%--
   Created by IntelliJ IDEA.
   User: Nastya
   Date: 20.03.2016
@@ -141,8 +143,8 @@
             <form action="MovieCatalog" method="POST">
                 <div class="group">
                     <input type="hidden" name="command" value="endEditCategory">
-                    <input type="hidden" name="categoryId" value ="<%=((CategoryItem)(request.getAttribute("category"))).getId()%>" />
-                    <input type="name" id="categoryName" name="categoryName" value="<%=((CategoryItem)(request.getAttribute("category"))).getName()%>" class="form-control" required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
+                    <input type="hidden" name="categoryId" value ="<%=((CategoryItem)Util.unmarshall((Document) request.getAttribute("category"), CategoryItem.class)).getId()%>" />
+                    <input type="name" id="categoryName" name="categoryName" value="<%=((CategoryItem)Util.unmarshall((Document) request.getAttribute("category"), CategoryItem.class)).getName()%>" class="form-control" required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
 
                 </div>
                 <button type="submit" class="button buttonBlue">Edit Category

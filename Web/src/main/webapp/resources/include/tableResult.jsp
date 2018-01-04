@@ -1,6 +1,10 @@
 <%@ page import="model.CategoryItem" %>
 <%@ page import="model.MovieItem" %>
 <%@ page import="java.util.List" %>
+<%@ page import="util.CatList" %>
+<%@ page import="util.Util" %>
+<%@ page import="org.w3c.dom.Document" %>
+<%@ page import="util.MovList" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya
@@ -123,10 +127,10 @@ limitations under the License
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <%
-                List<CategoryItem> categories = (List<CategoryItem>) request.getAttribute("categoryList");
+                CatList categories = (CatList) Util.unmarshall((Document) request.getAttribute("categoryList"), CatList.class);
                 if (categories != null) {
                     out.println("<h4>Categories</h4>");
-                    for (CategoryItem categoryItem : categories) {
+                    for (CategoryItem categoryItem : categories.getCategoryItemLIst()) {
                         out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
                                 "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
                                 "<i class=\"material-icons\">play_circle_filled</i>\n" +
@@ -165,10 +169,10 @@ limitations under the License
                 }
 
 
-                List<MovieItem> movieItems = (List<MovieItem>) request.getAttribute("movieList");
+                MovList movieItems = (MovList) Util.unmarshall((Document) request.getAttribute("movieList"), MovList.class);
                 if (movieItems != null) {
                     out.println("<h4>Movies</h4>");
-                    for (MovieItem movie : movieItems) {
+                    for (MovieItem movie : movieItems.getMovieItemList()) {
 
                         out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
                                 "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +

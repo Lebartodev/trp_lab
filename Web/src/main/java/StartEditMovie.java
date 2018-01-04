@@ -13,7 +13,7 @@ public class StartEditMovie implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
         try {
             request.setAttribute("movie", MarshallerUtil.marshallAction(ControllerSQL.getMovie(Integer.parseInt(request.getParameter("movieId"))), MovieItem.class));
-            request.setAttribute("categoryList", MarshallerUtil.marshallAction(new CatList(ControllerSQL.getCategories()), MovList.class));
+            request.setAttribute("categoryList", MarshallerUtil.marshallAction(new CatList(ControllerSQL.getCategories()), CatList.class));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

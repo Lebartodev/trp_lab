@@ -2,7 +2,9 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.MovieItem" %>
-<%@ page import="java.util.List" %>
+<%@ page import="org.w3c.dom.Document" %>
+<%@ page import="util.CatList" %>
+<%@ page import="util.Util" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya
@@ -137,36 +139,36 @@
                 <div class="group">
                     <input type="hidden" name="command" value="endEditMovie">
                     <input type="hidden" name="movieId"
-                           value="<%=((MovieItem)(request.getAttribute("movie"))).getId()%>"/>
+                           value="<%=((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getId()%>"/>
                     <input type="name" id="movieName" name="movieName"
-                           value="<%=((MovieItem)(request.getAttribute("movie"))).getName()%>" class="form-control"
+                           value="<%=((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getName()%>" class="form-control"
                            required autofocus
                            placeholder="Name"><span class="highlight"></span><span class="bar"></span>
                 </div>
                 <div class="group">
                     <input type="text" id="movieYear" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                           name="movieYear" value="<%=((MovieItem)(request.getAttribute("movie"))).getYear()%>"
+                           name="movieYear" value="<%=((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getYear()%>"
                            class="form-control" placeholder="Year" required><span
                         class="highlight"></span><span class="bar"></span>
                 </div>
                 <div class="group">
                     <input type="text" id="movieBudget" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                           name="movieBudget" value="<%=((MovieItem)(request.getAttribute("movie"))).getBudget()%>"
+                           name="movieBudget" value="<%=((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getBudget()%>"
                            class="form-control" placeholder="Budget" required><span
                         class="highlight"></span><span class="bar"></span>
                 </div>
                 <div class="group">
                     <input type="text" id="movieDescription" name="movieDescription" class="form-control"
                            placeholder="Description"
-                           value="<%=((MovieItem)(request.getAttribute("movie"))).getDescription()%>"><span
+                           value="<%=((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getDescription()%>"><span
                         class="highlight"></span><span class="bar"></span>
                 </div>
                 <div class="group">
                     <p><select name="movieGenreId" class="form-control" required>
                         <%
-                            List<CategoryItem> categoryItems = (List<CategoryItem>) request.getAttribute("categoryList");
-                            int selected = ((MovieItem) (request.getAttribute("movie"))).getGenreId();
-                            for (CategoryItem categoryItem : categoryItems) {
+                            CatList categories = (CatList) Util.unmarshall((Document) request.getAttribute("categoryList"), CatList.class);
+                            int selected = ((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getGenreId();
+                            for (CategoryItem categoryItem : categories.getCategoryItemLIst()) {
                                 if (selected != categoryItem.getId()) {
                                     out.print("<option value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
                                 } else {

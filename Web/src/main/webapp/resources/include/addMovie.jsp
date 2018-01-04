@@ -2,6 +2,9 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="util.CatList" %>
+<%@ page import="util.Util" %>
+<%@ page import="org.w3c.dom.Document" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya
@@ -156,8 +159,8 @@
                 <div class="group">
                     <p><select name="movieGenreId" class="form-control" required>
                         <%
-                            List<CategoryItem> categoryItems = (List<CategoryItem>) request.getAttribute("categoryList");
-                            for (CategoryItem categoryItem : categoryItems) {
+                            CatList categories = (CatList) Util.unmarshall((Document) request.getAttribute("categoryList"), CatList.class);
+                            for (CategoryItem categoryItem : categories.getCategoryItemLIst()) {
                                 out.print("<option value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
                             }
                         %>
