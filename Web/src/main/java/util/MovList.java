@@ -1,3 +1,5 @@
+package util;
+
 import model.MovieItem;
 
 import javax.xml.bind.annotation.XmlElement;

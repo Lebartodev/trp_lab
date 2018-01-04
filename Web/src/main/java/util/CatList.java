@@ -1,3 +1,5 @@
+package util;
+
 import model.CategoryItem;
 
 import javax.xml.bind.annotation.XmlElement;
