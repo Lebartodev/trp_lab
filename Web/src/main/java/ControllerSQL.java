@@ -131,4 +131,14 @@ public class ControllerSQL {
         statement.close();
         con.close();
     }
+
+    public static void deleteMovie(int id) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection(url, user, password);
+        String query = "delete from Movie where id = " + id;
+        Statement statement = con.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        con.close();
+    }
 }
