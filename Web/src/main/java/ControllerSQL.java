@@ -103,12 +103,11 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static void createCategory(CategoryItem categoryItem) throws SQLException, ClassNotFoundException {
+    public static void createCategory(String name) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
-        String query = "insert into Category(id, name) values("
-                + categoryItem.getId()
-                + ", '" + categoryItem.getName() + "');";
+        String query = "insert into Category(name) values("
+                + "'" + name + "');";
         Statement statement = con.createStatement();
         statement.executeUpdate(query);
         statement.close();
