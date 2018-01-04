@@ -138,7 +138,7 @@
 
                 });
             </script>
-            <form method="POST">
+            <form action="MovieCatalog" method="POST">
                 <div class="group">
                     <input type="hidden" name="command" value="endEditCategory">
                     <input type="hidden" name="categoryId" value ="<%=((CategoryItem)(request.getAttribute("category"))).getId()%>" />

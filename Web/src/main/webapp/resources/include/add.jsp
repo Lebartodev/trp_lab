@@ -104,21 +104,10 @@
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 
-            <a href="?command=show" class="mdl-layout__tab is-active">Home</a>
-            <a href="?command=tasksEmployees" class="mdl-layout__tab">Employees tasks</a>
-            <a href="?command=listEmployees" class="mdl-layout__tab">List of employees</a>
-            <a href="?command=logout" class="mdl-layout__tab">Logout</a>
+            <a href="?command=listCategories" class="mdl-layout__tab is-active">Home</a>
 
 
-            <a href="?command=startCreateCategory">
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
-                        id="add">
 
-                    <i class="material-icons" role="presentation">add</i>
-                    <span class="visuallyhidden">Add</span>
-
-                </button>
-            </a>
         </div>
     </header>
     <main class="mdl-layout__content">
@@ -163,13 +152,12 @@
 
                 });
             </script>
-            <form method="POST">
+            <form action="MovieCatalog" method="POST">
                 <div class="group">
                     <input type="hidden" name="command" value="endCreateCategory">
                     <input type="name" id="categoryName" name="categoryName" class="form-control" required autofocus placeholder="Name"><span class="highlight"></span><span class="bar"></span>
-
                 </div>
-                <button type="submit" class="button buttonBlue">Edit Category
+                <button type="submit" class="button buttonBlue">Add Category
                     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
                 </button>
             </form>
