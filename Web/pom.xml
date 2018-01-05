@@ -19,6 +19,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/tomcat/tomcat-juli -->
+    <dependency>
+      <groupId>tomcat</groupId>
+      <artifactId>tomcat-juli</artifactId>
+      <version>5.5.23</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>web</finalName>

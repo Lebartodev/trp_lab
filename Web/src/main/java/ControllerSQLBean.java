@@ -3,6 +3,9 @@ import util.MovieItem;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,10 +17,13 @@ public class ControllerSQLBean implements IControllerSQL{
     private final String user = "root";
     private final String password = "953111";
 
-    @Resource(lookup = "java:jdbc/MyLocalDB")
-    private DataSource dataSource;
+    Context ctx = new InitialContext();
+    DataSource dataSource = (DataSource) ctx.lookup("java:/comp/env/jdbc/MyLocalDB");
 
-    public ControllerSQLBean() {
+ /*   @Resource(lookup = "java:jdbc/MyLocalDB")
+    private DataSource dataSource;*/
+
+    public ControllerSQLBean() throws NamingException {
     }
 
     @Override
