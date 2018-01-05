@@ -19,11 +19,6 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>ejbModule</groupId>
-      <artifactId>ejbModule</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
   </dependencies>
   <build>
     <finalName>web</finalName>

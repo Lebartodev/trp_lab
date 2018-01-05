@@ -1,8 +1,11 @@
-import javax.ejb.Local;
+import util.CategoryItem;
+import util.MovieItem;
+
+import javax.ejb.Remote;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@Local
+@Remote
 public interface IControllerSQL {
 
     public ArrayList<CategoryItem> getCategories() throws SQLException, ClassNotFoundException;

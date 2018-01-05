@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class MainServlet extends HttpServlet {
     RequestHelper requestHelper = new RequestHelper();
 
-    @EJB
+    @EJB(lookup = "java:module/storage")
     private IControllerSQL controllerSQL;
 
 

@@ -1,7 +1,6 @@
 package util;
 
 import org.w3c.dom.Document;
-import util.ObjectFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

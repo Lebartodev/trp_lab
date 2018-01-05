@@ -1,10 +1,9 @@
-<%@ page import="model.CategoryItem" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="util.CatList" %>
 <%@ page import="util.Util" %>
 <%@ page import="org.w3c.dom.Document" %>
+<%@ page import="util.CategoryItem" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya

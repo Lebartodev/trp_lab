@@ -1,8 +1,8 @@
-<%@ page import="model.MovieItem" %>
 <%@ page import="java.util.List" %>
 <%@ page import="util.MovList" %>
 <%@ page import="org.w3c.dom.Document" %>
 <%@ page import="util.Util" %>
+<%@ page import="util.MovieItem" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya

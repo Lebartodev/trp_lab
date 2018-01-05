@@ -23,7 +23,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.CategoryItem" %><%--
+<%@ page import="util.CategoryItem" %><%--
   Created by IntelliJ IDEA.
   User: Nastya
   Date: 20.03.2016

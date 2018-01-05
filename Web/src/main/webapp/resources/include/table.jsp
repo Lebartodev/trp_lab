@@ -1,8 +1,8 @@
-<%@ page import="model.CategoryItem" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.w3c.dom.Document" %>
 <%@ page import="util.CatList" %>
 <%@ page import="util.Util" %>
+<%@ page import="util.CategoryItem" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nastya

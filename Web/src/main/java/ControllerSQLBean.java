@@ -1,10 +1,11 @@
-import javax.ejb.Local;
+import util.CategoryItem;
+import util.MovieItem;
+
 import javax.ejb.Stateless;
 import java.sql.*;
 import java.util.ArrayList;
 
-@Local(IControllerSQL.class)
-@Stateless
+@Stateless(name = "storage")
 public class ControllerSQLBean implements IControllerSQL{
     // JDBC URL, username and password of MySQL server
 
