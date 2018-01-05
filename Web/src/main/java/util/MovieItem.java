@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
-@XmlType(propOrder = {"name", "year", "description", "genreId", "budget"}, name = "movieItem")
+@XmlType(propOrder = {"id", "name", "year", "description", "genreId", "budget"}, name = "movieItem")
 public class MovieItem implements java.io.Serializable {
     private int id;
     private String name;
