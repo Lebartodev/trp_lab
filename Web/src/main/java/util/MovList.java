@@ -19,7 +19,7 @@ public class MovList {
     }
 
     @XmlElementWrapper(name = "movieItemList")
-    @XmlElement(name = "categoryItem")
+    @XmlElement(name = "movieItem")
     public List<MovieItem> getMovieItemList() {
         return movieItemList;
     }

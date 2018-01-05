@@ -7,24 +7,24 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 
 @XmlRootElement
-@XmlType(propOrder = {"categoryItemLIst"}, name = "catList")
+@XmlType(propOrder = {"categoryItemList"}, name = "catList")
 public class CatList {
-    private List<CategoryItem> categoryItemLIst;
+    private List<CategoryItem> categoryItemList;
 
-    public CatList(List<CategoryItem> categoryItemLIst) {
-        this.categoryItemLIst = categoryItemLIst;
+    public CatList(List<CategoryItem> categoryItemList) {
+        this.categoryItemList = categoryItemList;
     }
 
     public CatList() {
     }
 
-    @XmlElementWrapper(name = "categoryItemLIst")
+    @XmlElementWrapper(name = "categoryItemList")
     @XmlElement(name = "categoryItem")
-    public List<CategoryItem> getCategoryItemLIst() {
-        return categoryItemLIst;
+    public List<CategoryItem> getCategoryItemList() {
+        return categoryItemList;
     }
 
-    public void setCategoryItemLIst(List<CategoryItem> categoryItemLIst) {
-        this.categoryItemLIst = categoryItemLIst;
+    public void setCategoryItemList(List<CategoryItem> categoryItemList) {
+        this.categoryItemList = categoryItemList;
     }
 }

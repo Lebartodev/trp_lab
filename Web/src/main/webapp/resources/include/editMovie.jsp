@@ -167,7 +167,7 @@
                         <%
                             CatList categories = (CatList) Util.unmarshall((Document) request.getAttribute("categoryList"), CatList.class);
                             int selected = ((MovieItem)Util.unmarshall((Document) request.getAttribute("movie"), MovieItem.class)).getGenreId();
-                            for (CategoryItem categoryItem : categories.getCategoryItemLIst()) {
+                            for (CategoryItem categoryItem : categories.getCategoryItemList()) {
                                 if (selected != categoryItem.getId()) {
                                     out.print("<option value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
                                 } else {

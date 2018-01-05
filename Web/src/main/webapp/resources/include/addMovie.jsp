@@ -159,7 +159,7 @@
                     <p><select name="movieGenreId" class="form-control" required>
                         <%
                             CatList categories = (CatList) Util.unmarshall((Document) request.getAttribute("categoryList"), CatList.class);
-                            for (CategoryItem categoryItem : categories.getCategoryItemLIst()) {
+                            for (CategoryItem categoryItem : categories.getCategoryItemList()) {
                                 out.print("<option value=\"" + categoryItem.getId() + "\">" + categoryItem.getName() + "</option>");
                             }
                         %>

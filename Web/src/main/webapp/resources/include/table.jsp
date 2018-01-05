@@ -129,7 +129,7 @@ limitations under the License
 
                 CatList categories = (CatList) Util.unmarshall((Document) request.getAttribute("categoriesList"), CatList.class);
                 if (categories != null)
-                    for (CategoryItem categoryItem : categories.getCategoryItemLIst()) {
+                    for (CategoryItem categoryItem : categories.getCategoryItemList()) {
                         out.println("<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">\n" +
                                 "<header class=\"section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white\">\n" +
                                 "<i class=\"material-icons\">play_circle_filled</i>\n" +
