@@ -2,6 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.trp.lab</groupId>
     <artifactId>firstlab</artifactId>
+    <packaging>pom</packaging>
     <version>1</version>
     <build>
         <plugins>
@@ -15,6 +16,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>ejbModule</module>
+    </modules>
 
     <dependencies>
         <dependency>
