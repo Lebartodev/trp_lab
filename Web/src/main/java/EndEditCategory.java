@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 public class EndEditCategory implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         try {
-            ControllerSQL.updateCategory(Integer.parseInt(request.getParameter("categoryId"))
+            controllerSQL.updateCategory(Integer.parseInt(request.getParameter("categoryId"))
                     , request.getParameter("categoryName"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

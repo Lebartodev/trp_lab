@@ -7,5 +7,5 @@ import java.sql.SQLException;
  * Created by Nastya on 21.03.2016.
  */
 public interface Command {
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException;
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException;
 }

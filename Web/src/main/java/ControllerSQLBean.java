@@ -1,18 +1,24 @@
 import model.CategoryItem;
 import model.MovieItem;
 
+import javax.ejb.Stateless;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ControllerSQL {
+@Stateless
+public class ControllerSQLBean implements IControllerSQL{
     // JDBC URL, username and password of MySQL server
-    private static final String url = "jdbc:mysql://localhost:3306/mydb";
-    private static final String user = "root";
-    private static final String password = "953111";
-    // JDBC variables for opening and managing connection
-    private static Connection con;
 
-    public static ArrayList<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
+
+    public ControllerSQLBean() {
+    }
+
+    @Override
+    public ArrayList<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "SELECT * FROM Category";
@@ -32,7 +38,12 @@ public class ControllerSQL {
         return categoryItems;
     }
 
-    public static ArrayList<MovieItem> getMoviesInCategory(int categoryId) throws SQLException, ClassNotFoundException {
+    @Override
+    public ArrayList<MovieItem> getMoviesInCategory(int categoryId) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "select * from Movie where Movie.genreId = " + categoryId;
@@ -55,7 +66,12 @@ public class ControllerSQL {
         return movieItems;
     }
 
-    public static CategoryItem getCategory(int id) throws SQLException, ClassNotFoundException {
+    @Override
+    public CategoryItem getCategory(int id) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "select * from Category where id = " + id;
@@ -72,7 +88,12 @@ public class ControllerSQL {
         return categoryItem;
     }
 
-    public static void updateCategory(int id, String name) throws SQLException, ClassNotFoundException {
+    @Override
+    public void updateCategory(int id, String name) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "update Category set name = " + "'" + name + "'" + " where id = " + id;
@@ -82,7 +103,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static void deleteCategory(int id) throws SQLException, ClassNotFoundException {
+    @Override
+    public void deleteCategory(int id) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         deleteMoviesInCategory(id);
         con = DriverManager.getConnection(url, user, password);
@@ -93,7 +119,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static void deleteMoviesInCategory(int id) throws SQLException, ClassNotFoundException {
+    @Override
+    public void deleteMoviesInCategory(int id) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "delete from Movie where genreId = " + id;
@@ -103,7 +134,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static void createCategory(String name) throws SQLException, ClassNotFoundException {
+    @Override
+    public void createCategory(String name) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "insert into Category(name) values("
@@ -114,7 +150,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static void createMovie(String name, int year, String description, int genreId, int budget) throws SQLException, ClassNotFoundException {
+    @Override
+    public void createMovie(String name, int year, String description, int genreId, int budget) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         if(description == null){
@@ -132,7 +173,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static void deleteMovie(int id) throws SQLException, ClassNotFoundException {
+    @Override
+    public void deleteMovie(int id) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "delete from Movie where id = " + id;
@@ -142,7 +188,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static MovieItem getMovie(int id) throws SQLException, ClassNotFoundException {
+    @Override
+    public MovieItem getMovie(int id) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "select * from Movie where id = " + id;
@@ -163,7 +214,12 @@ public class ControllerSQL {
         return movieItem;
     }
 
-    public static void updateMovie(int id, String name, int year, String description, int genreId, int budget) throws SQLException, ClassNotFoundException {
+    @Override
+    public void updateMovie(int id, String name, int year, String description, int genreId, int budget) throws SQLException, ClassNotFoundException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         if(description == null){
@@ -181,7 +237,12 @@ public class ControllerSQL {
         con.close();
     }
 
-    public static ArrayList<CategoryItem> searchCategory(String name) throws ClassNotFoundException, SQLException {
+    @Override
+    public ArrayList<CategoryItem> searchCategory(String name) throws ClassNotFoundException, SQLException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "SELECT * FROM Category where name like '%" + name + "%'";
@@ -201,7 +262,12 @@ public class ControllerSQL {
         return categoryItems;
     }
 
-    public static ArrayList<MovieItem> searchMovie(String name) throws ClassNotFoundException, SQLException {
+    @Override
+    public ArrayList<MovieItem> searchMovie(String name) throws ClassNotFoundException, SQLException {
+        final String url = "jdbc:mysql://localhost:3306/mydb";
+        final String user = "root";
+        final String password = "953111";
+        Connection con;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         String query = "SELECT * FROM Movie where name like '%" + name + "%'";

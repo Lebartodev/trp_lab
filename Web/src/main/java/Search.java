@@ -9,10 +9,10 @@ import java.sql.SQLException;
 
 public class Search implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         try {
-            request.setAttribute("categoryList", MarshallerUtil.marshallAction(new CatList(ControllerSQL.searchCategory(request.getParameter("inputSearch"))), CatList.class));
-            request.setAttribute("movieList", MarshallerUtil.marshallAction(new MovList(ControllerSQL.searchMovie(request.getParameter("inputSearch"))), MovList.class) );
+            request.setAttribute("categoryList", MarshallerUtil.marshallAction(new CatList(controllerSQL.searchCategory(request.getParameter("inputSearch"))), CatList.class));
+            request.setAttribute("movieList", MarshallerUtil.marshallAction(new MovList(controllerSQL.searchMovie(request.getParameter("inputSearch"))), MovList.class) );
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

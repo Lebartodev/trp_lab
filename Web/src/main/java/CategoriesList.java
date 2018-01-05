@@ -1,7 +1,6 @@
 import model.CategoryItem;
 import util.CatList;
 import util.MarshallerUtil;
-import util.Util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +12,10 @@ import java.util.List;
  * Created by 0_o on 22.04.2016.
  */
 public class CategoriesList implements Command {
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         List<CategoryItem> arrayList = null;
         try {
-            arrayList = ControllerSQL.getCategories();
+            arrayList = controllerSQL.getCategories();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

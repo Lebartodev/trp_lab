@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 public class EndCreateMovie implements Command{
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         try {
-            ControllerSQL.createMovie(request.getParameter("movieName"),
+            controllerSQL.createMovie(request.getParameter("movieName"),
                     Integer.parseInt(request.getParameter("movieYear")),
                     request.getParameter("movieDescription"),
                     Integer.parseInt(request.getParameter("movieGenreId")),

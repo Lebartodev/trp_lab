@@ -1,3 +1,4 @@
+import javax.ejb.EJB;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,13 +11,16 @@ import java.sql.SQLException;
 public class MainServlet extends HttpServlet {
     RequestHelper requestHelper = new RequestHelper();
 
+    @EJB
+    private IControllerSQL controllerSQL;
+
 
 
 
     //    String[] message;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            doRequest(request, response);
+            doRequest(request, response, controllerSQL);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -31,7 +35,7 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            doRequest(request, response);
+            doRequest(request, response, controllerSQL);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -42,11 +46,11 @@ public class MainServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-    protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, NoSuchAlgorithmException, NamingException, ClassNotFoundException {
+    protected void doRequest(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws ServletException, IOException, SQLException, NoSuchAlgorithmException, NamingException, ClassNotFoundException {
         response.setContentType("text/html");
 
         Command command = requestHelper.getCommand(request);
-        String page  = command.execute(request,response);
+        String page  = command.execute(request,response, controllerSQL);
         request.getRequestDispatcher(page).forward(request, response);
 
     }

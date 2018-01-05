@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 public class DeleteCategory implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         try {
-            ControllerSQL.deleteCategory(Integer.parseInt(request.getParameter("categoryId")));
+            controllerSQL.deleteCategory(Integer.parseInt(request.getParameter("categoryId")));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

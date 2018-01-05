@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MoviesInCategory implements Command {
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         List<MovieItem> arrayList = null;
         try {
-            arrayList = ControllerSQL.getMoviesInCategory(Integer.parseInt(request.getParameter("categoryId")));
+            arrayList = controllerSQL.getMoviesInCategory(Integer.parseInt(request.getParameter("categoryId")));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class StartCreateMovie implements Command{
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException {
+    public String execute(HttpServletRequest request, HttpServletResponse response, IControllerSQL controllerSQL) throws SQLException, NoSuchAlgorithmException {
         try {
-            request.setAttribute("categoryList", MarshallerUtil.marshallAction(new CatList(ControllerSQL.getCategories()), CatList.class));
+            request.setAttribute("categoryList", MarshallerUtil.marshallAction(new CatList(controllerSQL.getCategories()), CatList.class));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
