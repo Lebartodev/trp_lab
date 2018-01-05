@@ -1,6 +1,5 @@
-import model.CategoryItem;
 import util.CatList;
-import util.MarshallerUtil;
+import util.Util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,7 @@ public class CategoriesList implements Command {
             e.printStackTrace();
         }
         System.out.println("kek");
-        request.setAttribute("categoriesList", MarshallerUtil.marshallAction(new CatList(arrayList), CatList.class));
+        request.setAttribute("categoriesList", Util.marshall(new CatList(arrayList), CatList.class));
 
 
         return "/resources/include/table.jsp";

@@ -1,6 +1,3 @@
-import model.CategoryItem;
-import model.MovieItem;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import java.sql.*;

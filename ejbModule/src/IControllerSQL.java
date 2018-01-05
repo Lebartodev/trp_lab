@@ -1,6 +1,3 @@
-import model.CategoryItem;
-import model.MovieItem;
-
 import javax.ejb.Local;
 import java.sql.SQLException;
 import java.util.ArrayList;
