@@ -1,6 +1,5 @@
 package util;
 
-import model.Task;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
