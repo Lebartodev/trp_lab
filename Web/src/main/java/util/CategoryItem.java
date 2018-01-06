@@ -21,7 +21,6 @@ public class CategoryItem implements java.io.Serializable {
     private String name;
 
     public CategoryItem() {
-
     }
 
     public int getId() {

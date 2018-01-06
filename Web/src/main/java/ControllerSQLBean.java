@@ -1,4 +1,3 @@
-import org.hibernate.Query;
 import org.hibernate.Session;
 import util.CategoryItem;
 import util.HibernateUtil;
@@ -7,6 +6,8 @@ import util.MovieItem;
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,243 +29,181 @@ public class ControllerSQLBean implements IControllerSQL{
             entityManager.close();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            /*if (session != null && session.isOpen()) {
-
-                session.close();
-            }*/
-
         }
         return resultsCategories;
     }
 
     @Override
     public List<MovieItem> getMoviesInCategory(int categoryId) throws SQLException, ClassNotFoundException {
-        Session session = null;
         List<MovieItem> resultsMovieItem = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from MovieItem where genreId = :id";
-            Query query = session.createQuery(hql);
-            query.setInteger("id",categoryId);
-            resultsMovieItem = (List<MovieItem>) query.list();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            TypedQuery<MovieItem> query = entityManager.createQuery("select m from MovieItem m where genreId = :id", MovieItem.class);
+            resultsMovieItem = query.setParameter("id", categoryId).getResultList();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-
         }
         return resultsMovieItem;
     }
 
     @Override
     public CategoryItem getCategory(int id) throws SQLException, ClassNotFoundException {
-        Session session = null;
         CategoryItem categoryItem = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from CategoryItem where id = :id";
-            Query query = session.createQuery(hql);
-            query.setInteger("id",id);
-            categoryItem = (CategoryItem) query.uniqueResult();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            TypedQuery<CategoryItem> query = entityManager.createQuery("select c from CategoryItem c where id = :id", CategoryItem.class);
+            categoryItem = query.setParameter("id", id).getSingleResult();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
 
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
         return categoryItem;
     }
 
     @Override
     public void updateCategory(CategoryItem categoryItem) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(categoryItem);
-            session.getTransaction().commit();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            CategoryItem categoryItem1 = entityManager.find(CategoryItem.class, categoryItem.getId());
+            entityManager.getTransaction().begin();
+            categoryItem1.setName(categoryItem.getName());
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
     @Override
     public void deleteCategory(int categoryId) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "delete from CategoryItem where id = :id";
-            Query query = session.createQuery(hql);
-            query.setInteger("id", categoryId);
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            deleteMoviesInCategory(categoryId);
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("delete from CategoryItem c "
+                    + "where c.id = :id");
+            query.setParameter("id", categoryId);
             query.executeUpdate();
-            session.getTransaction().commit();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
     @Override
     public void deleteMoviesInCategory(int id) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "delete from MovieItem where genreId = :id";
-            Query query = session.createQuery(hql);
-            query.setInteger("id", id);
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("delete from MovieItem m "
+                            + "where m.genreId = :id");
+                    query.setParameter("id", id);
             query.executeUpdate();
-            session.getTransaction().commit();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
     @Override
     public void createCategory(CategoryItem categoryItem) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(categoryItem);
-            session.getTransaction().commit();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.persist(categoryItem);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
         }
     }
 
     @Override
     public void createMovie(MovieItem movieItem) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(movieItem);
-            session.getTransaction().commit();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.persist(movieItem);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-
         }
     }
 
     @Override
     public void deleteMovie(int id) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "delete from MovieItem where id = :id";
-            Query query = session.createQuery(hql);
-            query.setInteger("id", id);
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("delete from MovieItem m "
+                    + "where m.id = :id");
+            query.setParameter("id", id);
             query.executeUpdate();
-            session.getTransaction().commit();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
     @Override
     public MovieItem getMovie(int id) throws SQLException, ClassNotFoundException {
-        Session session = null;
         MovieItem movieItem = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from MovieItem where id = :id";
-            Query query = session.createQuery(hql);
-            query.setInteger("id",id);
-            movieItem = (MovieItem) query.uniqueResult();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            TypedQuery<MovieItem> query = entityManager.createQuery("select m from MovieItem m where m.id = :id", MovieItem.class);
+            movieItem = query.setParameter("id", id).getSingleResult();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
-
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
         return movieItem;
     }
 
     @Override
     public void updateMovie(MovieItem movieItem) throws SQLException, ClassNotFoundException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(movieItem);
-            session.getTransaction().commit();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            MovieItem movieItem1 = entityManager.find(MovieItem.class, movieItem.getId());
+            entityManager.getTransaction().begin();
+            movieItem1.setName(movieItem.getName());
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
     @Override
     public List<CategoryItem> searchCategory(String name) throws ClassNotFoundException, SQLException {
-        Session session = null;
         List<CategoryItem> resultsCategoryItem = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from CategoryItem where name like :name";
-            Query query = session.createQuery(hql);
-            query.setString("name","%" + name + "%");
-            resultsCategoryItem = (List<CategoryItem>) query.list();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            TypedQuery<CategoryItem> query = entityManager.createQuery("select c from CategoryItem c where c.name like :name", CategoryItem.class);
+            resultsCategoryItem = query.setParameter("name", "%" + name + "%").getResultList();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-
         }
         return resultsCategoryItem;
     }
 
     @Override
     public List<MovieItem> searchMovie(String name) throws ClassNotFoundException, SQLException {
-        Session session = null;
         List<MovieItem> resultsMovieItem = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from MovieItem where name like :name";
-            Query query = session.createQuery(hql);
-            query.setString("name", "%" + name + "%");
-            resultsMovieItem = (List<MovieItem>) query.list();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            TypedQuery<MovieItem> query = entityManager.createQuery("select m from MovieItem m where m.name like :name", MovieItem.class);
+            resultsMovieItem = query.setParameter("name", "%" + name + "%").getResultList();
+            entityManager.getTransaction().commit();
+            entityManager.close();
         } catch (Exception e) {
             System.out.println("Error");
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-
         }
         return resultsMovieItem;
     }
