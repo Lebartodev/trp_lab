@@ -22,5 +22,12 @@
         <res-ref-name>jms/ConnectionFactory</res-ref-name>
         <res-type>javax.jms.ConnectionFactory</res-type>
         <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    <resource-ref>
+        <res-ref-name>jms/topic/MyTopic</res-ref-name>
+        <res-type>javax.jms.Topic</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
 </web-app>

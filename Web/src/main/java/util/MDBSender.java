@@ -8,20 +8,34 @@ import javax.naming.InitialContext;
 public class MDBSender {
 
 
+    @Resource(name="jms/ConnectionFactory")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(name="jms/topic/MyTopic")
+    private Destination destination;
+
+
     public void sendString(String enterString) {
         try {
-            InitialContext initCtx = new InitialContext();
-            Context envContext = (Context) initCtx.lookup("java:comp/env");
-            ConnectionFactory connectionFactory = (ConnectionFactory) envContext.lookup("jms/ConnectionFactory");
+            //создаем подключение
             Connection connection = connectionFactory.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createTopic("jms/topic/MyTopic");
+            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
             MessageProducer producer = session.createProducer(destination);
-            TextMessage msg = session.createTextMessage();
-            msg.setText("Message sent");
-            producer.send(msg);
-        } catch (Exception e) {
-            e.printStackTrace();
+            TextMessage message = session.createTextMessage();
+            //добавим в JMS сообщение собственное свойство в поле сообщения со свойствами
+            message.setStringProperty("clientType", "web clien");
+            //добавляем payload в сообщение
+            message.setText(enterString);
+            //отправляем сообщение
+            producer.send(message);
+            System.out.println("message sent");
+            //закрываем соединения
+            session.close();
+            connection.close();
+
+        } catch (JMSException ex) {
+            System.err.println("Sending message error");
+            ex.printStackTrace();
         }
     }
 }

@@ -1,6 +1,7 @@
 import org.hibernate.Session;
 import util.CategoryItem;
 import util.HibernateUtil;
+import util.MDBSender;
 import util.MovieItem;
 
 import javax.ejb.Stateless;
@@ -22,6 +23,7 @@ public class ControllerSQLBean implements IControllerSQL{
     public List<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
         List<CategoryItem> resultsCategories = new ArrayList<>();
         try {
+            new MDBSender().sendString("asdasd");
             EntityManager entityManager = HibernateUtil.getEntityManager();
             entityManager.getTransaction().begin();
             resultsCategories = entityManager.createQuery( "from CategoryItem", CategoryItem.class ).getResultList();
