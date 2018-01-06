@@ -1,0 +1,27 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="org.hibernate.tutorial.jpa" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mydb"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="953111"/>
+            <!-- Connection Pool Size -->
+            <property name="hibernate.connection.pool_size" value="5"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- org.hibernate.HibernateException: No CurrentSessionContext configured! -->
+            <property name="hibernate.current_session_context_class" value="thread"/>
+
+            <!-- Outputs the SQL queries, should be disabled in Production -->
+            <property name="hibernate.show_sql" value="true"/>
+
+            <!-- Dialect is required to let Hibernate know the Database Type, MySQL, Oracle etc
+                Hibernate 4 automatically figure out Dialect from Database Connection Metadata -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+        </properties>
+    </persistence-unit>
+</persistence>

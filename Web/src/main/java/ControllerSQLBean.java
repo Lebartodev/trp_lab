@@ -21,6 +21,7 @@ public class ControllerSQLBean implements IControllerSQL{
         Session session = null;
         List<CategoryItem> resultsCategories = new ArrayList<>();
         try {
+            HibernateUtil.getEntityManager().getTransaction().begin();
             session = HibernateUtil.getSessionFactory().openSession();
             resultsCategories = (List<CategoryItem>)session.createCriteria(CategoryItem.class).list();
         } catch (Exception e) {
