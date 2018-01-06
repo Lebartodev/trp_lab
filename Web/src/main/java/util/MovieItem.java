@@ -1,17 +1,31 @@
 package util;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Entity
+@Table(name="Movie",uniqueConstraints={@UniqueConstraint(columnNames={"id"})})
 @XmlRootElement
 @XmlType(propOrder = {"id", "name", "year", "description", "genreId", "budget"}, name = "movieItem")
 public class MovieItem implements java.io.Serializable {
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name="id", nullable=false)
     private int id;
+    @Column(name="name")
     private String name;
+    @Column(name="year")
     private int year;
+    @Column(name="description")
     private String description;
+    @Column(name="genreId")
     private int genreId;
+    @Column(name="budget")
     private int budget;
 
     public MovieItem() {

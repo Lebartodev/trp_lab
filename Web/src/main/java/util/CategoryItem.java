@@ -1,13 +1,23 @@
 package util;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Entity
+@Table(name="Category",uniqueConstraints={@UniqueConstraint(columnNames={"id"})})
 @XmlRootElement
 @XmlType(propOrder = {"name"}, name = "categoryItem")
 public class CategoryItem implements java.io.Serializable {
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name="id", nullable=false)
     private int id;
+    @Column(name="name")
     private String name;
 
     public CategoryItem() {
