@@ -6,6 +6,7 @@ import util.MovieItem;
 
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +19,24 @@ public class ControllerSQLBean implements IControllerSQL{
 
     @Override
     public List<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
-        Session session = null;
+        //Session session = null;
         List<CategoryItem> resultsCategories = new ArrayList<>();
         try {
-            HibernateUtil.getEntityManager().getTransaction().begin();
-            session = HibernateUtil.getSessionFactory().openSession();
-            resultsCategories = (List<CategoryItem>)session.createCriteria(CategoryItem.class).list();
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            resultsCategories = entityManager.createQuery( "from CategoryItem", CategoryItem.class ).getResultList();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+            //HibernateUtil.getEntityManager().getTransaction().begin();
+            //session = HibernateUtil.getSessionFactory().openSession();
+            //resultsCategories = (List<CategoryItem>)session.createCriteria(CategoryItem.class).list();
         } catch (Exception e) {
             System.out.println("Error");
         } finally {
-            if (session != null && session.isOpen()) {
+            /*if (session != null && session.isOpen()) {
 
                 session.close();
-            }
+            }*/
 
         }
         return resultsCategories;
@@ -224,24 +230,36 @@ public class ControllerSQLBean implements IControllerSQL{
     }
 
     @Override
-    public List<CategoryItem> searchCategory(String name) throws SQLException, ClassNotFoundException {
-        return null;
+    public List<CategoryItem> searchCategory(String name) throws ClassNotFoundException, SQLException {
+        Session session = null;
+        List<CategoryItem> resultsCategoryItem = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "from CategoryItem where name like :name";
+            Query query = session.createQuery(hql);
+            query.setString("name","%" + name + "%");
+            resultsCategoryItem = (List<CategoryItem>) query.list();
+        } catch (Exception e) {
+            System.out.println("Error");
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+
+        }
+        return resultsCategoryItem;
     }
 
     @Override
-    public List<MovieItem> searchMovie(String name) throws SQLException, ClassNotFoundException {
-        return null;
-    }
-
-    /*@Override
-    public List<CategoryItem> searchCategory(String name) throws ClassNotFoundException, SQLException {
+    public List<MovieItem> searchMovie(String name) throws ClassNotFoundException, SQLException {
         Session session = null;
         List<MovieItem> resultsMovieItem = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from CategoryItem where name like ";
+            String hql = "from MovieItem where name like :name";
             Query query = session.createQuery(hql);
-            query.setInteger("id",categoryId);
+            query.setString("name", "%" + name + "%");
             resultsMovieItem = (List<MovieItem>) query.list();
         } catch (Exception e) {
             System.out.println("Error");
@@ -254,29 +272,4 @@ public class ControllerSQLBean implements IControllerSQL{
         }
         return resultsMovieItem;
     }
-
-    @Override
-    public List<MovieItem> searchMovie(String name) throws ClassNotFoundException, SQLException {
-        Connection con;
-        Class.forName("com.mysql.jdbc.Driver");
-        con = dataSource.getConnection();
-        String query = "SELECT * FROM Movie where name like '%" + name + "%'";
-        Statement statement = con.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        ArrayList<MovieItem> movieItems = new ArrayList<>();
-        while (rs.next()) {
-            MovieItem newMovie = MovieItem.newBuilder().id(rs.getInt(1))
-                    .name(rs.getString(2))
-                    .year(rs.getInt(3))
-                    .description(rs.getString(4))
-                    .genreId(rs.getInt(5))
-                    .budget(rs.getInt(6))
-                    .build();
-            movieItems.add(newMovie);
-        }
-        con.close();
-        statement.close();
-        rs.close();
-        return movieItems;
-    }*/
 }
