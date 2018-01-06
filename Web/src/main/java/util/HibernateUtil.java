@@ -4,14 +4,15 @@ import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 public class HibernateUtil {
 
     //XML based configuration
     private static SessionFactory sessionFactory;
-    @PersistenceContext(unitName = "org.hibernate.tutorial.jpa")
-    private static EntityManagerFactory entityManager;
+    //@PersistenceContext(unitName = "org.hibernate.tutorial.jpa")
+    private static EntityManagerFactory entityManager = Persistence.createEntityManagerFactory( "org.hibernate.tutorial.jpa" );;
 
     private static SessionFactory buildSessionFactory() {
         try {

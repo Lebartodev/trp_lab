@@ -19,7 +19,6 @@ public class ControllerSQLBean implements IControllerSQL{
 
     @Override
     public List<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
-        //Session session = null;
         List<CategoryItem> resultsCategories = new ArrayList<>();
         try {
             EntityManager entityManager = HibernateUtil.getEntityManager();
@@ -27,9 +26,6 @@ public class ControllerSQLBean implements IControllerSQL{
             resultsCategories = entityManager.createQuery( "from CategoryItem", CategoryItem.class ).getResultList();
             entityManager.getTransaction().commit();
             entityManager.close();
-            //HibernateUtil.getEntityManager().getTransaction().begin();
-            //session = HibernateUtil.getSessionFactory().openSession();
-            //resultsCategories = (List<CategoryItem>)session.createCriteria(CategoryItem.class).list();
         } catch (Exception e) {
             System.out.println("Error");
         } finally {
