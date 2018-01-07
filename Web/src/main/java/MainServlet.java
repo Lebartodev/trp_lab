@@ -1,6 +1,3 @@
-import org.apache.activemq.broker.BrokerService;
-import util.MDBReceiver;
-
 import javax.ejb.EJB;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -16,7 +13,6 @@ public class MainServlet extends HttpServlet {
 
     @EJB(lookup = "java:module/storage")
     private IControllerSQL controllerSQL;
-    MDBReceiver receiver;
 
     //    String[] message;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

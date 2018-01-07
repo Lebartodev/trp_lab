@@ -7,16 +7,15 @@ import javax.naming.InitialContext;
 
 public class MDBSender {
 
-
-    @Resource(name="jms/ConnectionFactory")
-    private ConnectionFactory connectionFactory;
-
-    @Resource(name="jms/topic/MyTopic")
-    private Destination destination;
-
-
     public void sendString(String enterString) {
         try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            ConnectionFactory connectionFactory = (ConnectionFactory)
+                    envCtx.lookup("jms/ConnectionFactory");
+
+            Destination destination = (Destination)
+                    envCtx.lookup("jms/topic/MyTopic");
             //создаем подключение
             Connection connection = connectionFactory.createConnection();
             Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
@@ -33,7 +32,7 @@ public class MDBSender {
             session.close();
             connection.close();
 
-        } catch (JMSException ex) {
+        } catch (Exception ex) {
             System.err.println("Sending message error");
             ex.printStackTrace();
         }

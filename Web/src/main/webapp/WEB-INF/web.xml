@@ -3,6 +3,7 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
         <servlet-name>MainServlet</servlet-name>
@@ -12,6 +13,7 @@
         <servlet-name>MainServlet</servlet-name>
         <url-pattern>/MovieCatalog</url-pattern>
     </servlet-mapping>
+
     <resource-ref>
         <res-ref-name>jdbc/MyLocalDB</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
@@ -30,4 +32,5 @@
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
+
 </web-app>

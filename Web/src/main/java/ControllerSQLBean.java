@@ -30,7 +30,7 @@ public class ControllerSQLBean implements IControllerSQL{
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (Exception e) {
-            System.out.println("Error");
+            e.printStackTrace();
         }
         return resultsCategories;
     }
