@@ -13,27 +13,11 @@ import java.util.*;
 @ManagedBean
 @ApplicationScoped
 public class CategoriesRepository implements Serializable {
-    private List<CategoryItem> categoryItems = new ArrayList<>();
     @EJB(lookup = "java:module/storage")
     private IControllerSQL controllerSQL;
 
-    @PostConstruct
-    protected void init() {
-        try {
-            categoryItems = controllerSQL.getCategories();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<CategoryItem> getCategoryItems() {
-        return categoryItems;
-    }
-
-    public void setCategoryItems(List<CategoryItem> categoryItems) {
-        this.categoryItems = categoryItems;
+    public List<CategoryItem> getCategoryItems() throws SQLException, ClassNotFoundException {
+        return controllerSQL.getCategories();
     }
 
     public void createCategory(String name){
