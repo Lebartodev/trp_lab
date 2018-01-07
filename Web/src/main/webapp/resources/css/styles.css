@@ -107,6 +107,7 @@ html, body {
 }
 
 .mdl-demo .mdl-layout__content section:not(:last-of-type) {
+    text-align: center;
     position: relative;
     margin-bottom: 48px;
 }

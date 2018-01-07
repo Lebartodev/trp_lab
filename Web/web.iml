@@ -69,5 +69,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.faces:jsf-api:2.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.15" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.2.15" level="project" />
+    <orderEntry type="library" name="material" level="application" />
   </component>
 </module>
