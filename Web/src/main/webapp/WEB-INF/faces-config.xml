@@ -13,6 +13,10 @@
             <to-view-id>/resources/include/createCategory.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>editCategory</from-outcome>
+            <to-view-id>/resources/include/editCategory.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>categoryDetail</from-outcome>
             <to-view-id>/resources/include/movieList.xhtml</to-view-id>
         </navigation-case>

@@ -9,11 +9,18 @@
 </h:head>
 <h:body>
     <h:form id="form">
-        <h:dataTable id="persons" value="#{categoriesPage.categoriesRepository.categoryItems}" var="person">
+        <h:dataTable id="persons" value="#{categoriesPage.categories}" var="person">
             <h:column>
                 <f:facet name="header">Person</f:facet>
                 <h:link value="#{person.name}" outcome="categoryDetail">
                     <f:param name="id" value="#{person.id}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:link value="edit" outcome="editCategory">
+                    <f:param name="id" value="#{person.id}"/>
+                    <f:param name="name" value="#{person.name}"/>
                 </h:link>
             </h:column>
         </h:dataTable>
