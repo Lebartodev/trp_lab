@@ -6,14 +6,20 @@
 
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>MainServlet</servlet-class>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
+    <!-- Faces Servlet Mapping -->
     <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/MovieCatalog</url-pattern>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
 
+    <!-- Welcome files -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
     <resource-ref>
         <res-ref-name>jdbc/MyLocalDB</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
