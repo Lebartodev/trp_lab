@@ -1,40 +1,31 @@
 import util.MovieItem;
 
-import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.naming.NamingException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.List;
 
 @ManagedBean
 @ApplicationScoped
 public class MovieRepository {
-    private Map<Integer, MovieItem> movies = new TreeMap<Integer, MovieItem>();
+    private List movies = new ArrayList();
 
-    @PostConstruct
-    protected void init() {
+    @EJB(lookup = "java:module/storage")
+    private IControllerSQL controllerSQL;
+
+    public Collection<MovieItem> getMovies(int id) {
         try {
-            ControllerSQLBean controllerSQLBean = new ControllerSQLBean();
-            for (MovieItem movieItem : controllerSQLBean.getMoviesInCategory(2)) {
-                movies.put(movieItem.getId(), movieItem);
-            }
-        } catch (NamingException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            movies = controllerSQL.getMoviesInCategory(id);
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return movies;
     }
 
-    public Collection<MovieItem> getMovies() {
-        return movies.values();
-    }
-
-    public MovieItem getMovie(int id) {
-        return movies.get(id);
+    public MovieItem getMovie(int id) throws SQLException, ClassNotFoundException {
+        return controllerSQL.getMovie(id);
     }
 }

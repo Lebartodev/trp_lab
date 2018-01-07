@@ -3,6 +3,7 @@ import util.MovieItem;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import java.sql.SQLException;
 import java.util.Collection;
 
 @ManagedBean
@@ -14,12 +15,16 @@ public class MoviePage {
     private int selectedId;
     private MovieItem selectedMovie;
 
-    public Collection<MovieItem> getMovies() {
-        return movieRepository.getMovies();
+    public Collection<MovieItem> getMovies(int id) {
+        return movieRepository.getMovies(id);
     }
 
     public void loadMovie() {
-        selectedMovie = movieRepository.getMovie(selectedId);
+        try {
+            selectedMovie = movieRepository.getMovie(selectedId);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public MovieItem getSelectedMovie() {
