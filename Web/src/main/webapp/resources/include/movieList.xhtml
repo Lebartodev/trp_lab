@@ -10,7 +10,7 @@
 </h:head>
 <h:body>
     <h:form id="form">
-        <h:dataTable id="movies" value="#{moviePage.movies}" var="movie">
+        <h:dataTable id="movies" value="#{moviePage.getMovies(param['id'])}" var="movie">
             <h:column>
                 <f:facet name="header">Movie</f:facet>
                 <h:link value="#{movie.name}" outcome="movieDetails">

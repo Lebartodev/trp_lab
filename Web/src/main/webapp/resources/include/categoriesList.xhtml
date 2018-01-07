@@ -12,7 +12,7 @@
         <h:dataTable id="persons" value="#{categoriesPage.categoriesRepository.categoryItems}" var="person">
             <h:column>
                 <f:facet name="header">Person</f:facet>
-                <h:link value="#{person.name}" outcome="personDetails">
+                <h:link value="#{person.name}" outcome="categoryDetail">
                     <f:param name="id" value="#{person.id}"/>
                 </h:link>
             </h:column>
