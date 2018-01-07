@@ -16,6 +16,10 @@
             <from-outcome>categoryDetail</from-outcome>
             <to-view-id>/resources/include/movieList.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>categoriesList</from-outcome>
+            <to-view-id>/resources/include/categoriesList.xhtml</to-view-id>
+        </navigation-case>
 
 
     </navigation-rule>
