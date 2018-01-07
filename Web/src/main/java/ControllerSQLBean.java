@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless(name = "storage")
-public class ControllerSQLBean implements IControllerSQL{
+public class ControllerSQLBean implements IControllerSQL {
 
     public ControllerSQLBean() throws NamingException {
     }
@@ -23,10 +23,10 @@ public class ControllerSQLBean implements IControllerSQL{
     public List<CategoryItem> getCategories() throws SQLException, ClassNotFoundException {
         List<CategoryItem> resultsCategories = new ArrayList<>();
         try {
-            new MDBSender().sendString("asdasd");
+            new MDBSender().sendString(0, "asdasd", "update");
             EntityManager entityManager = HibernateUtil.getEntityManager();
             entityManager.getTransaction().begin();
-            resultsCategories = entityManager.createQuery( "from CategoryItem", CategoryItem.class ).getResultList();
+            resultsCategories = entityManager.createQuery("from CategoryItem", CategoryItem.class).getResultList();
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (Exception e) {
@@ -103,8 +103,8 @@ public class ControllerSQLBean implements IControllerSQL{
             EntityManager entityManager = HibernateUtil.getEntityManager();
             entityManager.getTransaction().begin();
             Query query = entityManager.createQuery("delete from MovieItem m "
-                            + "where m.genreId = :id");
-                    query.setParameter("id", id);
+                    + "where m.genreId = :id");
+            query.setParameter("id", id);
             query.executeUpdate();
             entityManager.getTransaction().commit();
             entityManager.close();

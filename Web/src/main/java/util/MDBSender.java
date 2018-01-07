@@ -7,7 +7,7 @@ import javax.naming.InitialContext;
 
 public class MDBSender {
 
-    public void sendString(String enterString) {
+    public void sendString(int idChanged, String name, String action) {
         try {
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -16,24 +16,20 @@ public class MDBSender {
 
             Destination destination = (Destination)
                     envCtx.lookup("jms/topic/MyTopic");
-            //создаем подключение
             Connection connection = connectionFactory.createConnection();
             Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
             MessageProducer producer = session.createProducer(destination);
             TextMessage message = session.createTextMessage();
-            //добавим в JMS сообщение собственное свойство в поле сообщения со свойствами
-            message.setStringProperty("clientType", "web clien");
-            //добавляем payload в сообщение
-            message.setText(enterString);
-            //отправляем сообщение
+            message.setIntProperty("id", idChanged);
+            message.setStringProperty("name", name);
+            message.setStringProperty("action", action);
+            message.setLongProperty("date", System.currentTimeMillis());
             producer.send(message);
             System.out.println("message sent");
-            //закрываем соединения
             session.close();
             connection.close();
 
         } catch (Exception ex) {
-            System.err.println("Sending message error");
             ex.printStackTrace();
         }
     }
