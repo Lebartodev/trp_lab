@@ -1,0 +1,6 @@
+<Container id="myMessageDrivenContainer" type="MESSAGE">
+    activationSpecClass = org.apache.activemq.ra.ActiveMQActivationSpec
+    instanceLimit = 10
+    messageListenerInterface = javax.jms.MessageListener
+    resourceAdapter = Default JMS Resource Adapter
+</Container>
