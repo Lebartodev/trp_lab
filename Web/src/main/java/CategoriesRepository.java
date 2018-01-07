@@ -35,4 +35,12 @@ public class CategoriesRepository implements Serializable {
     public void setCategoryItems(List<CategoryItem> categoryItems) {
         this.categoryItems = categoryItems;
     }
+
+    public void createCategory(String name){
+        try {
+            controllerSQL.createCategory(CategoryItem.newBuilder().name(name).build());
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -19,4 +19,8 @@ public class CategoriesPage {
     public void setCategoriesRepository(CategoriesRepository categoriesRepository) {
         this.categoriesRepository = categoriesRepository;
     }
+
+    public void createCategory(String name){
+        categoriesRepository.createCategory(name);
+    }
 }
