@@ -1,4 +1,3 @@
-import org.hibernate.Session;
 import util.CategoryItem;
 import util.HibernateUtil;
 import util.MDBSender;

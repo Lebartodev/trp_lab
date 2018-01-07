@@ -25,7 +25,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="org.hibernate.tutorial.jpa" value="ecf26d6b-f2d6-4476-910e-e4d442b3622a" />
+          <factory-entry name="org.hibernate.tutorial.jpa" value="bbec9217-f412-4a4e-97bd-87ba966e836e" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
@@ -42,6 +42,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Java EE 6-Java EE 6 (2)" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.faces:jsf-api:2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.15" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.2.15" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: tomcat:tomcat-juli:5.5.23" level="project" />
