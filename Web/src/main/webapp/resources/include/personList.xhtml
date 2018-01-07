@@ -9,7 +9,7 @@
 </h:head>
 <h:body>
     <h:form id="form">
-        <h:dataTable id="persons" value="#{personPage.persons}" var="person">
+        <h:dataTable id="persons" value="#{categoriesPage.categoriesRepository.categoryItems}" var="person">
             <h:column>
                 <f:facet name="header">Person</f:facet>
                 <h:link value="#{person.name}" outcome="personDetails">
