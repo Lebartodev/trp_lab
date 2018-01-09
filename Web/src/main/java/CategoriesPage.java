@@ -16,6 +16,16 @@ import java.util.List;
 public class CategoriesPage {
     private UIInput input1;
 
+    public UIInput getInput2() {
+        return input2;
+    }
+
+    public void setInput2(UIInput input2) {
+        this.input2 = input2;
+    }
+
+    private UIInput input2;
+private int editingId;
     @EJB(lookup = "java:module/storage")
     private IControllerSQL controllerSQL;
 
@@ -74,5 +84,13 @@ public class CategoriesPage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getEditingId() {
+        return editingId;
+    }
+
+    public void setEditingId(int editingId) {
+        this.editingId = editingId;
     }
 }

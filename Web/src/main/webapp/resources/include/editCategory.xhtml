@@ -12,7 +12,8 @@
     <h:form id="form">
         <h:form>
             <h:inputText binding="#{categoriesPage.input1}"/>
-            <h:commandButton ajax="true" actionListener="#{categoriesPage.editCategory(param['id'], categoriesPage.input1.value)}" value="Test"/>
+            <h:inputHidden binding="#{categoriesPage.input2}" value="#{param.get('id')}"/>
+            <h:commandButton ajax="true" actionListener="#{categoriesPage.editCategory(categoriesPage.input2.value, categoriesPage.input1.value)}" value="Test"/>
         </h:form>
     </h:form>
 </h:body>
